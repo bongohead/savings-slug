@@ -497,7 +497,7 @@ table.dataTable tr.odd:hover {
 	color: white !important;
 }
 
-table.dataTable tr:hover a {
+table.dataTable tr:hover {
 	color: white !important;
 }
 

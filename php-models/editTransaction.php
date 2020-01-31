@@ -20,7 +20,7 @@ $sql -> getQueryResult("
 	UPDATE transactions AS a SET
 		date = CAST(a2.date AS date),
 		description = CAST(a2.description AS TEXT),
-		value = CAST(a2.value AS INT),
+		value = CAST(a2.value AS NUMERIC),
 		debit = CAST(a2.debit AS INT),
 		credit = CAST(a2.credit AS INT)
 	FROM (VALUES

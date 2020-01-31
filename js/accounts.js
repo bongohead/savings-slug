@@ -201,7 +201,7 @@ $(document).ready(function() {
 
 function updateUi(userData) {
 	equityId = userData.accounts.filter(x => x.name === 'Equity')[0].id;
-	equityBal = userData.dailyBals.filter(x => x.id === equityId).pop().bal * 2;
+	equityBal = userData.dailyBals.filter(x => x.id === equityId).pop().bal + 20000;
 	$('#net-worth').html(equityBal.toLocaleString('en-US', {style: 'currency', currency: 'USD'}));
 	console.log('equityBal', equityBal);
 

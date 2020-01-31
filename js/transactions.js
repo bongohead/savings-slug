@@ -73,7 +73,53 @@ $(document).ready(function() {
 		
 	});
 
+	/********** Attach Table Event Listener to Autocomplete Descriptions **********/
+	$('#transactions-table').on('keyup', '#add-transaction-description', function() {
+		const dt = $('#transactions-table').DataTable();
+		const descriptionInput = $(this).val();
+		
+		// Delete if already exists
+		$('#autocomplete-description').remove();
+
+		if (descriptionInput.length < 2) return;
+		
+		// Get account transactions, sorted by reverse date
+		const accountTransactionsDescriptions = getData('page').transactions.sort((a, b) => new Date(b.date) > new Date(a.date)).map(x => x.description);
+		
+		// Finding matching transactions
+		// const matchingAccountTransactionsDescriptions = accountTransactionsDescriptions.filter(x => x.substr(0, descriptionInput.length).toUpperCase() === descriptionInput.toUpperCase());
+		const matchingAccountTransactionsDescriptions = accountTransactionsDescriptions.filter(x => x.toUpperCase().match(descriptionInput.toUpperCase()) !== null).slice(0, 9);
+		console.log(descriptionInput, matchingAccountTransactionsDescriptions);		
+		
+		// Create div of matching descriptions
+		const html = 
+			'<div id="autocomplete-description" class="list-group position-absolute" style="width: '+ $('#add-transaction-description').parent().width() + 'px">' +
+				matchingAccountTransactionsDescriptions.map(function(x) {
+					return(
+						'<a href="#" class="autocomplete-description-item list-group-item list-group-item-action py-1 text-truncate" style="font-size:.8rem" href="#" data-description="' + x + '">' +
+						x +
+						'</a>'
+						);
+				}).join('') +
+			'</div>';
+		$(this).after(html);
+	});
 	
+	/********** Attach Autocomplete Event Listerner when Clicked **********/
+	$('#transactions-table').on('click', '#autocomplete-description > .autocomplete-description-item', function() {
+		//console.log($(this).data('description'));
+		$('#add-transaction-description').val($(this).data('description'));
+		$('#autocomplete-description').remove();
+	});
+
+	/********** Attach Body Listener to Kill Autocomplete if Clicked Out **********/
+	$('body').on('click', function(e) { 
+		target = $(e.target);
+		if (target.hasClass('autocomplete-description-item') !== true) {
+			$('#autocomplete-description').remove();
+		}
+		//console.log(target, target.hasClass('autocomplete-description-item'));
+	});
 	
 	/********** Attach Table Event Listener to Open Edit Transaction Modal **********/
 	$('#transactions-table').on('click', '.edit-transaction', function() {
@@ -108,8 +154,7 @@ $(document).ready(function() {
 		modal.find('input, select').removeClass('is-invalid is-valid');
 		modal.modal('show');
 	});
-	
-	
+		
 
 	
 	/********** Attach Modal Event Listener to Validate & Display Debit/Credit Message **********/
@@ -180,9 +225,10 @@ $(document).ready(function() {
 		if ($(this).attr('id') !== 'edit-transaction-submit') return;
 		
 		getAJAX('editTransaction', toScript = ['updatedTransactions'], fromAjax = {id: id, date: date, description: description, value: valuePositive, debit: debitAccount.id, credit: creditAccount.id}).done(function(ajaxRes) {
+			/*console.log( {id: id, date: date, description: description, value: valuePositive, debit: debitAccount.id, credit: creditAccount.id}, ajaxRes);*/
 			if (JSON.parse(ajaxRes).updatedTransactions === 1) {
 				$('div.overlay').show();
-				$('#edit-account-modal').modal('hide');
+				$('#edit-transaction-modal').modal('hide');
 				init(_addDefaultState = function(newData) {
 					const accountId = parseInt(getUrlVars()['account']);
 					const account = newData.accounts.filter(x => x.id === accountId)[0];
