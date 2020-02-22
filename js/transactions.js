@@ -93,7 +93,7 @@ $(document).ready(function() {
 		
 		// Create div of matching descriptions
 		const html = 
-			'<div id="autocomplete-description" class="list-group position-absolute" style="width: '+ $('#add-transaction-description').parent().width() + 'px">' +
+			'<div id="autocomplete-description" class="list-group position-absolute" style="min-width: '+ $('#add-transaction-description').parent().width() + 'px">' +
 				matchingAccountTransactionsDescriptions.map(function(x) {
 					return(
 						'<a href="#" class="autocomplete-description-item list-group-item list-group-item-action py-1 text-truncate" style="font-size:.8rem" href="#" data-description="' + x + '">' +
