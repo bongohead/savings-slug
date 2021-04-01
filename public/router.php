@@ -8,7 +8,8 @@ foreach (glob('/var/www/web-framework/php-files/*.php') as $filename) {
 if (isset($_POST) && isset($_POST['isAjax'])) {
 	routeAjax(
 		$postVars = $_POST,
-		$modelsDir = __DIR__.'/../php-models'
+		$modelsDir = __DIR__.'/../php-models',
+		$db = 'budget'
 	);
 } else {
 	routePage(
@@ -18,14 +19,15 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		$toScript = [],
 		$jsDir = __DIR__.'/../js',
 		$routes = [
-			['template' => 'home', 'request' => ['', 'home'], 'title' => 'Home', 'models' => ['checkSession'], 'js' => []],
+			//['template' => 'home', 'request' => ['', 'home'], 'title' => 'Home', 'models' => ['checkSession'], 'js' => []],
 			['template' => 'login', 'request' => 'login', 'title' => 'Login', 'models' => [], 'js' => ['login']],
-			['template' => 'accounts', 'request' => ['accounts'], 'title' => 'Accounts', 'models' => ['checkSession'], 'js' => ['init', 'accounts']],
+			['template' => 'accounts', 'request' => ['accounts', 'home', ''], 'title' => 'Accounts', 'models' => ['checkSession'], 'js' => ['init', 'accounts']],
 			['template' => 'transactions', 'request' => ['transactions'], 'title' => 'Transactions Log', 'models' => ['checkSession'], 'js' => ['init', 'transactions']]
 		],
 		$errorRoute = ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		$baseJsFiles = ['functions', 'moment.min'],
-		$devMode = TRUE
+		$devMode = TRUE,
+		$db = 'budget'
 	);
 }
 

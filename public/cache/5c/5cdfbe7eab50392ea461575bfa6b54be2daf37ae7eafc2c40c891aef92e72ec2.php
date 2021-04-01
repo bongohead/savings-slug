@@ -13,7 +13,7 @@ use Twig\Source;
 use Twig\Template;
 
 /* base.html */
-class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61bb72b extends \Twig\Template
+class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e5727a extends \Twig\Template
 {
     private $source;
     private $macros = [];
@@ -48,9 +48,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
         echo twig_escape_filter($this->env, ($context["title"] ?? null));
         echo "</title>
     <link rel=\"icon\" type=image/ico href=\"/static/favicon2.png\"/>
-    <meta name=description content=\"Content.\" />
-    <meta name=keywords content=\"keyword1 keyword2 keyword3 keyword4\" />
-    
+\t
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\" integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\">
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">
@@ -76,20 +74,20 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t-->
     <script src=\"//code.highcharts.com/stock/highstock.js\"></script>
 \t
-\t\t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
+\t\t<script src=\"https://cmefi.github.io/gradient.js/gradient-min.js\"></script>
 \t\t
 \t\t<link href=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css\" rel=\"stylesheet\">
 \t\t<script src=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js\"></script>
 
     ";
-        // line 43
+        // line 41
         echo ($context["pageJS"] ?? null);
         echo "
 
     ";
-        // line 45
+        // line 43
         $this->displayBlock('staticlinks', $context, $blocks);
-        // line 46
+        // line 44
         echo "</head>
 
 <body>
@@ -112,7 +110,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t\t\t\t</li>
 \t\t\t\t\t-->
 \t\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fa fa-bank fa-fw mr-2\"></span>Accounts Summary</a>
+\t\t\t\t\t\t<a class=\"nav-link\" href=\"/accounts\"><span class=\"fa fa-bank fa-fw mr-2\"></span>Accounts Summary</a>
 \t\t\t\t\t</li>
 
 
@@ -188,9 +186,9 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
       
 \t\t<main class=\"col-md-9 col-lg-10 ml-sm-auto pt-3 px-2\" id=\"main\">
       ";
-        // line 143
+        // line 141
         $this->displayBlock('content', $context, $blocks);
-        // line 145
+        // line 143
         echo "    </main>
 \t</div>
 \t\t<div class=\"row flex-xl-nowrap\">
@@ -252,7 +250,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
 <script>
   ";
-        // line 205
+        // line 203
         echo ($context["bodyScript"] ?? null);
         echo "
 </script>
@@ -262,17 +260,17 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 </html>";
     }
 
-    // line 45
+    // line 43
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 143
+    // line 141
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 144
+        // line 142
         echo "      ";
     }
 
@@ -288,7 +286,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
     public function getDebugInfo()
     {
-        return array (  276 => 144,  272 => 143,  266 => 45,  256 => 205,  194 => 145,  192 => 143,  93 => 46,  91 => 45,  86 => 43,  48 => 8,  39 => 1,);
+        return array (  274 => 142,  270 => 141,  264 => 43,  254 => 203,  192 => 143,  190 => 141,  91 => 44,  89 => 43,  84 => 41,  48 => 8,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -302,9 +300,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 
     <title>{{ title|e }}</title>
     <link rel=\"icon\" type=image/ico href=\"/static/favicon2.png\"/>
-    <meta name=description content=\"Content.\" />
-    <meta name=keywords content=\"keyword1 keyword2 keyword3 keyword4\" />
-    
+\t
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\" integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\">
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">
@@ -330,7 +326,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t-->
     <script src=\"//code.highcharts.com/stock/highstock.js\"></script>
 \t
-\t\t<script src=\"https://cye131.github.io/gradient.js/gradient-min.js\"></script>
+\t\t<script src=\"https://cmefi.github.io/gradient.js/gradient-min.js\"></script>
 \t\t
 \t\t<link href=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css\" rel=\"stylesheet\">
 \t\t<script src=\"https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js\"></script>
@@ -360,7 +356,7 @@ class __TwigTemplate_a55cd274f18e742922e2e27c899e01278db6731180d7fa49b74effd8e61
 \t\t\t\t\t</li>
 \t\t\t\t\t-->
 \t\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\"><span class=\"fa fa-bank fa-fw mr-2\"></span>Accounts Summary</a>
+\t\t\t\t\t\t<a class=\"nav-link\" href=\"/accounts\"><span class=\"fa fa-bank fa-fw mr-2\"></span>Accounts Summary</a>
 \t\t\t\t\t</li>
 
 

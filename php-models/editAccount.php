@@ -13,8 +13,9 @@ $varsToBind =
 		'rel_order' => (int) $fromAjax['rel_order'] ?? null,
 		'parent_id' => (int) $fromAjax['parent_id'] ?? null,
 		'debit_effect' => (int) $fromAjax['debit_effect'] ?? null,
-		'is_open' => (int) $fromAjax['is_open'] ?? null
+		'is_open' => (intval($fromAjax['is_open']) == 1 ? 'true' : 'false') ?? null // This is due to an error in the way PHP PDO handles false values (i t converts it to emprty string "") https://stackoverflow.com/questions/32011979/handle-boolean-input-in-php-pdo-postgres
 	);
+	
 
 $sql -> getQueryResult("
 	UPDATE accounts AS a SET

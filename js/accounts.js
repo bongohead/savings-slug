@@ -201,7 +201,7 @@ $(document).ready(function() {
 
 function updateUi(userData) {
 	equityId = userData.accounts.filter(x => x.name === 'Equity')[0].id;
-	equityBal = userData.dailyBals.filter(x => x.id === equityId).pop().bal + 20000;
+	equityBal = userData.dailyBals.filter(x => x.id === equityId).pop().bal;
 	$('#net-worth').html(equityBal.toLocaleString('en-US', {style: 'currency', currency: 'USD'}));
 	console.log('equityBal', equityBal);
 
@@ -353,7 +353,19 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 			</div>
 		</div>
 		`);
+		/*
+		Bootstrap 5 prestyling
+		<div class="input-group input-group-sm my-0 justify-content-end"> 
+			<div><span class="input-group-text">Show All Accounts</div>
 
+			<div class="btn-group" role="group" id="show-all-accounts">
+				<input id="btnradio1" type="radio" class="btn-check" name="btnradio" value="1" autocomplete="off" checked>
+				<label class="btn btn-outline-primary" for="btnradio1">No</label>
+				<input id="btnradio2" type="radio" class="btn-check" name="btnradio" value="0" autocomplete="off">
+				<label class="btn btn-outline-primary" for="btnradio2">Yes</label>
+			</div>
+		</div>
+		*/
 	return true;
 }
 
