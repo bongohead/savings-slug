@@ -132,6 +132,7 @@ table.dataTable td {
     padding: .25rem .5rem;
     font-size: 0.82rem;
 	border: none;
+	vertical-align: middle;
 }
 
 table.dataTable td a {

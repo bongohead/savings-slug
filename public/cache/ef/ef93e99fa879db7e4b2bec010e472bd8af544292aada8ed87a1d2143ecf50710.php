@@ -56,32 +56,28 @@ class __TwigTemplate_a8cd97efad1111c4880abffaaec086cdaae41aa046fe8eb43f1786224f2
         // line 7
         echo "
 <section class=\"container-fluid\">
-\t<div class=\"col-12 mb-2 bs-callout bs-callout-primary\" style=\"background-color: rgb(245, 255, 255)\">
-\t\t<h2><span id=\"account-name\">Account</span>: <span id=\"account-balance\" class=\"text-success\"></span></h2>
-\t\t
+\t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
+\t\t<div class=\"row justify-content-center my-3\">
+\t\t\t<div class=\"col-auto\">
+\t\t\t\t<h2><span id=\"account-name\">Account</span>: <span id=\"account-balance\" class=\"text-success\"></span></h2>
+\t\t\t</div>
+\t\t</div>
 \t\t<div class=\"row justify-content-center my-1\">
-\t\t\t<div class=\"col-lg-4 col-md-12\" >
-\t\t\t\t<h4>Account Details</h4>
-\t\t\t</div>
-\t\t\t<div class=\"col-lg-8 col-md-12 col-md-12\" id=\"transactions-chart-div\">
-\t\t\t</div>
-\t\t\t
+\t\t\t<div class=\"col-lg-8 col-md-12\" id=\"transactions-chart-div\"></div>
 \t\t</div>
-\t<div class=\"row justify-content-center my-2\">
-\t\t<div class=\"col-sm-12 col-md-10 col-lg-8\">
-\t\t\t<table class=\"table\" style=\"width:100%\" id=\"transactions-table\"></table>
+\t\t<div class=\"row justify-content-center mt-5\">
+\t\t\t<div class=\"col-auto\">
+\t\t\t\t<h4>Transactions History</h4>
+\t\t\t</div>
+\t\t</div>
+
+\t\t<div class=\"row justify-content-center my-2\">
+\t\t\t<div class=\"col-auto\">
+\t\t\t\t<table class=\"table\" style=\"width:100%\" id=\"transactions-table\"></table>
+\t\t\t</div>
 \t\t</div>
 \t</div>
 
-\t</div>
-
-\t<!--
-\t<div class=\"row justify-content-center my-2\">
-\t\t<div class=\"col-auto my-2\">
-\t\t\t<table class=\"table table-responsive\" style=\"\" id=\"transactions-table\"></table>
-\t\t</div>
-\t</div>
-\t-->
 </section>
 
 <!-- Add Edit Modal -->
@@ -91,35 +87,35 @@ class __TwigTemplate_a8cd97efad1111c4880abffaaec086cdaae41aa046fe8eb43f1786224f2
 \t\t\t<form class=\"form\">
 \t\t\t\t<div class=\"modal-header\">
 \t\t\t\t\t<h5 class=\"modal-title\">Edit Transaction</h5>
-\t\t\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
+\t\t\t\t\t<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>
 \t\t\t\t</div>
 \t\t\t\t<div class=\"modal-body\">
 \t\t\t\t
-\t\t\t\t\t<div class = \"input-group input-group-md \">
-\t\t\t\t\t\t<div class=\"input-group-prepend\"><span class=\"input-group-text\">Transaction #:</span></div>
-\t\t\t\t\t\t<input type=\"text\" class=\"form-control form-control-md disabled col-2\" id=\"edit-transaction-id\" readonly>
-\t\t\t\t\t\t<div class=\"input-group-prepend\"><span class=\"input-group-text\">Transaction Date:</span></div>
-\t\t\t\t\t\t<input type=\"text\" class=\"form-control form-control-md\" id=\"edit-transaction-date\">
+\t\t\t\t\t<div class=\"input-group input-group-sm mb-2\">
+\t\t\t\t\t\t<span class=\"input-group-text\">Transaction #:</span>
+\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"edit-transaction-id\" readonly>
+\t\t\t\t\t\t<span class=\"input-group-text\">Transaction Date:</span>
+\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"edit-transaction-date\">
 \t\t\t\t\t</div>
 
-\t\t\t\t\t<div class = \"input-group input-group-md \">
-\t\t\t\t\t\t<div class=\"input-group-prepend\"><span class=\"input-group-text\">Description:</span></div>
-\t\t\t\t\t\t<input type=\"text\"  class=\"form-control form-control-md\" id=\"edit-transaction-description\"></input>
+\t\t\t\t\t<div class=\"input-group input-group-sm mb-2\">
+\t\t\t\t\t\t<span class=\"input-group-text\">Description:</span>
+\t\t\t\t\t\t<input type=\"text\"  class=\"form-control\" id=\"edit-transaction-description\"></input>
 \t\t\t\t\t</div>
 
-\t\t\t\t\t<div class = \"input-group input-group-md \">
-\t\t\t\t\t\t<div class=\"input-group-prepend\"><span class=\"input-group-text\">Funds In/Out
-\t\t\t\t\t\t\t<span class=\"fa fa-question-circle fa-fw ml-1 mr-1\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Enter the dollar value of the funds entering this account; use negatives to represent funds exiting the account.\"></span>:
-\t\t\t\t\t\t</span></div>
-\t\t\t\t\t\t<input type=\"text\"  class=\"form-control form-control-md\" id=\"edit-transaction-value\"></input>
+\t\t\t\t\t<div class=\"input-group input-group-sm mb-2\">
+\t\t\t\t\t\t<span class=\"input-group-text\">Funds In/Out
+\t\t\t\t\t\t\t<span class=\"fa fa-question-circle fa-fw ml-1 mr-1\" data-bs-toggle=\"tooltip\" data-html=\"true\" title=\"Enter the dollar value of the funds entering this account; use negatives to represent funds exiting the account.\"></span>:
+\t\t\t\t\t\t</span>
+\t\t\t\t\t\t<input type=\"text\"  class=\"form-control\" id=\"edit-transaction-value\"></input>
 \t\t\t\t\t</div>
 
 
-\t\t\t\t\t<div class = \"input-group input-group-md \">
-\t\t\t\t\t\t<div class=\"input-group-prepend\"><span class=\"input-group-text\">Fund Source/Destination
-\t\t\t\t\t\t\t<span class=\"fa fa-question-circle fa-fw ml-1 mr-1\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Source of funds entering account; or destination of funds exiting account if funds in/out value is negative.\"></span>:
-\t\t\t\t\t\t</span></div>
-\t\t\t\t\t\t<select id=\"edit-transaction-other-account\" class=\"form-control form-control-md\">
+\t\t\t\t\t<div class=\"input-group input-group-sm mb-2\">
+\t\t\t\t\t\t<span class=\"input-group-text\">Fund Source/Destination
+\t\t\t\t\t\t\t<span class=\"fa fa-question-circle fa-fw ml-1 mr-1\" data-bs-toggle=\"tooltip\" data-html=\"true\" title=\"Source of funds entering account; or destination of funds exiting account if funds in/out value is negative.\"></span>:
+\t\t\t\t\t\t</span>
+\t\t\t\t\t\t<select id=\"edit-transaction-other-account\" class=\"form-control form-select form-select-sm\">
 \t\t\t\t\t\t</select>
 \t\t\t\t\t</div>
 \t\t\t\t\t
@@ -165,32 +161,28 @@ class __TwigTemplate_a8cd97efad1111c4880abffaaec086cdaae41aa046fe8eb43f1786224f2
 {% block content %}
 
 <section class=\"container-fluid\">
-\t<div class=\"col-12 mb-2 bs-callout bs-callout-primary\" style=\"background-color: rgb(245, 255, 255)\">
-\t\t<h2><span id=\"account-name\">Account</span>: <span id=\"account-balance\" class=\"text-success\"></span></h2>
-\t\t
+\t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
+\t\t<div class=\"row justify-content-center my-3\">
+\t\t\t<div class=\"col-auto\">
+\t\t\t\t<h2><span id=\"account-name\">Account</span>: <span id=\"account-balance\" class=\"text-success\"></span></h2>
+\t\t\t</div>
+\t\t</div>
 \t\t<div class=\"row justify-content-center my-1\">
-\t\t\t<div class=\"col-lg-4 col-md-12\" >
-\t\t\t\t<h4>Account Details</h4>
-\t\t\t</div>
-\t\t\t<div class=\"col-lg-8 col-md-12 col-md-12\" id=\"transactions-chart-div\">
-\t\t\t</div>
-\t\t\t
+\t\t\t<div class=\"col-lg-8 col-md-12\" id=\"transactions-chart-div\"></div>
 \t\t</div>
-\t<div class=\"row justify-content-center my-2\">
-\t\t<div class=\"col-sm-12 col-md-10 col-lg-8\">
-\t\t\t<table class=\"table\" style=\"width:100%\" id=\"transactions-table\"></table>
+\t\t<div class=\"row justify-content-center mt-5\">
+\t\t\t<div class=\"col-auto\">
+\t\t\t\t<h4>Transactions History</h4>
+\t\t\t</div>
+\t\t</div>
+
+\t\t<div class=\"row justify-content-center my-2\">
+\t\t\t<div class=\"col-auto\">
+\t\t\t\t<table class=\"table\" style=\"width:100%\" id=\"transactions-table\"></table>
+\t\t\t</div>
 \t\t</div>
 \t</div>
 
-\t</div>
-
-\t<!--
-\t<div class=\"row justify-content-center my-2\">
-\t\t<div class=\"col-auto my-2\">
-\t\t\t<table class=\"table table-responsive\" style=\"\" id=\"transactions-table\"></table>
-\t\t</div>
-\t</div>
-\t-->
 </section>
 
 <!-- Add Edit Modal -->
@@ -200,35 +192,35 @@ class __TwigTemplate_a8cd97efad1111c4880abffaaec086cdaae41aa046fe8eb43f1786224f2
 \t\t\t<form class=\"form\">
 \t\t\t\t<div class=\"modal-header\">
 \t\t\t\t\t<h5 class=\"modal-title\">Edit Transaction</h5>
-\t\t\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>
+\t\t\t\t\t<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>
 \t\t\t\t</div>
 \t\t\t\t<div class=\"modal-body\">
 \t\t\t\t
-\t\t\t\t\t<div class = \"input-group input-group-md \">
-\t\t\t\t\t\t<div class=\"input-group-prepend\"><span class=\"input-group-text\">Transaction #:</span></div>
-\t\t\t\t\t\t<input type=\"text\" class=\"form-control form-control-md disabled col-2\" id=\"edit-transaction-id\" readonly>
-\t\t\t\t\t\t<div class=\"input-group-prepend\"><span class=\"input-group-text\">Transaction Date:</span></div>
-\t\t\t\t\t\t<input type=\"text\" class=\"form-control form-control-md\" id=\"edit-transaction-date\">
+\t\t\t\t\t<div class=\"input-group input-group-sm mb-2\">
+\t\t\t\t\t\t<span class=\"input-group-text\">Transaction #:</span>
+\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"edit-transaction-id\" readonly>
+\t\t\t\t\t\t<span class=\"input-group-text\">Transaction Date:</span>
+\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"edit-transaction-date\">
 \t\t\t\t\t</div>
 
-\t\t\t\t\t<div class = \"input-group input-group-md \">
-\t\t\t\t\t\t<div class=\"input-group-prepend\"><span class=\"input-group-text\">Description:</span></div>
-\t\t\t\t\t\t<input type=\"text\"  class=\"form-control form-control-md\" id=\"edit-transaction-description\"></input>
+\t\t\t\t\t<div class=\"input-group input-group-sm mb-2\">
+\t\t\t\t\t\t<span class=\"input-group-text\">Description:</span>
+\t\t\t\t\t\t<input type=\"text\"  class=\"form-control\" id=\"edit-transaction-description\"></input>
 \t\t\t\t\t</div>
 
-\t\t\t\t\t<div class = \"input-group input-group-md \">
-\t\t\t\t\t\t<div class=\"input-group-prepend\"><span class=\"input-group-text\">Funds In/Out
-\t\t\t\t\t\t\t<span class=\"fa fa-question-circle fa-fw ml-1 mr-1\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Enter the dollar value of the funds entering this account; use negatives to represent funds exiting the account.\"></span>:
-\t\t\t\t\t\t</span></div>
-\t\t\t\t\t\t<input type=\"text\"  class=\"form-control form-control-md\" id=\"edit-transaction-value\"></input>
+\t\t\t\t\t<div class=\"input-group input-group-sm mb-2\">
+\t\t\t\t\t\t<span class=\"input-group-text\">Funds In/Out
+\t\t\t\t\t\t\t<span class=\"fa fa-question-circle fa-fw ml-1 mr-1\" data-bs-toggle=\"tooltip\" data-html=\"true\" title=\"Enter the dollar value of the funds entering this account; use negatives to represent funds exiting the account.\"></span>:
+\t\t\t\t\t\t</span>
+\t\t\t\t\t\t<input type=\"text\"  class=\"form-control\" id=\"edit-transaction-value\"></input>
 \t\t\t\t\t</div>
 
 
-\t\t\t\t\t<div class = \"input-group input-group-md \">
-\t\t\t\t\t\t<div class=\"input-group-prepend\"><span class=\"input-group-text\">Fund Source/Destination
-\t\t\t\t\t\t\t<span class=\"fa fa-question-circle fa-fw ml-1 mr-1\" data-toggle=\"tooltip\" data-html=\"true\" title=\"Source of funds entering account; or destination of funds exiting account if funds in/out value is negative.\"></span>:
-\t\t\t\t\t\t</span></div>
-\t\t\t\t\t\t<select id=\"edit-transaction-other-account\" class=\"form-control form-control-md\">
+\t\t\t\t\t<div class=\"input-group input-group-sm mb-2\">
+\t\t\t\t\t\t<span class=\"input-group-text\">Fund Source/Destination
+\t\t\t\t\t\t\t<span class=\"fa fa-question-circle fa-fw ml-1 mr-1\" data-bs-toggle=\"tooltip\" data-html=\"true\" title=\"Source of funds entering account; or destination of funds exiting account if funds in/out value is negative.\"></span>:
+\t\t\t\t\t\t</span>
+\t\t\t\t\t\t<select id=\"edit-transaction-other-account\" class=\"form-control form-select form-select-sm\">
 \t\t\t\t\t\t</select>
 \t\t\t\t\t</div>
 \t\t\t\t\t
