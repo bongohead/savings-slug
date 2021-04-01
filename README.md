@@ -2,6 +2,11 @@ This is budget tracking software built for my own uses, hosted on https://budget
 
 # CHANGELOG
 
+## 2021-04-01
+- Updated to latest JS libraries
+- Updated to latest version of web-framework
+- Updated code compatability for Bootstrap 5
+
 ## 2019-03-29
 - Minor CSS changes
 

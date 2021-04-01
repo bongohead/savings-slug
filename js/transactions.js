@@ -267,6 +267,22 @@ $(document).ready(function() {
 		});
 
 	});
+	
+
+	/********** Attach Table Event Listener to Clone Transaction **********/
+	$('#transactions-table').on('click', '.clone-transaction', function() {
+		const dt = $('#transactions-table').DataTable();
+		const thisRowData = dt.row($(this).closest('tr')).data();
+		
+		$('#add-transaction-description').val(thisRowData.description);
+		$('#add-transaction-value').val(thisRowData.value);
+		$('#add-transaction-other-account').val(thisRowData.other_account);
+		
+		// Trigger on change calback (requires event binding to have also been done with jQuery)
+		$('#add-transaction-description').change();
+		console.log(thisRowData);
+	});
+		
 
 
 });
@@ -304,7 +320,7 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 			description: '<span style="display:none">!!!!!</span><input id="add-transaction-description" type="text" class="form-control form-control-sm"></input>',
 			value_effect: null,
 			value: '<input type="text" id="add-transaction-value" class="form-control form-control-sm"></input>',
-			other_account_name: '<select id="add-transaction-other-account" class="form-control form-control-sm"><option value="none"></option>' +
+			other_account_name: '<select id="add-transaction-other-account" class="form-control form-control-sm form-select form-select-sm"><option value="none"></option>' +
 				accounts.map(account =>
 					(account.id !== thisAccount.id ? '<option value="'+account.id+'"' + (account.descendants.length !== 0 ? 'disabled': '') + '>' + '&nbsp;'.repeat(account.name_path.length) + account.name + '</option>' : '')
 					).join('') +
@@ -314,14 +330,14 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 		});
 
 		
-	//console.log('dtData', dtData);
+	console.log('dtData', dtData);
 		
 		
 	if (loadInstance === 0) {
 	
 		const dtCols =
 			[
-				{title: 'Date', data: 'date'},
+				{title: 'Transaction Date', data: 'date'},
 				{title: 'Description', data: 'description'},
 				{title: 'Funds In/Out', data: 'value'},
 				{title: 'Other Account', data: 'other_account_name'},
@@ -334,7 +350,7 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 					orderable: true,
 					ordering: (x.title === 'Transaction Date' ? true : false),
 					searchable: (x.title === 'Description'),
-					type: (x.title === 'Date' ? 'html' : ['value', 'debited_account_id', 'credited_account_id'].includes(x.data) ? 'html-num' : 'html'),
+					type: (x.title === 'Transaction Date' ? 'html' : ['value', 'debited_account_id', 'credited_account_id'].includes(x.data) ? 'html-num' : 'html'),
 					className: (x.title === 'Description' || x.title === 'Other Account' ? 'dt-left' : 'dt-center' ),
 					render:
 						x.data === 'value' ? function(data, type, row) {
@@ -342,8 +358,8 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 							else return data;
 						}
 						: x.title === 'Action' ? function(data, type, row) {
-							if (row.input_row === false) return '<button type="button" class="btn btn-warning btn-sm btn-block edit-transaction">Edit</button>';
-							else return '<button type="button" class="btn btn-info btn-sm btn-block" id="add-transaction-submit">Add</button>';
+							if (row.input_row === false) return '<button type="button" class="btn btn-warning btn-sm edit-transaction">Edit</button><button type="button" class="btn btn-info btn-sm clone-transaction">Clone</button>';
+							else return '<button type="button" class="btn btn-success btn-sm " id="add-transaction-submit">Add</button>';
 						}
 						: x.title === 'Description' ? (data, type, row) => '<span>' + /* (data.includes('add-transaction') === false && data.length > 40 ? data.substr(0, 40) + '...' : data)*/ data + '</span>' 
 						: false
@@ -357,7 +373,7 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 				columns: dtCols,
 				iDisplayLength: 50,
 				dom:
-					"<'row'<'col-6 justify-content-left d-flex'f><'col-md-6 justify-content-end d-flex'B>>" +
+					"<'row'<'col-6 px-0 justify-content-start d-flex'f><'col-md-6 px-0 justify-content-end d-flex'B>>" +
 					"<'row'<'col-12 px-0'tr>>" +
 					"<'row'<'col-6'i><'col-6'p>>",
 				buttons: [

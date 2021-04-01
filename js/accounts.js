@@ -24,9 +24,9 @@ $(document).ready(function() {
 	});
 	
 	/********** Attach Table Event Listener to Show/Hide All Accounts **********/
-	$('#main').on('click', '#show-all-accounts > label', function(event) {
+	$('main').on('click', 'input[name="show-all-accounts"]:checked', function(event) {
 		const dt = $('#accounts-table').DataTable();
-		const showAllAccounts = parseInt($('#show-all-accounts > label.active > input').val());
+		const showAllAccounts = parseInt($('input[name="show-all-accounts"]:checked').val());
 		dt.rows().every(function (rowIdx, tableLoop, rowLoop) {
 			let rowData = this.data();
 			rowData.showAllAccounts = showAllAccounts;
@@ -65,14 +65,15 @@ $(document).ready(function() {
 			.each(function() {
 				console.log($(this));
 				if (parseInt($(this).val()) === thisRowData.debit_effect) {
-					$(this).parent('label').addClass('active');
+					$(this).prop('checked', true);
 				} else {
-					$(this).parent('label').removeClass('active');
+					$(this).prop('checked', false);
 				}
 			});
 		
 		// Set default onload toggle for editing modal
-		$('#edit-account-is-open').bootstrapToggle(thisRowData.is_open === true ? 'on' : 'off');
+		$('#edit-account-is-open').prop('checked', thisRowData.is_open === true);
+		//$('#edit-account-is-open').bootstrapToggle(thisRowData.is_open === true ? 'on' : 'off');
 
 		modal.modal('show');
 	});
@@ -96,7 +97,7 @@ $(document).ready(function() {
 		const name = $('#edit-account-name').val();
 		const rel_order = parseInt($('#edit-account-rel-order > option:selected').val());
 		const parent_id = parseInt($('#edit-account-parent-id > option:selected').val());
-		const debit_effect = parseInt($('#edit-account-debit-effect > label.active > input').val());
+		const debit_effect = parseInt($('input[name=edit-account-debit-effect]:checked').val());
 		const is_open = $('#edit-account-is-open').prop('checked') ? 1 : 0;
 		console.log('inputs', id, name, rel_order, parent_id, debit_effect, is_open);
 				
@@ -156,7 +157,7 @@ $(document).ready(function() {
 		const name = $('#add-account-name').val();
 		const parent_id = parseInt($('#add-account-parent-id > option:selected').val());
 		const rel_order = parseInt($('#add-account-rel-order > option:selected').val());
-		const debit_effect = parseInt($('#add-account-debit-effect > label.active > input').val());
+		const debit_effect = parseInt($('input[name=add-account-debit-effect]:checked').val());
 	
 		if (typeof(name) !== 'string' || name.length < 1) {
 			$('#add-account-name').addClass('is-invalid');
@@ -279,14 +280,14 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 							/* Else if row has no children (-1) */
 							return
 							'<span style="padding-left: ' + Math.round((row.nest_level - 1) * 15) + 'px">' +
-							'<a style="font-size:14px;font-weight:bold" href="transactions?account=' + row.id + '">' +
+							'<a style="font-size:0.95rem;font-weight:bold" href="transactions?account=' + row.id + '">' +
 								row.name +
 							'</a>' +
-							(row.childrenState === -1 ? '' : ('<a class="expandable" style="cursor:pointer">' + (row.childrenState === 1 ? '<span class="fa fa-minus fa-fw mx-1"></span>' : '<span class="fa fa-plus fa-fw mx-1"></span>') + '</a>'));
+							(row.childrenState === -1 ? '' : ('<a class="expandable" style="cursor:pointer">' + (row.childrenState === 1 ? '<span class="fas fa-minus ms-2"></span>' : '<span class="fas fa-plus ms-2"></span>') + '</a>'));
 						}
-						: x.title === '' ? (data, type, row) => (row.id_path.length === 1 ? '<button type="button" class="btn btn-primary btn-sm btn-block" disabled>Edit</button>' : '<button type="button" class="btn btn-primary btn-sm btn-block edit-account">Edit</button>')
-						: x.title === 'Balance' ? (data, type, row) => '<span style="font-weight:500">' + data.toLocaleString('en-US', {style: 'currency', currency: 'USD'}) + '</span>'
-						: x.title === 'Change This Month' ?  (data, type, row) => '<span class="small">' + data.toLocaleString('en-US', {style: 'currency', currency: 'USD'}) + '</span>'
+						: x.title === '' ? (data, type, row) => (row.id_path.length === 1 ? '<button type="button" class="btn btn-primary btn-sm" disabled>Edit</button>' : '<button type="button" class="btn btn-primary btn-sm edit-account">Edit</button>')
+						: x.title === 'Balance' ? (data, type, row) => '<span style="font-weight:500;font-size:0.95rem;">' + data.toLocaleString('en-US', {style: 'currency', currency: 'USD'}) + '</span>'
+						: x.title === 'Change This Month' ?  (data, type, row) => '<span class="small">' + (data < 0 ? '<span class="fas fa-arrow-down text-danger me-1"></span>' : (data === 0 ? '<span class="fas fa-arrows-alt-h me-1"></span>' : '<span class="fas fa-arrow-up text-success me-1"></span>')) + data + '</span>'
 						: false
 				}};
 			});
@@ -298,9 +299,9 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 				columns: dtCols,
 				iDisplayLength: 1000,
 				dom:
-					"<'row'<'col-6 px-0 justify-content-left d-flex'f><'col-6 toggle-container'>>" +
+					"<'row'<'col-6 px-0 justify-content-start d-flex'f><'col-6 px-0 justify-content-end d-flex toggle-container'>>" +
 					"<'row'<'px-0'tr>>" +
-					"<'row'<'col-2'i><'col-10 justify-content-end d-flex'B>>", // Flex display needed for right alignment
+					"<'row'<'col-2'i><'col-10 justify-content-end d-flex px-0'B>>", // Flex display needed for right alignment
 				buttons: [ // https://datatables.net/reference/option/buttons.buttons
 					{extend: 'copyHtml5', text: 'Copy to clipboard', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn-sm btn-primary btn' },
 					{extend: 'csvHtml5', text: 'Export to CSV', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn-sm btn-primary btn'}
@@ -346,12 +347,15 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 	// Reloading data always resets showAllAccounts: 0 // Add justify content end for right alignment
 	$('div.toggle-container').html(`
 		<div class="input-group input-group-sm my-0 justify-content-end"> 
-			<div class="input-group-prepend"><span class="input-group-text">Show All Accounts</div>
-			<div class="btn-group btn-group-toggle" data-toggle="buttons" id="show-all-accounts">
-				<label class="btn btn-info btn-sm active"><input type="radio" value="1" autocomplete="off">No</label>
-				<label class="btn btn-info btn-sm"><input type="radio" value="0" autocomplete="off">Yes</label>
+			<div class="btn-group btn-group-sm" role="group">
+				<button class="btn btn-secondary" disabled="">Show All Accounts</button>
+				<input id="show-all-accounts-1" type="radio" class="btn-check" name="show-all-accounts" value="0" autocomplete="off" checked>
+				<label class="btn btn-outline-primary" for="show-all-accounts-1">No</label>
+				<input id="show-all-accounts-2" type="radio" class="btn-check" name="show-all-accounts" value="1" autocomplete="off">
+				<label class="btn btn-outline-primary" for="show-all-accounts-2">Yes</label>
 			</div>
 		</div>
+
 		`);
 		/*
 		Bootstrap 5 prestyling
@@ -374,12 +378,13 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 
 function drawChart(chartId, accounts, dailyBals, loadInstance) {
 	
+	
 	const accountsByCategory = [
 		{category: 'assets', colors: ['forestgreen', 'cadetblue'], accounts: accounts.filter(x => x.name_path[0] === 'Assets' && x.name_path.length === 2)},
 		{category: 'liabilities', colors: ['firebrick', 'lightsalmon'], accounts: accounts.filter(x => x.name_path[0] === 'Liabilities' && x.name_path.length === 2)},
 		{category: 'equity', colors: ['black'], accounts: accounts.filter(x => x.name_path[0] === 'Equity' && x.name_path.length === 1)}
 		]
-	//console.log('accountsByCategory', accountsByCategory);
+	console.log('accountsByCategory', accountsByCategory);
 		
 	const chartData =
 		accountsByCategory.map(function(category) {
@@ -390,7 +395,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 					color: (category.accounts.length >= 2 ? gradient.valToColor(i, gradient.create([0,  category.accounts.length - 1], category.colors, 'htmlcolor'), 'rgba') : category.colors[0]),
 					lineWidth: (category.category !== 'equity' ? 2 : 5),
 					category: category.category,
-					type: (category.category !== 'equity' ? 'area' : 'line'),
+					type: (category.category !== 'equity' ? 'areaspline' : 'spline'),
 					stacking: (category.category !== 'equity' ? 'normal' : false),
 					stack: (category.category !== 'equity' ? category.category : false),
 					data: dailyBals.filter(x => x.id === account.id).map(x => [new Date(x.date).getTime(), x.bal * (category.category === 'liabilities' ? -1 : 1)]);
@@ -401,16 +406,64 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 	//console.log('chartData', chartData);
 
 	if (loadInstance >= 0) {
+		
+		Highcharts.setOptions({
+			lang: {
+				rangeSelectorZoom: 'Display:'
+			},
+			credits: {
+				enabled: false
+			},
+			scrollbar: {
+				enabled: false
+			},
+			tooltip: {
+				style: {
+					fontWeight: 'bold',
+					fontSize: '0.85rem'
+				}
+			},
+			rangeSelector: {
+				buttonTheme: { // styles for the buttons
+					fill: 'var(--bs-econblue)',
+					style: {
+						color: 'white'
+					},
+					states: {
+						hover: {
+							fill: 'var(--bs-econdblue)'
+						},
+						select: {
+							fill: 'var(--bs-econlblue)',
+							style: {
+								color: 'white'
+							}
+						}
+					}
+				},
+				inputBoxBorderColor: 'gray',
+				inputStyle: {
+					color: 'black'
+				},
+				labelStyle: {
+					color: 'black',
+				},
+			}
+
+		});
+
 	// Reload whole chart regardless
 		const chartOptions = {
 			chart: {
-				marginRight: 10,
-				backgroundColor: 'rgba(225, 233, 240,.6)',
+				spacingTop: 0,
+				backgroundColor: 'rgba(255, 255, 255, 0)',
 				plotBackgroundColor: '#FFFFFF',
-				plotBorderColor: '#C0C0C0',
-				//plotBorderWidth: 1,
-				height: 400,
-				animation: false
+				style: {
+					fontColor: 'var(--bs-econgreen)'
+				},
+				height: 280,
+				plotBorderColor: 'black',
+				plotBorderWidth: 2
 			},
 			scrollbar: {
 				enabled: false
@@ -454,7 +507,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 				formatter: function () {
 						text = '';
 						for (i = 0; i < this.points.length; i++) {
-								text += '<span style="font-weight:bold;color:'+this.points[i].series.color+'">' + this.points[i].series.name + ': </span>' +
+								text += '<span style="color:'+this.points[i].series.color+'">' + this.points[i].series.name + ': </span>' +
 								this.points[i].y.toLocaleString('en-US', {style: 'currency',currency: 'USD'}) + '<br>';
 						}
 						return text;

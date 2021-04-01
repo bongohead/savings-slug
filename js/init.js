@@ -1,20 +1,144 @@
 $(document).ready(function() {
 
 	(function(){
-		
-		var pathname = window.location.pathname;
+		/*
+			document.querySelector('nav.navbar').classList.add('justify-content-center');
+			document.querySelector('header').style.position = 'relative';
+			document.querySelector('nav.navbar > div').classList.add('col-auto');
+			document.querySelector('nav.navbar').style.backgroundColor = '#90A4A4';
+			document.querySelector('nav.navbar a.navbar-brand').remove();
+			document.querySelectorAll('nav.navbar a.nav-link').forEach(x => x.style.fontSize = '1.1rem');
+
+			const newDiv = document.createElement('div');
+			newDiv.style.backgroundColor = 'cyan';
+			const newA = document.createElement('a');
+			newA.setAttribute('href', '/');
+			const newImg = document.createElement('img');
+			newImg.setAttribute('src', '/static/slug3.png');
+			newImg.setAttribute('height', '60');
+			newImg.setAttribute('alt', 'Savings SLUG');
+			newImg.classList.add('mx-auto');
+			newImg.classList.add('d-block');
+			newImg.style.imageRendering = '-webkit-optimize-contrast';
+
+			newDiv.appendChild(newA).appendChild(newImg);
 			
-		/* Highlights navigation bar menu item if it's active */
-		$("#header > .nav-item > a").each(function(){
-			var a = $(this);
-			var link = a.attr("href");
-			if (link == pathname) a.addClass('active');
-		});
-		
+			document.querySelector('header').insertBefore(newDiv, document.querySelector('nav.navbar'));
+		*/
 		// Enables tooltips
 		$('[data-toggle="tooltip"]').tooltip();
 	})();
 	
+	
+	Highcharts.setOptions({
+		time: {
+			timezoneOffset: 5 * 60
+		}
+	});
+	
+	Highcharts.theme = {
+		colors: ['#E10033', '#000000', '#767676', '#E4E4E4'],
+		chart: {
+		backgroundColor: "#FFF1E0",
+			style: {
+				fontFamily: '"Assistant", Arial, "sans-serif"',
+				color: '#000000'
+			}
+		},
+		title: {
+			align: 'center',
+			style: {
+				fontFamily: '"Assistant", Arial, "sans-serif"',
+				color: '#000000'
+			}
+		},
+		subtitle: {
+			align: 'center',
+			style: {
+				fontFamily: '"Assistant", Arial, "sans-serif"',
+				color: '#000000'
+			}
+		},
+		xAxis: {
+			lineColor: "#000000",
+			lineWidth: 2,
+			tickColor: "#000000",
+			tickWidth: 2,
+			labels: {
+				style: {
+					color: "black"
+				}
+			},
+			title: {
+				style: {
+					color: "black"
+				}
+			}
+		},
+		yAxis: {
+			gridLineDashStyle: 'Dot',
+			gridLineWidth: 2,
+			gridLineColor: "#CEC6B9",
+			lineColor: "#CEC6B9",
+			minorGridLineColor: "#CEC6B9",
+			labels: {
+				style: {
+					color: "black"
+				}
+			},
+			tickLength: 0,
+			tickColor: "#CEC6B9",
+			tickWidth: 1,
+			title: {
+				style: {
+					color: "black"
+				}
+			}
+		},
+		tooltip: {
+			backgroundColor: "#FFFFFF",
+			borderColor: "#76c0c1",
+			style: {
+				color: "#000000"
+			}
+		},
+		legend: {
+			layout: "horizontal",
+			align: "left",
+			verticalAlign: "top",
+			itemStyle: {
+				color: "#3C3C3C"
+			}
+		},
+		credits: {
+			style: {
+				color: "#666"
+			}
+		},
+		labels: {
+			style: {
+				color: "#D7D7D8"
+			}
+		},
+		navigation: {
+			buttonOptions: {
+				symbolStroke: "#DDDDDD",
+				theme: {
+					fill: "#505053"
+				}
+			}
+		},
+	legendBackgroundColor: "rgba(0, 0, 0, 0.5)",
+	background2: "#505053",
+	dataLabelsColor: "#B0B0B3",
+	textColor: "#C0C0C0",
+	contrastTextColor: "#F0F0F3",
+	maskColor: "rgba(255,255,255,0.3)"
+	};
+	// Apply the theme
+	Highcharts.setOptions(Highcharts.theme);
+	
+
 });
 
 
@@ -151,32 +275,13 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 		setAllData(finalData);
 		const accountsSidebarHtml =
 			finalData.accounts.map(account => 
-				'<a class="list-group-item list-group-item-action bg-none py-1 text-truncate" href="/transactions?account=' + account.id + '">' +
-					'<span class="menu-collapsed" style="margin-left: ' + Math.round((account.nest_level - 1) * 1) + 'rem">' +  account.name /*(account.name.length >= 25 ? account.name.substr(0, 25) + '...' : account.name)*/ + '</span>' +
+				'<a class="text-truncate" href="/transactions?account=' + account.id + '">' +
+					'<span style="font-size:.8rem;margin-left: ' + (1 + Math.round((account.nest_level - 1) * 1)) + 'rem">' +  account.name + '</span>' +
 				'</a>'
 			).join('\n');
 			
 		$(accountsSidebarHtml).appendTo('#transactions-links')
-			/*
-			$(`<a class="list-group-item list-group-item-action bg-none" href="/transactions?id=${account.id}"><span class="menu-collapsed">${name}</span></a>`)
-				.appendTo('#transactions-links')
-*/
-		//$('#model-selected').text('Active Model: ' + finalData.activeModel.name);
-		/*
-		$.map(finalData.scenarios, function(scenario, index) {
-			$(`<a class="list-group-item list-group-item-action bg-none" href="/scenario?id=${scenario.id}"><span class="menu-collapsed">${scenario['long_name']}</span></a>`)
-				.appendTo('#sc-list')
-		});
-		*/
-		
-		// Copy sidebar to navbar
-		/*
-		const sidebar = $('nav.sidebar');
-		sidebar.find('ul > a')
-		$('#sidebar-replacement-div')
-		
-		<a class="dropdown-item" href=""> Action</a>
-		*/
+
 		const accountsNavbarHtml =
 			finalData.accounts.map(account => 
 				'<a class="dropdown-item" href="/transactions?account=' + account.id + '">' +
@@ -185,12 +290,38 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 			).join('\n');
 		$('#navbar-detailed-accounts').html(accountsNavbarHtml);
 
-		
+
+
+		// Set navbar activepage
+		const pathname = window.location.pathname + window.location.search;
+		const navbar = document.querySelector('nav.navbar');
+
+		if (navbar) {
+			navbar.querySelectorAll('a').forEach(function(x) {
+				if (x.getAttribute('href') == pathname) {
+					x.classList.add('activepage');
+					if (x.closest('.dropdown-menu')) {
+						x.closest('.dropdown-menu').parentNode.querySelector('a.nav-link').classList.add('activepage');
+					}
+					};
+				return;
+			});
+
+		}
+		const sidebar = document.querySelector('nav.sidebar');
+		if (sidebar) {
+			sidebar.querySelectorAll('a').forEach(function(x) {
+				if (x.getAttribute('href') == pathname) x.classList.add('activepage');
+				return;
+			})
+		}
+
 		console.log('finalData', finalData);
 
 		initDfd.resolve(finalData);
 	});
 	
+		
 	return initDfd.promise();
 }
 
