@@ -1,7 +1,30 @@
 $(document).ready(function() {
 
 	(function(){
-				
+		/*
+			document.querySelector('nav.navbar').classList.add('justify-content-center');
+			document.querySelector('header').style.position = 'relative';
+			document.querySelector('nav.navbar > div').classList.add('col-auto');
+			document.querySelector('nav.navbar').style.backgroundColor = '#90A4A4';
+			document.querySelector('nav.navbar a.navbar-brand').remove();
+			document.querySelectorAll('nav.navbar a.nav-link').forEach(x => x.style.fontSize = '1.1rem');
+
+			const newDiv = document.createElement('div');
+			newDiv.style.backgroundColor = 'cyan';
+			const newA = document.createElement('a');
+			newA.setAttribute('href', '/');
+			const newImg = document.createElement('img');
+			newImg.setAttribute('src', '/static/slug3.png');
+			newImg.setAttribute('height', '60');
+			newImg.setAttribute('alt', 'Savings SLUG');
+			newImg.classList.add('mx-auto');
+			newImg.classList.add('d-block');
+			newImg.style.imageRendering = '-webkit-optimize-contrast';
+
+			newDiv.appendChild(newA).appendChild(newImg);
+			
+			document.querySelector('header').insertBefore(newDiv, document.querySelector('nav.navbar'));
+		*/
 		// Enables tooltips
 		$('[data-toggle="tooltip"]').tooltip();
 	})();
@@ -284,6 +307,13 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				return;
 			});
 
+		}
+		const sidebar = document.querySelector('nav.sidebar');
+		if (sidebar) {
+			sidebar.querySelectorAll('a').forEach(function(x) {
+				if (x.getAttribute('href') == pathname) x.classList.add('activepage');
+				return;
+			})
 		}
 
 		console.log('finalData', finalData);

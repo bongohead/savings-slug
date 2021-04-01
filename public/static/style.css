@@ -26,7 +26,7 @@ footer {
 
 /* Top Navbar */
 nav.navbar {
-	background-color: var(--bs-econgreen);
+	background-color: var(--bs-primary);
 }
 
 /* Top-level dropdown links */
@@ -38,7 +38,7 @@ nav.navbar li.nav-item > a.nav-link {
 
 /* When dropdown is opened */
 nav.navbar li.nav-item > a.nav-link.show {
-	background-color: var(--bs-econorange);
+	background-color: var(--bs-info);
 	color: white;
 }
 
@@ -46,26 +46,26 @@ nav.navbar li.nav-item > a.nav-link.show {
 /* Dropdown items */
 nav.navbar ul.dropdown-menu, nav.navbar div.dropdown-menu {
 	background-color: var(--bs-light);
-	border-color: var(--bs-econorange);
+	border-color: var(--bs-info);
 	border-radius: .25rem;
 	border-width: 1px;
 	font-size: .9rem;
 }
 
 nav.navbar ul.dropdown-menu a:hover, nav.navbar div.dropdown-menu a:hover {
-	background-color: var(--bs-econorange);
+	background-color: var(--bs-info);
 	color: white;
 }
 
 /* Dropdown items when active */
 nav.navbar a.dropdown-item.activepage {
-	background-color: var(--bs-econgreen);
+	background-color: var(--bs-info);
 	color: white;
 }
 
 /* Top-level nav link when dropdown subitem is active */
 nav.navbar a.nav-link.activepage {
-	background-color: var(--bs-econdgreen);
+	background-color: #31b0d5;
 }
 
 
@@ -110,12 +110,12 @@ nav.sidebar div.sidebar-submenu > a {
 }
 
 nav.sidebar div.sidebar-submenu > a.activepage {
-  background-color: var(--bs-econgreen);
+  background-color: #31b0d5;
   color: white;
 }
 
 nav.sidebar div.sidebar-submenu > a:hover {
-  background-color: var(--bs-econorange);
+  background-color: var(--bs-info);
   color: white;
   cursor: pointer;
 }
@@ -168,8 +168,7 @@ table.dataTable tr.odd {
 }
 
 table.dataTable tr:hover {
-	background-color: rgba(0, 0, 158, .7) !important;
-	color: white !important;
+	background-color: rgba(200, 230, 245, .5) !important;
 }
 
 div.dataTables_filter input {

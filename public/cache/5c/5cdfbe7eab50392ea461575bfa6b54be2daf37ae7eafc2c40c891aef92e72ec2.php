@@ -85,7 +85,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 <body>
 <header>
-\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgba(10, 24, 66,1);\"></div>     
+\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:black;\"></div>     
 \t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top\">
 \t\t<div class=\"container-fluid\">
 \t\t\t<a class=\"navbar-brand\" href=\"/\">
@@ -313,7 +313,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
 <body>
 <header>
-\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgba(10, 24, 66,1);\"></div>     
+\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:black;\"></div>     
 \t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top\">
 \t\t<div class=\"container-fluid\">
 \t\t\t<a class=\"navbar-brand\" href=\"/\">
