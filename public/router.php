@@ -22,7 +22,8 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			//['template' => 'home', 'request' => ['', 'home'], 'title' => 'Home', 'models' => ['checkSession'], 'js' => []],
 			['template' => 'login', 'request' => 'login', 'title' => 'Login', 'models' => [], 'js' => ['login']],
 			['template' => 'accounts', 'request' => ['accounts', 'home', ''], 'title' => 'Accounts', 'models' => ['checkSession'], 'js' => ['init', 'accounts']],
-			['template' => 'transactions', 'request' => ['transactions'], 'title' => 'Transactions Log', 'models' => ['checkSession'], 'js' => ['init', 'transactions']]
+			['template' => 'transactions', 'request' => ['transactions'], 'title' => 'Transactions Log', 'models' => ['checkSession'], 'js' => ['init', 'transactions']],
+			['template' => 'budget', 'request' => ['budget'], 'title' => 'Budget', 'models' => ['checkSession'], 'js' => ['init', 'budget']]
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		baseJsFiles: ['functions', 'moment.min'],

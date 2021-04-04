@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block staticlinks %}
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<div class="container">
+	<div class="row justify-content-center py-2">
+		<h3>
+			<span class="align-bottom">List of Budgets</span>
+			<button id="add-budget-open" class="btn btn-sm btn-success" type="submit"><span class="fas fa-plus me-2">Add New Budget</button>
+		</h3>
+		<div class="col-12 overflow-scroll">
+			<div id="budget-container" class="d-flex">
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+				<div class="card card-body">Card</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<section class="container">
+	<!--<div class="row justify-content-center">
+		<div class="col-xl-8 col-lg-10 col-12-md px-2" id="accounts-chart-div"></div>
+	</div>-->
+	<div class="row justify-content-center my-2">
+		<div class="col-auto">
+			<table class="border-bottom" id="accounts-table"></table>
+		</div>
+	</div>
+	<div class="row justify-content-center my-4">
+	
+		<div class="col-6">
+			<div class="d-grid gap-2">
+			  <button class="btn btn-success" type="button" id="add-account-open">Add New Account</button>
+			</div>
+		</div>
+	</div>
+
+</section>
+
+
+
+<!-- Edit Account Modal -->
+<div class="modal fade" id="edit-budget-modal" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<form class="form">
+				<div class="modal-header">
+					<h5 class="modal-title">Edit Account Information</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+				
+					<div class="input-group input-group-sm mb-2">
+						<span class="input-group-text">ID:</span>
+						<input type="text" class="form-control" id="edit-account-id" placeholder="1" disabled>
+					</div>
+					
+					<div class="input-group mb-2">
+						<span class="input-group-text">Budget Name:</span>
+						<input type="text" class="form-control" id="edit-account-name" placeholder="Enter Name for Budget">
+					</div>
+
+					<div>
+					
+					</div>
+
+					<div class="invalid-feedback mt-1" style="color: #DC3545, font-size: .8rem">Error Message!</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button class="btn btn-primary" id="edit-account-submit" type="button">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<!-- Add Budget Modal -->
+<div class="modal fade" id="add-budget-modal" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<form class="form">
+				<div class="modal-header">
+					<h5 class="modal-title">New Budget Information</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+				
+					<div class="input-group mb-3">
+						<span class="input-group-text">Budget Name:</span>
+						<input type="text" class="form-control" id="add-account-name" placeholder="Enter Account Name Here">
+					</div>
+					
+					<div class="row justify-content-center my-2">
+						<div class="col-12">
+							<table id="add-budget-table" class="border-bottom w-100"></table>
+						</div>
+					</div>
+
+							
+					<div class="invalid-feedback mt-1" style="color: #DC3545, font-size: .8rem">Error Message!</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button class="btn btn-primary" id="add-account-submit" type="button">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}

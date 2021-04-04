@@ -287,7 +287,7 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 						}
 						: x.title === '' ? (data, type, row) => (row.id_path.length === 1 ? '<button type="button" class="btn btn-primary btn-sm" disabled>Edit</button>' : '<button type="button" class="btn btn-primary btn-sm edit-account">Edit</button>')
 						: x.title === 'Balance' ? (data, type, row) => '<span style="font-weight:500;font-size:0.95rem;">' + data.toLocaleString('en-US', {style: 'currency', currency: 'USD'}) + '</span>'
-						: x.title === 'Change This Month' ?  (data, type, row) => '<span class="small">' + (data < 0 ? '<span class="fas fa-arrow-down text-danger me-1"></span>' : (data === 0 ? '<span class="fas fa-arrows-alt-h me-1"></span>' : '<span class="fas fa-arrow-up text-success me-1"></span>')) + data + '</span>'
+						: x.title === 'Change This Month' ?  (data, type, row) => '<span class="small">' + (data < 0 ? '<span class="fas fa-arrow-down text-danger me-1"></span>' : (data === 0 ? '<span class="fas fa-arrows-alt-h me-1"></span>' : '<span class="fas fa-arrow-up text-success me-1"></span>')) + data.toFixed(2) + '</span>'
 						: false
 				}};
 			});

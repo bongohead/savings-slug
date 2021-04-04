@@ -69,31 +69,31 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
 </head>
 
 <body>
-\t<header>
-\t\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgba(10, 24, 66,1);\"></div>        
-\t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top\">
-\t\t\t<a class=\"navbar-brand\" href=\"/\">Budget Log</a>
-\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
-\t\t\t
-\t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
-\t\t\t\t<ul class=\"navbar-nav\">
-\t\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t\t<a class=\"nav-link\" href=\"/\">Work In Progress</a>
-\t\t\t\t\t</li>
-\t\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\">Work in Progress</a>
-\t\t\t\t\t</li>
-\t\t\t\t</ul>
-\t\t\t</div>
-\t\t</nav>
-\t</header>
+<header>
+\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgba(10, 24, 66,1);\"></div>        
+\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top\">
+\t\t<a class=\"navbar-brand\" href=\"/\">Budget Log</a>
+\t\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
+\t\t
+\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
+\t\t\t<ul class=\"navbar-nav\">
+\t\t\t\t<li class=\"nav-item\">
+\t\t\t\t\t<a class=\"nav-link\" href=\"/\">Work In Progress</a>
+\t\t\t\t</li>
+\t\t\t\t<li class=\"nav-item\">
+\t\t\t\t\t<a class=\"nav-link\" href=\"/about\">Work in Progress</a>
+\t\t\t\t</li>
+\t\t\t</ul>
+\t\t</div>
+\t</nav>
+</header>
 
-
+<main>
    <div class=\"container-fluid\">
 \t\t<div class=\"row\">
 \t\t\t<!-- Form from https://getbootstrap.com/docs/4.0/examples/sign-in/ -->
-\t\t\t<form class=\"text-center\" style=\"max-width:330px;padding:15px;margin:0 auto\">
-\t\t\t\t<img class=\"mb-4\" src=\"/static/slug.png\" alt=\"\" width=\"150\" height=\"150\">
+\t\t\t<form class=\"text-center p-5 mx-auto\">
+\t\t\t\t<img class=\"mb-4\" src=\"/static/slug.png\" alt=\"Savings Slug\" width=\"150\" height=\"150\">
 \t\t\t\t<h1 class=\"h3 mb-3 font-weight-normal\">Please sign in</h1>
 \t\t\t\t\t<label for=\"inputEmail\" class=\"sr-only\">Email address</label>
 \t\t\t\t\t<input type=\"email\" id=\"inputEmail\" class=\"form-control mb-2 py-4 px-2\" placeholder=\"Email address\" required=\"\" autofocus=\"\">
@@ -104,64 +104,84 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
 \t\t\t\t\t\t\t<input type=\"checkbox\" value=\"remember-me\"> Remember me
 \t\t\t\t\t\t</label>
 \t\t\t\t\t</div>
-\t\t\t\t\t<button id=\"login-button\" class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Sign in</button>
-\t\t\t\t</form>
+\t\t\t\t\t<button id=\"login-button\" class=\"btn btn-lg btn-primary\" type=\"submit\">Sign in</button>
+\t\t\t</form>
 \t\t</div>
 \t</div>
-\t
-\t<div class=\"row flex-xl-nowrap\">
-\t\t<div class=\"col-12 font-small pt-4\" style=\"background: rgba(10, 24, 66,1);\">
-\t\t\t<div class=\"row\">
-\t
-\t\t\t\t<div class=\"col-md-6 mt-md-0 mt-3\">
-\t\t\t\t\t<h5 class=\"text-uppercase\">CHIMPS v5.2</h5>
-\t\t\t\t\t<p>Under development</p>
-\t\t\t\t</div>\t\t
-\t\t\t\t<div class=\"col-md-6 mb-md-0 mb-3\">
-\t\t\t\t\t<h5 class=\"text-uppercase\">Links</h5>
-\t\t\t\t\t<ul class=\"list-unstyled\">
-\t\t\t\t\t\t<li>
-\t\t\t\t\t\t\t<a href=\"#!\">Link 1</a>
-\t\t\t\t\t\t</li>
-\t\t\t\t\t</ul>
-\t\t\t\t</div>
+</main>
+
+<footer class=\"container-fluid text-white px-0 bg-dark\">
+\t  <!-- Grid container -->
+\t  <div class=\"container py-3\">
+\t\t<!--Grid row-->
+\t\t<div class=\"row\">
+\t\t  <!--Grid column-->
+\t\t  <div class=\"col-6 mb-2 mb-md-0\">
+\t\t\t<h5 class=\"text-uppercase\">Links</h5>
+\t\t\t<ul class=\"list-unstyled mb-0\">
+\t\t\t  <li>
+\t\t\t\t<a href=\"https://charlesye.com\" class=\"text-white\">My Portfolio</a>
+\t\t\t  </li>
+\t\t\t</ul>
+\t\t  </div>
+\t\t  <!--Grid column-->
+
+\t\t  <!--Grid column-->
+\t\t  <div class=\"col-6 mb-2 mb-md-0 text-end\">
+\t\t\t<h5 class=\"text-uppercase mb-0\">CONTACT</h5>
+
+\t\t\t<ul class=\"list-unstyled\">
+\t\t\t  <li>
+\t\t\t\t<a href=\"mailto:charles@cmefi.com\" class=\"text-white\">Email: charles (at) cmefi (dotcom)</a>
+\t\t\t  </li>
+\t\t\t</ul>
+\t\t  </div>
+\t\t  <!--Grid column-->
+\t\t</div>
+\t\t<!--Grid row-->
+\t  </div>
+\t  <!-- Grid container -->
+
+\t <!-- Copyright -->
+\t<div class=\"container-fluid\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
+\t\t<div class=\"container text-end p-2\">
+\t\t\t<span>© 2021 <img class=\"mx-1\" src=\"/static/slug2.png\" width=\"16\" height=\"16\"> Charles Ye</span>
+\t\t</div>
+\t</div>
+\t <!-- Copyright -->
+</footer>
+        
+
+\t<div class=\"overlay h-100\" id=\"overlay\" style=\"display:none\">
+\t\t<div class=\"row h-25\">
+\t\t\t<div class=\"\"></div>
+\t\t</div>
+\t\t<div class=\"row\">
+\t\t\t<div class=\"text-center col-12\"><h4 style=\"text-align:center\" id=\"loadmessage\">Loading ...</h4></div>
+\t\t</div>
+\t\t<div class=\"row\">
+\t\t\t<div class=\"sk-circle\">
+\t\t\t\t<div class=\"sk-circle1 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle2 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle3 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle4 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle5 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle6 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle7 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle8 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle9 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle10 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle11 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle12 sk-child\"></div>
 \t\t\t</div>
-
-\t\t\t<div class=\"footer-copyright text-center\">© 2019
-\t\t\t\t<a href=\"test\">Email</a>
-\t\t\t</div>\t\t\t
 \t\t</div>
 \t</div>
 
-<div class=\"overlay h-100\" id=\"overlay\" style=\"display:none\">
-    <div class=\"row h-25\">
-        <div class=\"\"></div>
-    </div>
-    <div class=\"row\">
-        <div class=\"text-center col-12\"><h4 style=\"text-align:center\" id=\"loadmessage\">Loading ...</h4></div>
-    </div>
-    <div class=\"row\">
-        <div class=\"sk-circle\">
-            <div class=\"sk-circle1 sk-child\"></div>
-            <div class=\"sk-circle2 sk-child\"></div>
-            <div class=\"sk-circle3 sk-child\"></div>
-            <div class=\"sk-circle4 sk-child\"></div>
-            <div class=\"sk-circle5 sk-child\"></div>
-            <div class=\"sk-circle6 sk-child\"></div>
-            <div class=\"sk-circle7 sk-child\"></div>
-            <div class=\"sk-circle8 sk-child\"></div>
-            <div class=\"sk-circle9 sk-child\"></div>
-            <div class=\"sk-circle10 sk-child\"></div>
-            <div class=\"sk-circle11 sk-child\"></div>
-            <div class=\"sk-circle12 sk-child\"></div>
-        </div>
-    </div>
-</div>
 
 
 <script>
   ";
-        // line 121
+        // line 141
         echo ($context["bodyScript"] ?? null);
         echo "
 </script>
@@ -183,7 +203,7 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
 
     public function getDebugInfo()
     {
-        return array (  165 => 121,  66 => 25,  46 => 8,  37 => 1,);
+        return array (  185 => 141,  66 => 25,  46 => 8,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -217,31 +237,31 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
 </head>
 
 <body>
-\t<header>
-\t\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgba(10, 24, 66,1);\"></div>        
-\t\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top\">
-\t\t\t<a class=\"navbar-brand\" href=\"/\">Budget Log</a>
-\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
-\t\t\t
-\t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
-\t\t\t\t<ul class=\"navbar-nav\">
-\t\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t\t<a class=\"nav-link\" href=\"/\">Work In Progress</a>
-\t\t\t\t\t</li>
-\t\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t\t<a class=\"nav-link\" href=\"/about\">Work in Progress</a>
-\t\t\t\t\t</li>
-\t\t\t\t</ul>
-\t\t\t</div>
-\t\t</nav>
-\t</header>
+<header>
+\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgba(10, 24, 66,1);\"></div>        
+\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top\">
+\t\t<a class=\"navbar-brand\" href=\"/\">Budget Log</a>
+\t\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
+\t\t
+\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
+\t\t\t<ul class=\"navbar-nav\">
+\t\t\t\t<li class=\"nav-item\">
+\t\t\t\t\t<a class=\"nav-link\" href=\"/\">Work In Progress</a>
+\t\t\t\t</li>
+\t\t\t\t<li class=\"nav-item\">
+\t\t\t\t\t<a class=\"nav-link\" href=\"/about\">Work in Progress</a>
+\t\t\t\t</li>
+\t\t\t</ul>
+\t\t</div>
+\t</nav>
+</header>
 
-
+<main>
    <div class=\"container-fluid\">
 \t\t<div class=\"row\">
 \t\t\t<!-- Form from https://getbootstrap.com/docs/4.0/examples/sign-in/ -->
-\t\t\t<form class=\"text-center\" style=\"max-width:330px;padding:15px;margin:0 auto\">
-\t\t\t\t<img class=\"mb-4\" src=\"/static/slug.png\" alt=\"\" width=\"150\" height=\"150\">
+\t\t\t<form class=\"text-center p-5 mx-auto\">
+\t\t\t\t<img class=\"mb-4\" src=\"/static/slug.png\" alt=\"Savings Slug\" width=\"150\" height=\"150\">
 \t\t\t\t<h1 class=\"h3 mb-3 font-weight-normal\">Please sign in</h1>
 \t\t\t\t\t<label for=\"inputEmail\" class=\"sr-only\">Email address</label>
 \t\t\t\t\t<input type=\"email\" id=\"inputEmail\" class=\"form-control mb-2 py-4 px-2\" placeholder=\"Email address\" required=\"\" autofocus=\"\">
@@ -252,59 +272,79 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
 \t\t\t\t\t\t\t<input type=\"checkbox\" value=\"remember-me\"> Remember me
 \t\t\t\t\t\t</label>
 \t\t\t\t\t</div>
-\t\t\t\t\t<button id=\"login-button\" class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Sign in</button>
-\t\t\t\t</form>
+\t\t\t\t\t<button id=\"login-button\" class=\"btn btn-lg btn-primary\" type=\"submit\">Sign in</button>
+\t\t\t</form>
 \t\t</div>
 \t</div>
-\t
-\t<div class=\"row flex-xl-nowrap\">
-\t\t<div class=\"col-12 font-small pt-4\" style=\"background: rgba(10, 24, 66,1);\">
-\t\t\t<div class=\"row\">
-\t
-\t\t\t\t<div class=\"col-md-6 mt-md-0 mt-3\">
-\t\t\t\t\t<h5 class=\"text-uppercase\">CHIMPS v5.2</h5>
-\t\t\t\t\t<p>Under development</p>
-\t\t\t\t</div>\t\t
-\t\t\t\t<div class=\"col-md-6 mb-md-0 mb-3\">
-\t\t\t\t\t<h5 class=\"text-uppercase\">Links</h5>
-\t\t\t\t\t<ul class=\"list-unstyled\">
-\t\t\t\t\t\t<li>
-\t\t\t\t\t\t\t<a href=\"#!\">Link 1</a>
-\t\t\t\t\t\t</li>
-\t\t\t\t\t</ul>
-\t\t\t\t</div>
+</main>
+
+<footer class=\"container-fluid text-white px-0 bg-dark\">
+\t  <!-- Grid container -->
+\t  <div class=\"container py-3\">
+\t\t<!--Grid row-->
+\t\t<div class=\"row\">
+\t\t  <!--Grid column-->
+\t\t  <div class=\"col-6 mb-2 mb-md-0\">
+\t\t\t<h5 class=\"text-uppercase\">Links</h5>
+\t\t\t<ul class=\"list-unstyled mb-0\">
+\t\t\t  <li>
+\t\t\t\t<a href=\"https://charlesye.com\" class=\"text-white\">My Portfolio</a>
+\t\t\t  </li>
+\t\t\t</ul>
+\t\t  </div>
+\t\t  <!--Grid column-->
+
+\t\t  <!--Grid column-->
+\t\t  <div class=\"col-6 mb-2 mb-md-0 text-end\">
+\t\t\t<h5 class=\"text-uppercase mb-0\">CONTACT</h5>
+
+\t\t\t<ul class=\"list-unstyled\">
+\t\t\t  <li>
+\t\t\t\t<a href=\"mailto:charles@cmefi.com\" class=\"text-white\">Email: charles (at) cmefi (dotcom)</a>
+\t\t\t  </li>
+\t\t\t</ul>
+\t\t  </div>
+\t\t  <!--Grid column-->
+\t\t</div>
+\t\t<!--Grid row-->
+\t  </div>
+\t  <!-- Grid container -->
+
+\t <!-- Copyright -->
+\t<div class=\"container-fluid\" style=\"background-color: rgba(0, 0, 0, 0.2)\">
+\t\t<div class=\"container text-end p-2\">
+\t\t\t<span>© 2021 <img class=\"mx-1\" src=\"/static/slug2.png\" width=\"16\" height=\"16\"> Charles Ye</span>
+\t\t</div>
+\t</div>
+\t <!-- Copyright -->
+</footer>
+        
+
+\t<div class=\"overlay h-100\" id=\"overlay\" style=\"display:none\">
+\t\t<div class=\"row h-25\">
+\t\t\t<div class=\"\"></div>
+\t\t</div>
+\t\t<div class=\"row\">
+\t\t\t<div class=\"text-center col-12\"><h4 style=\"text-align:center\" id=\"loadmessage\">Loading ...</h4></div>
+\t\t</div>
+\t\t<div class=\"row\">
+\t\t\t<div class=\"sk-circle\">
+\t\t\t\t<div class=\"sk-circle1 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle2 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle3 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle4 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle5 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle6 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle7 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle8 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle9 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle10 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle11 sk-child\"></div>
+\t\t\t\t<div class=\"sk-circle12 sk-child\"></div>
 \t\t\t</div>
-
-\t\t\t<div class=\"footer-copyright text-center\">© 2019
-\t\t\t\t<a href=\"test\">Email</a>
-\t\t\t</div>\t\t\t
 \t\t</div>
 \t</div>
 
-<div class=\"overlay h-100\" id=\"overlay\" style=\"display:none\">
-    <div class=\"row h-25\">
-        <div class=\"\"></div>
-    </div>
-    <div class=\"row\">
-        <div class=\"text-center col-12\"><h4 style=\"text-align:center\" id=\"loadmessage\">Loading ...</h4></div>
-    </div>
-    <div class=\"row\">
-        <div class=\"sk-circle\">
-            <div class=\"sk-circle1 sk-child\"></div>
-            <div class=\"sk-circle2 sk-child\"></div>
-            <div class=\"sk-circle3 sk-child\"></div>
-            <div class=\"sk-circle4 sk-child\"></div>
-            <div class=\"sk-circle5 sk-child\"></div>
-            <div class=\"sk-circle6 sk-child\"></div>
-            <div class=\"sk-circle7 sk-child\"></div>
-            <div class=\"sk-circle8 sk-child\"></div>
-            <div class=\"sk-circle9 sk-child\"></div>
-            <div class=\"sk-circle10 sk-child\"></div>
-            <div class=\"sk-circle11 sk-child\"></div>
-            <div class=\"sk-circle12 sk-child\"></div>
-        </div>
-    </div>
-</div>
 
 
 <script>
