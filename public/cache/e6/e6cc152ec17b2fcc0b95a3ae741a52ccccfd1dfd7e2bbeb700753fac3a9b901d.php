@@ -55,8 +55,24 @@ class __TwigTemplate_9759ee0ac3b67d3c13bbc4e9b73fd2aeeb58511ef3d9155817595f9d60e
         $macros = $this->macros;
         // line 7
         echo "
+<pre class=\"p-5\">
+        THIS PAGE IS A WORK IN PROGRESS    
+\t\t
+</pre>
+
+<pre class=\"p-5 image\">
+
+\t\t
+     |\\_/|                  
+     | o o   Woof Woof
+     |   <>              _  
+     | \\_/\\/--_______ ((| |))
+     \\               `--' |   
+  ____|  _____    __|  |_.' 
+ /_/____/    /___/_____|
 
 
+</pre>
 ";
     }
 
@@ -84,8 +100,24 @@ class __TwigTemplate_9759ee0ac3b67d3c13bbc4e9b73fd2aeeb58511ef3d9155817595f9d60e
 
 {% block content %}
 
+<pre class=\"p-5\">
+        THIS PAGE IS A WORK IN PROGRESS    
+\t\t
+</pre>
+
+<pre class=\"p-5 image\">
+
+\t\t
+     |\\_/|                  
+     | o o   Woof Woof
+     |   <>              _  
+     | \\_/\\/--_______ ((| |))
+     \\               `--' |   
+  ____|  _____    __|  |_.' 
+ /_/____/    /___/_____|
 
 
+</pre>
 {% endblock %}", "error.html", "/var/www/budget.macrodawg.com/public/templates/error.html");
     }
 }
