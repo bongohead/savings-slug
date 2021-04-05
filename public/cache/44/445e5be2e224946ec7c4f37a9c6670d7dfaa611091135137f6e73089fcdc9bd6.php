@@ -145,7 +145,7 @@ class __TwigTemplate_25fd9ca99668e751fba75a71a9132f3abff563a92b584ab0b5a45fd6ffc
 
 <!-- Add Budget Modal -->
 <div class=\"modal fade\" id=\"add-budget-modal\" tabindex=\"-1\">
-\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">
+\t<div class=\"modal-dialog modal-dialog-centered modal-lg\" role=\"document\">
 \t\t<div class=\"modal-content\">
 \t\t\t<form class=\"form\">
 \t\t\t\t<div class=\"modal-header\">
@@ -295,7 +295,7 @@ class __TwigTemplate_25fd9ca99668e751fba75a71a9132f3abff563a92b584ab0b5a45fd6ffc
 
 <!-- Add Budget Modal -->
 <div class=\"modal fade\" id=\"add-budget-modal\" tabindex=\"-1\">
-\t<div class=\"modal-dialog modal-dialog-centered\" role=\"document\">
+\t<div class=\"modal-dialog modal-dialog-centered modal-lg\" role=\"document\">
 \t\t<div class=\"modal-content\">
 \t\t\t<form class=\"form\">
 \t\t\t\t<div class=\"modal-header\">

@@ -13,7 +13,77 @@ $(document).ready(function() {
 		modal.modal('show');
 	});
 
+	/********** Attach Event Listener to New Budget - "Include in Budget" & "Auto-Calculate" **********/
+	$('#add-budget-table').on('click', 'input.add-budget-include:enabled', function(event) {
+		const dt = $('#add-budget-table').DataTable();
+		const thisRow = dt.row($(this).closest('tr'));
+		const thisRowData = thisRow.data();
+		let newRowData = thisRowData;
+		newRowData['includeInBudget'] = $(this).is(':checked');
+		thisRow.data(newRowData);
+		dt.draw();
+	});
+	$('#add-budget-table').on('click', 'input.add-budget-calculate:enabled', function(event) {
+		const dt = $('#add-budget-table').DataTable();
+		const thisRow = dt.row($(this).closest('tr'));
+		const thisRowData = thisRow.data();
+		let newRowData = thisRowData;
+		newRowData['autoCalculate'] = $(this).is(':checked');
+		thisRow.data(newRowData);
+		dt.draw();
+	});
+
+
+	var typingTimer;                //timer identifier
+	// https://stackoverflow.com/questions/4220126/run-javascript-function-when-user-finishes-typing-instead-of-on-key-up
+	$('#add-budget-table').on('change keyup', 'input.add-budget-value:enabled', function(event) {
+			clearTimeout(typingTimer);
+			typingTimer = setTimeout(function() {
+				console.log('Done typing');
+				const dt = $('#add-budget-table').DataTable();
+				const thisRow = dt.row($(this).closest('tr'));
+				const thisRowData = thisRow.data();
+				let newRowData = thisRowData;
+				newRowData['monthlyBudget'] = Number($(this).val());
+				thisRow.data(newRowData);
+				
+				const thisId = thisRow.index()
+				const lastIndex = dt.rows().count() - 1
+				// Get any ancestors
+				seq(0, thisId).filter(i => dt.row(i).data().descendants.includes(thisRowData.id))
+				.sort((a, b) => dt.row(a).data().nest_level > dt.row(b).data().nest_level ? -1 : 1)
+				// Iterate through ancestors (in reverse order of nest_level) and add through descendants
+				.forEach(function(i) {
+					const parentId = dt.row(i).data().id;
+					console.log('parentId', parentId);
+					let newRowData = dt.row(i).data();
+					// Iterate through and get any rows which are direct descendants
+					const res = seq(0, lastIndex).filter(j => dt.row(j).data().parent == parentId).map(j => Number(dt.row(j).data().monthlyBudget) || 0);
+					newRowData['monthlyBudget'] = res.reduce((a, b) => a + b);
+					console.log(res);
+					dt.row(i).data(newRowData);
+				});
+			}.bind(this), 500); // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind 
+			// Also set done Typing Interval here
+	});
 	
+
+	/********** Attach Event Listener to New Budget - Validation & Submit **********/
+	$('#add-budget-table').on('change keyup click', 'input, #add-budget-submit', function() {
+		
+		// Validate inputs
+		document.querySelectorAll('input.add-budget-value').forEach(function(x) {
+			const val = Number(x.value);
+			x.classList.remove('is-valid');
+			x.classList.remove('is-invalid');
+			x.classList.add(typeof(val) === 'number' && !isNaN(val) ? 'is-valid' : 'is-invalid')
+		});
+		
+		
+		
+	});
+
+
 });
 
 
@@ -37,7 +107,10 @@ function drawTable(tbl, accounts, dailyBals, loadInstance) {
 		.filter(x => x.name_path.includes('Expenses'))
 		.map(account => 
 			({...account, ... {
-				childrenState: account.descendants.length > 0 ? (account.id_path.length <= 1 ? 1 : 0) : -1
+				childrenState: account.descendants.length > 0 ? (account.id_path.length <= 1 ? 1 : 0) : -1,
+				includeInBudget: true,
+				autoCalculate: account.descendants.length > 0 ? true : false,
+				monthlyBudget: 0
 			}})
 		);
 			
@@ -55,11 +128,13 @@ function drawTable(tbl, accounts, dailyBals, loadInstance) {
 				{title: 'Nest Level', data: 'nest_level'},
 				{title: 'Descendants', data: 'descendants'},
 				{title: 'Account', data: null},
-				{title: 'Monthly Budget', data: null},
+				{title: 'Include In Budget', data: 'includeInBudget'},
+				{title: 'Auto-Calculate', data: 'autoCalculate'},
+				{title: 'Monthly Budget', data: 'monthlyBudget'},
 				{title: '#', data: 'id'},
 			].map(function(x, i) {
 				return {...x, ...{
-					visible: (!['Row Number', 'Descendants', 'Children State', 'Nest Level', '#'].includes(x.title)),
+					visible: (!['Row Number', 'Descendants', 'Children State', 'Nest Level'].includes(x.title)),
 					orderable: false,
 					ordering: (x.title === 'Row Number' ? true : false),
 					searchable: (x.title === 'Account'),
@@ -71,12 +146,21 @@ function drawTable(tbl, accounts, dailyBals, loadInstance) {
 							/* Else if row has children & children are hidden (0) + */
 							/* Else if row has no children (-1) */
 							return
-							'<span style="padding-left: ' + Math.round((row.nest_level - 1) * 1) + 'rem">' +
-							'<a style="font-size:0.95rem;font-weight:bold" href="transactions?account=' + row.id + '">' +
+							'<span style="padding-left: ' + Math.round((row.nest_level - 2) * 1) + 'rem">' +
+							'<a style="font-size:0.90rem;font-weight:bold" href="transactions?account=' + row.id + '">' +
 								row.name +
 							'</a>';
 						}
-						: x.title === 'Monthly Budget' ? (data, type, row) => '<input type="text" id="disabledTextInput" class="form-control form-control-sm" value=0>'
+						: x.title === 'Include In Budget' ? (data, type, row) => (data === true ? '<input class="form-check-input add-budget-include" type="checkbox" checked>' : '<input class="form-check-input add-budget-include" type="checkbox">')
+						: x.title === 'Auto-Calculate' ? (data, type, row) =>
+							'<input class="form-check-input add-budget-calculate" type="checkbox" ' +
+							(row.autoCalculate === true ? 'checked' : '') +
+							(row.includeInBudget === true && row.descendants.length !== 0 ? '' : 'disabled') +
+							'>'
+						: x.title === 'Monthly Budget' ? (data, type, row) => 
+							'<input type="text" class="form-control form-control-sm add-budget-value" value='+Number(row.monthlyBudget).toFixed(2)+' ' +
+							(row.includeInBudget === true && row.autoCalculate === false ? '' : 'disabled') +
+							'>'
 						: false
 				}};
 			});
@@ -123,8 +207,8 @@ function drawTable(tbl, accounts, dailyBals, loadInstance) {
 			return(show);
 		});
 		*/
-		dt.draw();		
-		
+		dt.draw();
+
 	} else if (loadInstance === 1) {
 	
 		const dt =
