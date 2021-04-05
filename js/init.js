@@ -292,7 +292,7 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 
 
 
-		// Set navbar activepage
+		// Set navbar activepage - this has been moved down from the initial init so that now if on transactions? page, if can detect that detailed accoutns should be highlighted in the navbar
 		const pathname = window.location.pathname + window.location.search;
 		const navbar = document.querySelector('nav.navbar');
 
@@ -316,6 +316,8 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 			})
 		}
 
+
+		// Also, make "add transactions" open on sidebar if on transactions page
 		console.log('finalData', finalData);
 
 		initDfd.resolve(finalData);

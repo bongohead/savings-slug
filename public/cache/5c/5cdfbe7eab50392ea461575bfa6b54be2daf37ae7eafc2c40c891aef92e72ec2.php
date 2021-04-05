@@ -145,7 +145,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t</div>
 \t\t\t\t</a>
 
-\t\t\t\t<div id='transactions-links' class=\"collapse sidebar-submenu\">
+\t\t\t\t<div id='transactions-links' class=\"show sidebar-submenu\"> <!-- Switch show to collapse to hide ond efault\"
 \t\t\t\t\t<!--<a class=\"list-group-item list-group-item-action\" href=\"/transactions\"><span>Transactions 1</span></a>-->
 \t\t\t\t</div>\t\t\t\t
 \t\t\t</ul>
@@ -373,7 +373,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t</div>
 \t\t\t\t</a>
 
-\t\t\t\t<div id='transactions-links' class=\"collapse sidebar-submenu\">
+\t\t\t\t<div id='transactions-links' class=\"show sidebar-submenu\"> <!-- Switch show to collapse to hide ond efault\"
 \t\t\t\t\t<!--<a class=\"list-group-item list-group-item-action\" href=\"/transactions\"><span>Transactions 1</span></a>-->
 \t\t\t\t</div>\t\t\t\t
 \t\t\t</ul>
