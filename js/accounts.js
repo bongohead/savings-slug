@@ -395,7 +395,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 					color: (category.accounts.length >= 2 ? gradient.valToColor(i, gradient.create([0,  category.accounts.length - 1], category.colors, 'htmlcolor'), 'rgba') : category.colors[0]),
 					lineWidth: (category.category !== 'equity' ? 2 : 5),
 					category: category.category,
-					type: (category.category !== 'equity' ? 'areaspline' : 'spline'),
+					type: (category.category !== 'equity' ? 'areaspline' : 'line'),
 					stacking: (category.category !== 'equity' ? 'normal' : false),
 					stack: (category.category !== 'equity' ? category.category : false),
 					data: dailyBals.filter(x => x.id === account.id).map(x => [new Date(x.date).getTime(), x.bal * (category.category === 'liabilities' ? -1 : 1)]);
@@ -482,7 +482,13 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 				//buttonTheme: {display: 'none'}
 			},
 			legend: {
-				enabled: false
+				title: {
+					text: 'Accounts<br/><span style="font-size: 9px; color: #666; font-weight: normal">(Click to hide)</span>'
+				},
+				enabled: true,
+				align: 'right',
+				verticalAlign: 'top',
+				layout: 'vertical'
 			},
 			xAxis: {
 				type: 'datetime',
