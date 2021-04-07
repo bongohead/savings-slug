@@ -116,10 +116,26 @@ class __TwigTemplate_25fd9ca99668e751fba75a71a9132f3abff563a92b584ab0b5a45fd6ffc
 \t\t\t\t\t<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>
 \t\t\t\t</div>
 \t\t\t\t<div class=\"modal-body\">
-\t\t\t\t
+\t\t\t\t\t
 \t\t\t\t\t<div class=\"input-group input-group-sm mb-2\">
 \t\t\t\t\t\t<span class=\"input-group-text\">ID:</span>
 \t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"edit-account-id\" placeholder=\"1\" disabled>
+\t\t\t\t\t</div>
+\t\t\t\t\t
+\t\t\t\t\t<div class=\"input-group input-groups-sm mb-2\">
+\t\t\t\t\t\t<select id=\"\">
+\t\t\t\t\t\t<option value=\"1\">Jan</option>
+\t\t\t\t\t\t<option value=\"2\">Feb</option>
+\t\t\t\t\t\t<option value=\"3\">Mar</option>
+\t\t\t\t\t\t<option value=\"4\">Apr</option>
+\t\t\t\t\t\t<option value=\"5\">May</option>
+\t\t\t\t\t\t<option value=\"6\">Jun</option>
+\t\t\t\t\t\t<option value=\"7\">Jul</option>
+\t\t\t\t\t\t<option value=\"8\">Aug</option>
+\t\t\t\t\t\t<option value=\"9\">Sep</option>
+\t\t\t\t\t\t<option value=\"10\">Oct</option>
+\t\t\t\t\t\t<option value=\"11\">Nov</option>
+\t\t\t\t\t\t<option value=\"12\">Dec</option>
 \t\t\t\t\t</div>
 \t\t\t\t\t
 \t\t\t\t\t<div class=\"input-group mb-2\">
@@ -154,13 +170,83 @@ class __TwigTemplate_25fd9ca99668e751fba75a71a9132f3abff563a92b584ab0b5a45fd6ffc
 \t\t\t\t</div>
 \t\t\t\t<div class=\"modal-body\">
 \t\t\t\t
-\t\t\t\t\t<div class=\"input-group mb-3\">
-\t\t\t\t\t\t<span class=\"input-group-text\">Budget Name:</span>
-\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"add-account-name\" placeholder=\"Enter Account Name Here\">
-\t\t\t\t\t</div>
-\t\t\t\t\t
 \t\t\t\t\t<div class=\"row justify-content-center my-2\">
 \t\t\t\t\t\t<div class=\"col-12\">
+\t\t\t\t\t\t<div class=\"input-group\">
+\t\t\t\t\t\t\t<span class=\"input-group-text\">Budget Name:</span>
+\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"add-account-name\" placeholder=\"Enter Account Name Here\">
+\t\t\t\t\t\t</div>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"row justify-content-center my-2\">
+
+\t\t\t\t\t\t<div class=\"col-6\">
+\t\t\t\t\t\t\t<div class=\"input-group input-groups-sm\">
+\t\t\t\t\t\t\t\t<div class=\"input-group-text\">Start Range</div>
+\t\t\t\t\t\t\t\t<select id=\"start-month\" class=\"form-select\">
+\t\t\t\t\t\t\t\t\t<option value=\"1\">Jan</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2\">Feb</option>
+\t\t\t\t\t\t\t\t\t<option value=\"3\">Mar</option>
+\t\t\t\t\t\t\t\t\t<option value=\"4\">Apr</option>
+\t\t\t\t\t\t\t\t\t<option value=\"5\">May</option>
+\t\t\t\t\t\t\t\t\t<option value=\"6\">Jun</option>
+\t\t\t\t\t\t\t\t\t<option value=\"7\">Jul</option>
+\t\t\t\t\t\t\t\t\t<option value=\"8\">Aug</option>
+\t\t\t\t\t\t\t\t\t<option value=\"9\">Sep</option>
+\t\t\t\t\t\t\t\t\t<option value=\"10\">Oct</option>
+\t\t\t\t\t\t\t\t\t<option value=\"11\">Nov</option>
+\t\t\t\t\t\t\t\t\t<option value=\"12\">Dec</option>
+\t\t\t\t\t\t\t\t</select>
+\t\t\t\t\t\t\t\t<select id=\"start-year\" class=\"form-select\">
+\t\t\t\t\t\t\t\t\t<option value=\"2021\">2021</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2022\">2022</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2023\">2023</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2024\">2024</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2025\">2025</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2026\">2026</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2027\">2027</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2028\">2028</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2029\">2029</option>
+
+\t\t\t\t\t\t\t\t</select>
+\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t\t<div class=\"col-6\">
+\t\t\t\t\t\t\t<div class=\"input-group input-groups-sm\">
+\t\t\t\t\t\t\t\t<div class=\"input-group-text\">End Range</div>
+\t\t\t\t\t\t\t\t<select id=\"end-month\" class=\"form-select\">
+\t\t\t\t\t\t\t\t\t<option value=\"1\">Jan</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2\">Feb</option>
+\t\t\t\t\t\t\t\t\t<option value=\"3\">Mar</option>
+\t\t\t\t\t\t\t\t\t<option value=\"4\">Apr</option>
+\t\t\t\t\t\t\t\t\t<option value=\"5\">May</option>
+\t\t\t\t\t\t\t\t\t<option value=\"6\">Jun</option>
+\t\t\t\t\t\t\t\t\t<option value=\"7\">Jul</option>
+\t\t\t\t\t\t\t\t\t<option value=\"8\">Aug</option>
+\t\t\t\t\t\t\t\t\t<option value=\"9\">Sep</option>
+\t\t\t\t\t\t\t\t\t<option value=\"10\">Oct</option>
+\t\t\t\t\t\t\t\t\t<option value=\"11\">Nov</option>
+\t\t\t\t\t\t\t\t\t<option value=\"12\">Dec</option>
+\t\t\t\t\t\t\t\t</select>
+\t\t\t\t\t\t\t\t<select id=\"end-year\" class=\"form-select\">
+\t\t\t\t\t\t\t\t\t<option value=\"2021\">2021</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2022\">2022</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2023\">2023</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2024\">2024</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2025\">2025</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2026\">2026</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2027\">2027</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2028\">2028</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2029\">2029</option>
+\t\t\t\t\t\t\t\t</select>
+\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t</div>
+
+\t\t\t\t\t</div>
+\t\t\t\t\t<hr>
+\t\t\t\t\t<div class=\"row justify-content-center my-2\">
+\t\t\t\t\t\t<h4>Budget</h4>
+\t\t\t\t\t\t<div class=\"col-12 px-4\">
 \t\t\t\t\t\t\t<table id=\"add-budget-table\" class=\"border-bottom w-100\"></table>
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>
@@ -266,10 +352,26 @@ class __TwigTemplate_25fd9ca99668e751fba75a71a9132f3abff563a92b584ab0b5a45fd6ffc
 \t\t\t\t\t<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>
 \t\t\t\t</div>
 \t\t\t\t<div class=\"modal-body\">
-\t\t\t\t
+\t\t\t\t\t
 \t\t\t\t\t<div class=\"input-group input-group-sm mb-2\">
 \t\t\t\t\t\t<span class=\"input-group-text\">ID:</span>
 \t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"edit-account-id\" placeholder=\"1\" disabled>
+\t\t\t\t\t</div>
+\t\t\t\t\t
+\t\t\t\t\t<div class=\"input-group input-groups-sm mb-2\">
+\t\t\t\t\t\t<select id=\"\">
+\t\t\t\t\t\t<option value=\"1\">Jan</option>
+\t\t\t\t\t\t<option value=\"2\">Feb</option>
+\t\t\t\t\t\t<option value=\"3\">Mar</option>
+\t\t\t\t\t\t<option value=\"4\">Apr</option>
+\t\t\t\t\t\t<option value=\"5\">May</option>
+\t\t\t\t\t\t<option value=\"6\">Jun</option>
+\t\t\t\t\t\t<option value=\"7\">Jul</option>
+\t\t\t\t\t\t<option value=\"8\">Aug</option>
+\t\t\t\t\t\t<option value=\"9\">Sep</option>
+\t\t\t\t\t\t<option value=\"10\">Oct</option>
+\t\t\t\t\t\t<option value=\"11\">Nov</option>
+\t\t\t\t\t\t<option value=\"12\">Dec</option>
 \t\t\t\t\t</div>
 \t\t\t\t\t
 \t\t\t\t\t<div class=\"input-group mb-2\">
@@ -304,13 +406,83 @@ class __TwigTemplate_25fd9ca99668e751fba75a71a9132f3abff563a92b584ab0b5a45fd6ffc
 \t\t\t\t</div>
 \t\t\t\t<div class=\"modal-body\">
 \t\t\t\t
-\t\t\t\t\t<div class=\"input-group mb-3\">
-\t\t\t\t\t\t<span class=\"input-group-text\">Budget Name:</span>
-\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"add-account-name\" placeholder=\"Enter Account Name Here\">
-\t\t\t\t\t</div>
-\t\t\t\t\t
 \t\t\t\t\t<div class=\"row justify-content-center my-2\">
 \t\t\t\t\t\t<div class=\"col-12\">
+\t\t\t\t\t\t<div class=\"input-group\">
+\t\t\t\t\t\t\t<span class=\"input-group-text\">Budget Name:</span>
+\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"add-account-name\" placeholder=\"Enter Account Name Here\">
+\t\t\t\t\t\t</div>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"row justify-content-center my-2\">
+
+\t\t\t\t\t\t<div class=\"col-6\">
+\t\t\t\t\t\t\t<div class=\"input-group input-groups-sm\">
+\t\t\t\t\t\t\t\t<div class=\"input-group-text\">Start Range</div>
+\t\t\t\t\t\t\t\t<select id=\"start-month\" class=\"form-select\">
+\t\t\t\t\t\t\t\t\t<option value=\"1\">Jan</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2\">Feb</option>
+\t\t\t\t\t\t\t\t\t<option value=\"3\">Mar</option>
+\t\t\t\t\t\t\t\t\t<option value=\"4\">Apr</option>
+\t\t\t\t\t\t\t\t\t<option value=\"5\">May</option>
+\t\t\t\t\t\t\t\t\t<option value=\"6\">Jun</option>
+\t\t\t\t\t\t\t\t\t<option value=\"7\">Jul</option>
+\t\t\t\t\t\t\t\t\t<option value=\"8\">Aug</option>
+\t\t\t\t\t\t\t\t\t<option value=\"9\">Sep</option>
+\t\t\t\t\t\t\t\t\t<option value=\"10\">Oct</option>
+\t\t\t\t\t\t\t\t\t<option value=\"11\">Nov</option>
+\t\t\t\t\t\t\t\t\t<option value=\"12\">Dec</option>
+\t\t\t\t\t\t\t\t</select>
+\t\t\t\t\t\t\t\t<select id=\"start-year\" class=\"form-select\">
+\t\t\t\t\t\t\t\t\t<option value=\"2021\">2021</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2022\">2022</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2023\">2023</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2024\">2024</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2025\">2025</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2026\">2026</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2027\">2027</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2028\">2028</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2029\">2029</option>
+
+\t\t\t\t\t\t\t\t</select>
+\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t</div>
+\t\t\t\t\t\t<div class=\"col-6\">
+\t\t\t\t\t\t\t<div class=\"input-group input-groups-sm\">
+\t\t\t\t\t\t\t\t<div class=\"input-group-text\">End Range</div>
+\t\t\t\t\t\t\t\t<select id=\"end-month\" class=\"form-select\">
+\t\t\t\t\t\t\t\t\t<option value=\"1\">Jan</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2\">Feb</option>
+\t\t\t\t\t\t\t\t\t<option value=\"3\">Mar</option>
+\t\t\t\t\t\t\t\t\t<option value=\"4\">Apr</option>
+\t\t\t\t\t\t\t\t\t<option value=\"5\">May</option>
+\t\t\t\t\t\t\t\t\t<option value=\"6\">Jun</option>
+\t\t\t\t\t\t\t\t\t<option value=\"7\">Jul</option>
+\t\t\t\t\t\t\t\t\t<option value=\"8\">Aug</option>
+\t\t\t\t\t\t\t\t\t<option value=\"9\">Sep</option>
+\t\t\t\t\t\t\t\t\t<option value=\"10\">Oct</option>
+\t\t\t\t\t\t\t\t\t<option value=\"11\">Nov</option>
+\t\t\t\t\t\t\t\t\t<option value=\"12\">Dec</option>
+\t\t\t\t\t\t\t\t</select>
+\t\t\t\t\t\t\t\t<select id=\"end-year\" class=\"form-select\">
+\t\t\t\t\t\t\t\t\t<option value=\"2021\">2021</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2022\">2022</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2023\">2023</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2024\">2024</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2025\">2025</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2026\">2026</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2027\">2027</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2028\">2028</option>
+\t\t\t\t\t\t\t\t\t<option value=\"2029\">2029</option>
+\t\t\t\t\t\t\t\t</select>
+\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t</div>
+
+\t\t\t\t\t</div>
+\t\t\t\t\t<hr>
+\t\t\t\t\t<div class=\"row justify-content-center my-2\">
+\t\t\t\t\t\t<h4>Budget</h4>
+\t\t\t\t\t\t<div class=\"col-12 px-4\">
 \t\t\t\t\t\t\t<table id=\"add-budget-table\" class=\"border-bottom w-100\"></table>
 \t\t\t\t\t\t</div>
 \t\t\t\t\t</div>

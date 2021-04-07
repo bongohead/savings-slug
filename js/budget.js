@@ -33,7 +33,8 @@ $(document).ready(function() {
 		dt.draw();
 	});
 
-
+	
+	/********** Update Sums in Add Modal Every Few Seconds **********/
 	var typingTimer;                //timer identifier
 	// https://stackoverflow.com/questions/4220126/run-javascript-function-when-user-finishes-typing-instead-of-on-key-up
 	$('#add-budget-table').on('change keyup', 'input.add-budget-value:enabled', function(event) {
@@ -71,6 +72,12 @@ $(document).ready(function() {
 	/********** Attach Event Listener to New Budget - Validation & Submit **********/
 	$('#add-budget-table').on('change keyup click', 'input, #add-budget-submit', function() {
 		
+		
+		const form = $(this).closest('form');
+		form.find('.is-invalid').removeClass('is-invalid');
+		form.find('.invalid-feedback').hide().text('');
+		
+		
 		// Validate inputs
 		document.querySelectorAll('input.add-budget-value').forEach(function(x) {
 			const val = Number(x.value);
@@ -78,6 +85,7 @@ $(document).ready(function() {
 			x.classList.remove('is-invalid');
 			x.classList.add(typeof(val) === 'number' && !isNaN(val) ? 'is-valid' : 'is-invalid')
 		});
+		
 		
 		
 		
