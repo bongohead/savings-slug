@@ -45,8 +45,8 @@ $(document).ready(function() {
 				const thisRow = dt.row($(this).closest('tr'));
 				const thisRowData = thisRow.data();
 				let newRowData = thisRowData;
-				newRowData['monthly_budget'] = Number($(this).val());
-				newRowData['validValue'] = (typeof(newRowData['monthly_budget']) === 'number' && !isNaN(newRowData['monthly_budget']));
+				newRowData['bvalue'] = Number($(this).val());
+				newRowData['validValue'] = (typeof(newRowData['bvalue']) === 'number' && !isNaN(newRowData['bvalue']));
 				thisRow.data(newRowData);
 				// console.log(thisRowData);
 				
@@ -61,9 +61,9 @@ $(document).ready(function() {
 					// console.log('parentId', parentId);
 					let newRowData = dt.row(i).data();
 					// Iterate through and get any rows which are direct descendants
-					const res = seq(0, lastIndex).filter(j => dt.row(j).data().parent == parentId).map(j => Number(dt.row(j).data().monthly_budget) || 0);
-					newRowData['monthly_budget'] = res.reduce((a, b) => a + b);
-					newRowData['validValue'] =  (typeof(newRowData['monthly_budget']) === 'number' && !isNaN(newRowData['monthly_budget']));
+					const res = seq(0, lastIndex).filter(j => dt.row(j).data().parent == parentId).map(j => Number(dt.row(j).data().bvalue) || 0);
+					newRowData['bvalue'] = res.reduce((a, b) => a + b);
+					newRowData['validValue'] =  (typeof(newRowData['bvalue']) === 'number' && !isNaN(newRowData['bvalue']));
 					// console.log(res);
 					dt.row(i).data(newRowData);
 				});
@@ -75,38 +75,46 @@ $(document).ready(function() {
 
 	/********** Attach Event Listener to New Budget - Validation & Submit **********/
 	$('#add-budget-submit').on('click', function() {
-		console.log('Submitted');
+		
 		const form = $(this).closest('form');
 		form.find('.invalid-feedback').hide().text('');
 		
+		
+		// Check if budget name is valid
+		const name = $('#add-budget-name').val();
+		const valid_name = (typeof(name)  === 'string' && name.length >= 1 && name.length <= 200);
+		if (!valid_name) {
+			$('#add-budget-name').removeClass('is-invalid').addClass('is-invalid');
+			form.find('.invalid-feedback').text('Name must be between 1 and 200 characters').show();
+			return;
+		}
+		
+	
+		// Validate if start date is greater than end date
+		const start_date_0 = Number($('#start-year').val() + '.' + $('#start-month').val().padStart(2, '0'));
+		const end_date_0 = Number($('#end-year').val() + '.' + $('#end-month').val().padStart(2, '0'));
+		const start_date = String(start_date_0).replace('.', '-') + '-01';
+		const end_date = String(end_date_0).replace('.', '-') + '-01';
+		const valid_dates = start_date_0 <= end_date_0
+		if (!valid_dates) {
+			form.find('select').removeClass('is-invalid').addClass('is-invalid');
+			form.find('.invalid-feedback').text('Start date must be greater than end date').show();
+			return;
+		}
+		
+		
 		// Validate monthly budget values are numeric
 		const dtData = $('#add-budget-table').DataTable().rows().data().toArray();
-		console.log(dtData);
-		const valid_values = dtData.every(x => (typeof(Number(x.monthly_budget)) === 'number' && !isNaN(Number(x.monthly_budget))));
-		console.log(dtData.map(x => x.monthly_budget));
+		// console.log(dtData);
+		const valid_values = dtData.every(x => (typeof(x.bvalue) === 'number' && !isNaN(x.bvalue)));
 		if (!valid_values) {
 			form.find('.invalid-feedback').text('Non-numeric values in monthly budget').show();
 			return;
 		}
 		
-		const ids_budgets = dtData.map(x => ({id: x.id, monthly_budget: x.monthly_budget}));
-		console.log(ids_budgets);
+
+		// Validate 
 		
-
-		// Send to SQL 
-		getAJAX('editAccountBudgets', toScript = ['updatedAccounts'], fromAjax = {ids_budgets: ids_budgets}).done(function(ajaxRes) {
-		console.log(ajaxRes);
-			if (JSON.parse(ajaxRes).updatedAccounts >= 1) {
-				$('#add-budget-modal').modal('hide');
-				$('div.overlay').show();
-				init(_addDefaultState = function(newData) {
-					return {page: {loadInstance: 1}};
-				}, true).done((userData) => updateUi(userData));
-			} else {
-				form.find('.invalid-feedback').text('SQL Error').show();
-			}
-		});
-
 		
 	});
 
@@ -132,11 +140,12 @@ function drawTable(tbl, accounts, dailyBals, loadInstance) {
 				childrenState: account.descendants.length > 0 ? (account.id_path.length <= 1 ? 1 : 0) : -1,
 				includeInBudget: account.is_open === true ? true : false,
 				autoCalculate: account.descendants.length > 0 ? true : false,
-				monthly_budget: account.monthly_budget || 0,
+				bvalue: 0,
 				validValue: true
 			}})
 		);
 			
+			;		
 	// console.log('dtData', dtData);
 
 	if (loadInstance === 0) {
@@ -152,7 +161,7 @@ function drawTable(tbl, accounts, dailyBals, loadInstance) {
 				{title: 'Account', data: null},
 				{title: 'Include In Budget', data: 'includeInBudget'},
 				{title: 'Auto-Calculate', data: 'autoCalculate'},
-				{title: 'Monthly Budget', data: 'monthly_budget'},
+				{title: 'Monthly Budget', data: 'bvalue'},
 				{title: 'Valid Value', data: 'validValue'},
 				{title: '#', data: 'id'},
 			].map(function(x, i) {
@@ -165,6 +174,9 @@ function drawTable(tbl, accounts, dailyBals, loadInstance) {
 					className: (x.title === 'Account' ? 'dt-left' : 'dt-center'),
 					render:
 						x.title === 'Account' ? (data, type, row) => {
+							/* If row itself has children & children are shown (1) - */
+							/* Else if row has children & children are hidden (0) + */
+							/* Else if row has no children (-1) */
 							return
 							'<span style="padding-left: ' + Math.round((row.nest_level - 2) * 1) + 'rem">' +
 							'<a style="font-size:0.90rem;font-weight:bold" href="transactions?account=' + row.id + '">' +
