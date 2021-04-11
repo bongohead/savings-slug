@@ -60,29 +60,46 @@ class __TwigTemplate_25fd9ca99668e751fba75a71a9132f3abff563a92b584ab0b5a45fd6ffc
 <div class=\"container\">
 \t<div class=\"row justify-content-center py-2\">
 \t\t<h3>
-\t\t\t<span class=\"align-bottom\">List of Budgets</span>
-\t\t\t<button id=\"add-budget-open\" class=\"btn btn-sm btn-success\" type=\"submit\"><span class=\"fas fa-plus me-1\"></span>Modify Monthly Budget</button>
+\t\t\t<h3 class=\"align-bottom\">Monthly Budget Planner</h3>
+\t\t\t<button id=\"add-budget-open\" class=\"btn btn-success\" type=\"submit\"><span class=\"fas fa-plus me-1\"></span>Modify Monthly Budget</button>
 \t\t</h3>
 \t</div>
 </div>
-
+<hr>
 <section class=\"container\">
 \t<!--<div class=\"row justify-content-center\">
 \t\t<div class=\"col-xl-8 col-lg-10 col-12-md px-2\" id=\"accounts-chart-div\"></div>
 \t</div>-->
 \t<div class=\"row justify-content-center my-2\">
 \t\t<div class=\"col-auto\">
-\t\t\t<table class=\"border-bottom\" id=\"accounts-table\"></table>
+\t\t\t<div class=\"btn-group btn-group-lg mb-3\">
+\t\t\t\t<button id=\"active-month-back\" type=\"button\" class=\"btn btn-outline-secondary active-month-change\">
+\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" fill=\"currentColor\" class=\"bi bi-arrow-left-square\" viewBox=\"0 0 16 16\">
+\t\t\t\t\t<path fill-rule=\"evenodd\" d=\"M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z\"></path>
+\t\t\t\t\t</svg>
+\t\t\t\t\t<span class=\"visually-hidden\">Button</span>
+\t\t\t\t</button>
+\t\t\t\t<button type=\"button\" class=\"btn btn-outline-secondary\">
+\t\t\t\t\t<span id=\"active-month\" class=\"font-size:2.0rem\">Active Month</span>
+\t\t\t\t</button>
+\t\t\t\t<button id=\"active-month-next\" type=\"button\" class=\"btn btn-outline-secondary active-month-change\">
+\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" fill=\"currentColor\" class=\"bi bi-arrow-right-square\" viewBox=\"0 0 16 16\">
+\t\t\t\t\t<path fill-rule=\"evenodd\" d=\"M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z\"></path>
+\t\t\t\t\t</svg>
+\t\t\t\t\t<span class=\"visually-hidden\">Button</span>
+              </button>
+            </div>
 \t\t</div>
 \t</div>
-\t<div class=\"row justify-content-center my-4\">
+\t<div class=\"row justify-content-center my-2\">
+\t\t<div class=\"col-auto\">
+\t\t\t<table class=\"border-bottom\" id=\"budget-table\"></table>
+\t\t</div>
+\t</div>
+
+\t<hr>
+
 \t
-\t\t<div class=\"col-6\">
-\t\t\t<div class=\"d-grid gap-2\">
-\t\t\t  <button class=\"btn btn-success\" type=\"button\" id=\"add-account-open\">Add New Account</button>
-\t\t\t</div>
-\t\t</div>
-\t</div>
 </section>
 
 
@@ -150,29 +167,46 @@ class __TwigTemplate_25fd9ca99668e751fba75a71a9132f3abff563a92b584ab0b5a45fd6ffc
 <div class=\"container\">
 \t<div class=\"row justify-content-center py-2\">
 \t\t<h3>
-\t\t\t<span class=\"align-bottom\">List of Budgets</span>
-\t\t\t<button id=\"add-budget-open\" class=\"btn btn-sm btn-success\" type=\"submit\"><span class=\"fas fa-plus me-1\"></span>Modify Monthly Budget</button>
+\t\t\t<h3 class=\"align-bottom\">Monthly Budget Planner</h3>
+\t\t\t<button id=\"add-budget-open\" class=\"btn btn-success\" type=\"submit\"><span class=\"fas fa-plus me-1\"></span>Modify Monthly Budget</button>
 \t\t</h3>
 \t</div>
 </div>
-
+<hr>
 <section class=\"container\">
 \t<!--<div class=\"row justify-content-center\">
 \t\t<div class=\"col-xl-8 col-lg-10 col-12-md px-2\" id=\"accounts-chart-div\"></div>
 \t</div>-->
 \t<div class=\"row justify-content-center my-2\">
 \t\t<div class=\"col-auto\">
-\t\t\t<table class=\"border-bottom\" id=\"accounts-table\"></table>
+\t\t\t<div class=\"btn-group btn-group-lg mb-3\">
+\t\t\t\t<button id=\"active-month-back\" type=\"button\" class=\"btn btn-outline-secondary active-month-change\">
+\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" fill=\"currentColor\" class=\"bi bi-arrow-left-square\" viewBox=\"0 0 16 16\">
+\t\t\t\t\t<path fill-rule=\"evenodd\" d=\"M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z\"></path>
+\t\t\t\t\t</svg>
+\t\t\t\t\t<span class=\"visually-hidden\">Button</span>
+\t\t\t\t</button>
+\t\t\t\t<button type=\"button\" class=\"btn btn-outline-secondary\">
+\t\t\t\t\t<span id=\"active-month\" class=\"font-size:2.0rem\">Active Month</span>
+\t\t\t\t</button>
+\t\t\t\t<button id=\"active-month-next\" type=\"button\" class=\"btn btn-outline-secondary active-month-change\">
+\t\t\t\t\t<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" fill=\"currentColor\" class=\"bi bi-arrow-right-square\" viewBox=\"0 0 16 16\">
+\t\t\t\t\t<path fill-rule=\"evenodd\" d=\"M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z\"></path>
+\t\t\t\t\t</svg>
+\t\t\t\t\t<span class=\"visually-hidden\">Button</span>
+              </button>
+            </div>
 \t\t</div>
 \t</div>
-\t<div class=\"row justify-content-center my-4\">
+\t<div class=\"row justify-content-center my-2\">
+\t\t<div class=\"col-auto\">
+\t\t\t<table class=\"border-bottom\" id=\"budget-table\"></table>
+\t\t</div>
+\t</div>
+
+\t<hr>
+
 \t
-\t\t<div class=\"col-6\">
-\t\t\t<div class=\"d-grid gap-2\">
-\t\t\t  <button class=\"btn btn-success\" type=\"button\" id=\"add-account-open\">Add New Account</button>
-\t\t\t</div>
-\t\t</div>
-\t</div>
 </section>
 
 

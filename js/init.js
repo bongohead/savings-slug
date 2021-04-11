@@ -208,8 +208,18 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				$.when(getAccounts, getTransactions).done(function(r1, r2) {
 					const accounts = r1.accounts;
 					const transactions = r2.transactions;
-					const dates = [...new Set(transactions.map(x => x.date))];
 					
+					// Get dates by iterating through start date and end date
+					// https://stackoverflow.com/questions/29466944/how-to-list-all-month-between-2-dates-with-moment-js
+					// Use below line instead to only include dates with transactions
+					const dates = [...new Set(transactions.map(x => x.date))];
+					/*const startDate = transactions.reduce((x, accum) => moment(accum.date) < moment(x.date) ? accum : x).date;
+					const dates =
+						Array.from({length: moment().diff(moment(startDate), 'day') + 1 }).map((_, index) =>
+							moment(moment(startDate)).add(index, 'day').format('YYYY-MM-DD'),
+						);
+					console.log('dates', dates);
+					*/
 					// Get daily credit & debit changes at all dates (does not sum up to top-level elements)
 					const dailyBalChangeNested = dates.map(function(date) {
 						const dailyTransactions = transactions.filter(x => x.date === date);
@@ -279,8 +289,9 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 					'<span style="font-size:.8rem;margin-left: ' + (1 + Math.round((account.nest_level - 1) * 1)) + 'rem">' +  account.name + '</span>' +
 				'</a>'
 			).join('\n');
-			
-		$(accountsSidebarHtml).appendTo('#transactions-links')
+		
+		$('#transactions-links').html(accountsSidebarHtml);
+		// $(accountsSidebarHtml).appendTo('#transactions-links')
 
 		const accountsNavbarHtml =
 			finalData.accounts.map(account => 

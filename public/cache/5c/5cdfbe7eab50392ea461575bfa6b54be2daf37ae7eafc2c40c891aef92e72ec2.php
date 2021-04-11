@@ -129,8 +129,8 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t<a class=\"text-truncate\" href=\"/accounts\">
 \t\t\t\t\t\t<span class=\"fas fa-piggy-bank\"></span><span class=\"ps-2\">Accounts Summary</span>
 \t\t\t\t\t</a>
-\t\t\t\t\t<a class=\"text-truncate\" href=\"/error\">
-\t\t\t\t\t\t<span class=\"fas fa-search-dollar\"></span><span class=\"ps-2\">Monthly Budget (WIP)</span>
+\t\t\t\t\t<a class=\"text-truncate\" href=\"/budget\">
+\t\t\t\t\t\t<span class=\"fas fa-search-dollar\"></span><span class=\"ps-2\">Monthly Budget</span>
 \t\t\t\t\t</a>
 \t\t\t\t\t<a class=\"text-truncate\" href=\"/login\">
 \t\t\t\t\t\t<span class=\"fas fa-power-off\"></span><span class=\"ps-2\">Log Out</span>
@@ -357,8 +357,8 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t<a class=\"text-truncate\" href=\"/accounts\">
 \t\t\t\t\t\t<span class=\"fas fa-piggy-bank\"></span><span class=\"ps-2\">Accounts Summary</span>
 \t\t\t\t\t</a>
-\t\t\t\t\t<a class=\"text-truncate\" href=\"/error\">
-\t\t\t\t\t\t<span class=\"fas fa-search-dollar\"></span><span class=\"ps-2\">Monthly Budget (WIP)</span>
+\t\t\t\t\t<a class=\"text-truncate\" href=\"/budget\">
+\t\t\t\t\t\t<span class=\"fas fa-search-dollar\"></span><span class=\"ps-2\">Monthly Budget</span>
 \t\t\t\t\t</a>
 \t\t\t\t\t<a class=\"text-truncate\" href=\"/login\">
 \t\t\t\t\t\t<span class=\"fas fa-power-off\"></span><span class=\"ps-2\">Log Out</span>

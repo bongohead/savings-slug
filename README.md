@@ -1,14 +1,14 @@
 This is budget tracking software built for my own uses, hosted on https://budget.macrodawg.com. It combines double-entry bookkeping with zero cash-flow budgeting, allowing for the consistency of professional accounting software with the usable of personal budgeting software. Linux/Nginx/PostgreSQL/PHP backend.
 
-# TO-DO
-- Add submit button & SQL insert to submit page
-- Add date range to each budget
-- Add edit budget modal
-- Add table to compare monthly budget level
-- Add ability to switch between months
-
 
 # CHANGELOG
+
+## 2021-04-10
+- Added modify budget code
+- Added table to compare monthly budget level
+- Added date range to budget page and month switcher
+- Added nice progress bars
+- Added budget page link to sidebar
 
 ## 2021-04-04
 - Added initial work on budget page

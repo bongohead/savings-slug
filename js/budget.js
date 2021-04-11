@@ -3,7 +3,7 @@ $(document).ready(function() {
 	/********** Initialize **********/
 	$('div.overlay').show();
 	const initialize = init(_addDefaultState = function(newData) {
-		return {page: {loadInstance: 0}};
+		return {page: {activeMonth: moment().startOf('month').format('YYYY-MM-DD'), loadInstance: 0}};
 	}, true).done((userData) => updateUi(userData));
 	
 	
@@ -109,19 +109,33 @@ $(document).ready(function() {
 
 		
 	});
-
+	
+	
+	/********** Attach Event Listener to Arrows - Back & Forward Dates **********/
+	$('button.active-month-change').on('click', function() {
+		const newActiveMonth = moment(getData('page').activeMonth).add((this.id === 'active-month-next' ? 1 : -1), 'months').format('YYYY-MM-DD');
+		
+		init(_addDefaultState = function(newData) {
+			return {page: {activeMonth: newActiveMonth, loadInstance: 1}};
+		}, true).done((userData) => updateUi(userData));
+	});
 
 });
 
 
 function updateUi(userData) {
-	drawTable($('#add-budget-table'), userData.accounts, userData.dailyBals, userData.page.loadInstance);
+	drawActiveMonth(userData.page.activeMonth, userData.page.loadInstance);
+	drawTable($('#add-budget-table'), userData.accounts, userData.page.loadInstance);
+	drawBudgetTable($('#budget-table'), userData.accounts, userData.dailyBals, userData.page.activeMonth, userData.page.loadInstance);
+
 	$('div.overlay').hide();
 }
 
+function drawActiveMonth(activeMonth, loadInstance) {
+	$('#active-month').text(moment(activeMonth).format('MMM YYYY'));
+}
 
-
-function drawTable(tbl, accounts, dailyBals, loadInstance) {
+function drawTable(tbl, accounts, loadInstance) {
 	
 	// Include all expense data
 	const dtData =
@@ -224,3 +238,169 @@ function drawTable(tbl, accounts, dailyBals, loadInstance) {
 	return true;
 }
 
+
+function drawBudgetTable(tbl, accounts, dailyBals, activeMonth, loadInstance) {
+	
+	// Get accounts that are subfilters of expenses and where showInBudget is true
+	const accountsData = accounts.filter(x => x.name_path.includes('Expenses'));
+	const accountIds = accountsData.map(x => x.id);
+	
+	// If no daily balances for this month
+	if (dailyBals.filter(x => moment(x.date).isSame(moment(activeMonth), 'month')).length === 0) {
+		console.log('No data for table');
+		tbl.DataTable().clear().draw();
+		return;
+	}
+	
+	
+	// Get transactions data filtered by expense accounts & within active month
+	// const transactionsData = transactions.filter(x => accountIds.includes(x.debit) && moment(x.date).isSame(moment(activeMonth), 'month'));
+	// console.log('transactionsData', transactionsData);
+	
+	// https://stackoverflow.com/questions/29466944/how-to-list-all-month-between-2-dates-with-moment-js
+	// Get  first transaction date and build a monthly array up until current month
+	// const startDate = transactionsData.reduce((x, accum) => moment(accum.date) < moment(x.date) ? accum : x).date;
+	/* const budgetMonths =
+		Array.from({length: moment().diff(moment(startDate), 'month') + 1 }).map((_, index) =>
+			moment(moment(startDate)).add(index, 'month').format('MM.YYYY'),
+		);
+	*/
+	/*
+	console.log(activeMonth);
+	
+	const tblData = accountsData.map(function(account) {
+		const monthly_spending = transactionsData.filter(x => x.debit_id === account.id).map(x => value).reduce((a, b) => a + b, 0);
+		return {...account, ... {monthly_spending: monthly_spending}};
+	});
+	*/
+	
+	// Iterate through accounts, last dailyBals of the month minus first dailyBals of month
+	console.log('activeMonth', activeMonth);
+	const dtData = accountsData.map(function(account) {
+		// Get last balance for this account for this month
+		const endValue =
+			dailyBals
+			.filter(x => x.id === account.id && moment(x.date).isSame(moment(activeMonth), 'month'))
+			// Get max date
+			.reduce((accum, x) => moment(x.date) >= moment(accum.date) ? x : accum, {date: '2000-01-01', debit: 0}).debit;
+			
+		console.log(			dailyBals
+			.filter(x => x.id === account.id && moment(x.date).isSame(moment(activeMonth), 'month'))
+			);
+		// Get last balance for this account for last month if any balance exists for last month;
+		const startValue =
+			dailyBals
+			.filter(x => x.id === account.id && moment(x.date).isSame(moment(activeMonth).add(-1, 'month'), 'month'))
+			// Get max date
+			.reduce((accum, x) => moment(x.date) >= moment(accum.date) ? x : accum, {date: '2000-01-01', debit: 0}).debit;
+
+		//const startValue = thisAccountBals.reduce((accum, x) => moment(accum.date) < moment(x.date) ? accum : x, activeMonth).debit || 0;
+		//const endValue = thisAccountBals.reduce((accum, x) => moment(x.date) >= moment(accum.date) ? accum : x, activeMonth).debit || 0;
+		console.log(startValue, endValue);
+		const monthly_spending = endValue - startValue;
+		const monthly_spending_percent = typeof(Number(account.monthly_budget)) === 'number' && Number(account.monthly_budget) !== 0 ? monthly_spending/Number(account.monthly_budget) : null;
+		return {...account, ... {monthly_spending: monthly_spending, monthly_spending_percent: monthly_spending_percent}};
+	});
+
+	console.log('tblData', dtData);
+	
+	if (loadInstance === 0) {
+		const dtCols =
+			[
+				{title: 'Row Number', data: 'full_order'},
+				{title: 'Nest Level', data: 'nest_level'},
+				{title: 'Account', data: null},
+				{title: 'Spending', data: 'monthly_spending'},
+				{title: 'Budget Size', data: 'monthly_budget'},
+				{title: '%', data: 'monthly_spending_percent'},
+				{title: '#', data: 'id'},
+			].map(function(x, i) {
+				return {...x, ...{
+					visible: (!['Row Number', 'Nest Level', '#'].includes(x.title)),
+					orderable: false,
+					ordering: (x.title === 'Row Number' ? true : false),
+					searchable: (x.title === 'Account'),
+					type: (x.title === 'Account' ? 'html' : 'num'),
+					className: (x.title === 'Account' ? 'dt-left' : 'dt-center'),
+					render:
+						x.title === 'Account' ? (data, type, row) => {
+							return
+							'<span style="padding-left: ' + Math.round((row.nest_level - 2) * 1) + 'rem">' +
+							'<a style="font-size:0.90rem;font-weight:bold" href="transactions?account=' + row.id + '">' +
+								row.name +
+							'</a>';
+						}
+						: x.data === 'monthly_spending' ? (data, type, row) => Number(data).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})
+						: x.data === 'monthly_budget' ? (data, type, row) => Number(data).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})
+						: x.data === 'monthly_spending_percent' ? (data, type, row) => {
+							if (data === null) return '';
+							// https://stackoverflow.com/questions/12937470/twitter-bootstrap-center-text-on-progress-bar
+							else if (data <= .8) return 
+								'<div class="progress position-relative" style="width:5rem">' +
+									'<div class="progress-bar progress-bar-striped" style="background-color: lawngreen; width:' + (data * 100/1).toFixed(0) + '%" role="progressbar"></div>' +
+									//'<div class="progress-bar progress-bar-striped" style="background-color: salmon; width:' + Math.max(0, (data - .5) * 100/2).toFixed(0) + '%" role="progressbar"></div>' +
+									'<small class="justify-content-center d-flex position-absolute w-100">' + (data * 100).toFixed(0) + '%' + '</small>' +
+								'</div>';
+							else if (data <= 1.0) return 
+								'<div class="progress position-relative" style="width:5rem">' +
+									'<div class="progress-bar progress-bar-striped" style="background-color: #0dcaf0; width:100%" role="progressbar"></div>' +
+									'<small class="justify-content-center d-flex position-absolute w-100">' + (data * 100).toFixed(0) + '%' + '</small>' +
+								'</div>';
+							else if (data <= 1.5) return 
+								'<div class="progress position-relative" style="width:5rem">' +
+									'<div class="progress-bar progress-bar-striped" style="background-color: #ffc107; width:100%" role="progressbar"></div>' +
+									'<small class="justify-content-center d-flex position-absolute w-100">' + (data * 100).toFixed(0) + '%' + '</small>' +
+								'</div>';
+							else if (data <= 2.0) return 
+								'<div class="progress position-relative" style="width:5rem">' +
+									'<div class="progress-bar progress-bar-striped" style="background-color: salmon; width:100%" role="progressbar"></div>' +
+									'<small class="justify-content-center d-flex position-absolute w-100">' + (data * 100).toFixed(0) + '%' + '</small>' +
+								'</div>';
+							else return
+								'<div class="progress position-relative" style="width:5rem">' +
+									'<div class="progress-bar progress-bar-striped" style="background-color: orangered; width:100%" role="progressbar"></div>' +
+									'<small class="justify-content-center d-flex position-absolute w-100">' + (data * 100).toFixed(0) + '%' + '</small>' +
+								'</div>';
+						}
+						: false
+				}};
+			});
+				
+		const dt =
+			tbl
+			.DataTable({
+				data: dtData,
+				columns: dtCols,
+				iDisplayLength: 1000,
+				dom:
+					"<'row'<'col-4 px-0 justify-content-start d-flex'f><'col-8 justify-content-end d-flex px-0'B>>" +
+					"<'row'<'px-0'tr>>",
+				buttons: [ // https://datatables.net/reference/option/buttons.buttons
+					{extend: 'copyHtml5', text: 'Copy to clipboard', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn-sm btn-primary btn' },
+					{extend: 'csvHtml5', text: 'Export to CSV', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn-sm btn-primary btn'}
+					//{extend: 'excelHtml5', text: 'Export to Excel', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn-sm'} requires jszip
+				],
+				order: [[0, 'asc']],
+				language: {
+					emptyTable: 'No Expense Transactions Available for This Month',
+					search: '',
+					searchPlaceholder: 'Search by Account'
+				},
+				paging: false,
+				info: false
+				})
+			.draw();
+				
+		dt.draw();
+
+	} else if (loadInstance === 1) {
+	
+		const dt =
+			tbl.DataTable()
+			.clear()
+			.rows.add(dtData) // Add new data
+			.draw();
+	}
+	
+	return true;	
+}
