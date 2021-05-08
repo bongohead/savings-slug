@@ -57,30 +57,13 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
 \t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css\" integrity=\"sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg==\" crossorigin=\"anonymous\" />
 
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css\"/>
+\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css\"/>
 
-\t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js\"></script>
-\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js\"></script>
-
-\t<script src=\"https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js\"></script>
-\t<script src=\"https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js\"></script>
 \t
-\t<script src=\"https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js\"></script>
-\t<script src=\"https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
-\t\t
-    <script src=\"//code.highcharts.com/stock/highstock.js\"></script>
-\t
-\t<script src=\"https://cmefi.github.io/gradient.js/gradient-min.js\"></script>
-\t\t
     ";
-        // line 34
-        echo ($context["pageJS"] ?? null);
-        echo "
-
-    ";
-        // line 36
+        // line 22
         $this->displayBlock('staticlinks', $context, $blocks);
-        // line 37
+        // line 23
         echo "</head>
 
 <body>
@@ -153,9 +136,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t</nav>
 \t\t<div class=\"col\">
 \t\t\t";
-        // line 108
+        // line 94
         $this->displayBlock('content', $context, $blocks);
-        // line 110
+        // line 96
         echo "\t\t</div>
 \t</div>
 </main>
@@ -229,30 +212,46 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t</div>
 
 
+\t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js\"></script>
 
-<script>
-  ";
-        // line 185
+\t<script src=\"https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js\"></script>
+\t
+\t<script src=\"https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
+\t\t
+    <script src=\"//code.highcharts.com/stock/highstock.js\"></script>
+\t
+\t<script src=\"https://cmefi.github.io/gradient.js/gradient-min.js\"></script>
+\t";
+        // line 181
+        echo ($context["pageJS"] ?? null);
+        echo "
+
+\t<script>
+\t  ";
+        // line 184
         echo ($context["bodyScript"] ?? null);
         echo "
-</script>
-
+\t</script>
+\t
 </body>
 
 </html>";
     }
 
-    // line 36
+    // line 22
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 108
+    // line 94
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 109
+        // line 95
         echo "\t\t\t";
     }
 
@@ -268,7 +267,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
     public function getDebugInfo()
     {
-        return array (  256 => 109,  252 => 108,  246 => 36,  236 => 185,  159 => 110,  157 => 108,  84 => 37,  82 => 36,  77 => 34,  49 => 9,  39 => 1,);
+        return array (  255 => 95,  251 => 94,  245 => 22,  235 => 184,  229 => 181,  142 => 96,  140 => 94,  67 => 23,  65 => 22,  49 => 9,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -291,23 +290,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
 \t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css\" integrity=\"sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg==\" crossorigin=\"anonymous\" />
 
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap5.min.css\"/>
+\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css\"/>
 
-\t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js\"></script>
-\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js\"></script>
-
-\t<script src=\"https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js\"></script>
-\t<script src=\"https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap5.min.js\"></script>
 \t
-\t<script src=\"https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js\"></script>
-\t<script src=\"https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
-\t\t
-    <script src=\"//code.highcharts.com/stock/highstock.js\"></script>
-\t
-\t<script src=\"https://cmefi.github.io/gradient.js/gradient-min.js\"></script>
-\t\t
-    {{ pageJS | raw }}
-
     {% block staticlinks %}{% endblock %}
 </head>
 
@@ -455,11 +440,24 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t</div>
 
 
+\t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js\"></script>
 
-<script>
-  {{ bodyScript |raw }}
-</script>
+\t<script src=\"https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js\"></script>
+\t
+\t<script src=\"https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
+\t\t
+    <script src=\"//code.highcharts.com/stock/highstock.js\"></script>
+\t
+\t<script src=\"https://cmefi.github.io/gradient.js/gradient-min.js\"></script>
+\t{{ pageJS | raw }}
 
+\t<script>
+\t  {{ bodyScript |raw }}
+\t</script>
+\t
 </body>
 
 </html>", "base.html", "/var/www/budget.macrodawg.com/public/templates/base.html");
