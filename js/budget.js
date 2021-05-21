@@ -3,7 +3,7 @@ $(document).ready(function() {
 	/********** Initialize **********/
 	$('div.overlay').show();
 	const initialize = init(_addDefaultState = function(newData) {
-		return {page: {activeMonth: moment().startOf('month').format('YYYY-MM-DD'), loadInstance: 0}};
+		return {page: {activeMonth: moment.max(newData.dates.map(x => moment(x))).format('YYYY-MM-DD'), loadInstance: 0}};
 	}, true).done((userData) => updateUi(userData));
 	
 	
@@ -287,13 +287,16 @@ function drawBudgetTable(tbl, accounts, dailyBals, activeMonth, loadInstance) {
 		console.log(			dailyBals
 			.filter(x => x.id === account.id && moment(x.date).isSame(moment(activeMonth), 'month'))
 			);
-		// Get last balance for this account for last month if any balance exists for last month;
+		// Get last balance for this account before this month if exists; otherwise 0;
 		const startValue =
 			dailyBals
-			.filter(x => x.id === account.id && moment(x.date).isSame(moment(activeMonth).add(-1, 'month'), 'month'))
+			.filter(x => x.id === account.id && moment(x.date).isBefore(moment(activeMonth), 'month'))
+			// Uncomment below to always use last months value instead of last value before this month
+			// .filter(x => x.id === account.id && moment(x.date).isSame(moment(activeMonth).add(-1, 'month'), 'month'))
 			// Get max date
 			.reduce((accum, x) => moment(x.date) >= moment(accum.date) ? x : accum, {date: '2000-01-01', debit: 0}).debit;
-
+			
+			
 		//const startValue = thisAccountBals.reduce((accum, x) => moment(accum.date) < moment(x.date) ? accum : x, activeMonth).debit || 0;
 		//const endValue = thisAccountBals.reduce((accum, x) => moment(x.date) >= moment(accum.date) ? accum : x, activeMonth).debit || 0;
 		console.log(startValue, endValue);
