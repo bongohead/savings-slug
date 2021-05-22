@@ -78,9 +78,6 @@ function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
 			plotBorderColor: 'black',
 			plotBorderWidth: 2
         },
-		time: {
-			timezone: 'America/New_York'
-		},
         credits: {
 			enabled: false
         },
