@@ -115,6 +115,10 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t<a class=\"text-truncate\" href=\"/budget\">
 \t\t\t\t\t\t<span class=\"fas fa-search-dollar\"></span><span class=\"ps-2\">Monthly Budget</span>
 \t\t\t\t\t</a>
+\t\t\t\t\t<a class=\"text-truncate\" href=\"/expenses\">
+\t\t\t\t\t\t<span class=\"fas fa-chart-area\"></span><span class=\"ps-2\">Expense Graph</span>
+\t\t\t\t\t</a>
+
 \t\t\t\t\t<a class=\"text-truncate\" href=\"/login\">
 \t\t\t\t\t\t<span class=\"fas fa-power-off\"></span><span class=\"ps-2\">Log Out</span>
 \t\t\t\t\t</a>
@@ -123,7 +127,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t<a href=\"#transactions-links\" data-bs-toggle=\"collapse\" class=\"nav-link\">
 \t\t\t\t\t<div>
 \t\t\t\t\t\t<span class=\"fas fa-bars\"></span> 
-\t\t\t\t\t\t<span class=\"ps-2\">Modify Transactions</span>
+\t\t\t\t\t\t<span class=\"ps-2\">Transactions</span>
 \t\t\t\t\t\t<span class=\"fas fa-caret-down ms-1\"></span>
 \t\t\t\t\t</div>
 \t\t\t\t</a>
@@ -136,9 +140,9 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t</nav>
 \t\t<div class=\"col\">
 \t\t\t";
-        // line 94
+        // line 98
         $this->displayBlock('content', $context, $blocks);
-        // line 96
+        // line 100
         echo "\t\t</div>
 \t</div>
 </main>
@@ -225,13 +229,13 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t
 \t<script src=\"https://cmefi.github.io/gradient.js/gradient-min.js\"></script>
 \t";
-        // line 181
+        // line 185
         echo ($context["pageJS"] ?? null);
         echo "
 
 \t<script>
 \t  ";
-        // line 184
+        // line 188
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -247,11 +251,11 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
         $macros = $this->macros;
     }
 
-    // line 94
+    // line 98
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 95
+        // line 99
         echo "\t\t\t";
     }
 
@@ -267,7 +271,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 
     public function getDebugInfo()
     {
-        return array (  255 => 95,  251 => 94,  245 => 22,  235 => 184,  229 => 181,  142 => 96,  140 => 94,  67 => 23,  65 => 22,  49 => 9,  39 => 1,);
+        return array (  259 => 99,  255 => 98,  249 => 22,  239 => 188,  233 => 185,  146 => 100,  144 => 98,  67 => 23,  65 => 22,  49 => 9,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -345,6 +349,10 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t\t<a class=\"text-truncate\" href=\"/budget\">
 \t\t\t\t\t\t<span class=\"fas fa-search-dollar\"></span><span class=\"ps-2\">Monthly Budget</span>
 \t\t\t\t\t</a>
+\t\t\t\t\t<a class=\"text-truncate\" href=\"/expenses\">
+\t\t\t\t\t\t<span class=\"fas fa-chart-area\"></span><span class=\"ps-2\">Expense Graph</span>
+\t\t\t\t\t</a>
+
 \t\t\t\t\t<a class=\"text-truncate\" href=\"/login\">
 \t\t\t\t\t\t<span class=\"fas fa-power-off\"></span><span class=\"ps-2\">Log Out</span>
 \t\t\t\t\t</a>
@@ -353,7 +361,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t<a href=\"#transactions-links\" data-bs-toggle=\"collapse\" class=\"nav-link\">
 \t\t\t\t\t<div>
 \t\t\t\t\t\t<span class=\"fas fa-bars\"></span> 
-\t\t\t\t\t\t<span class=\"ps-2\">Modify Transactions</span>
+\t\t\t\t\t\t<span class=\"ps-2\">Transactions</span>
 \t\t\t\t\t\t<span class=\"fas fa-caret-down ms-1\"></span>
 \t\t\t\t\t</div>
 \t\t\t\t</a>

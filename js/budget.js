@@ -243,7 +243,7 @@ function drawBudgetTable(tbl, accounts, dailyBals, activeMonth, loadInstance) {
 	
 	// Get accounts that are subfilters of expenses and where showInBudget is true
 	const accountsData = accounts.filter(x => x.name_path.includes('Expenses'));
-	const accountIds = accountsData.map(x => x.id);
+	//const accountIds = accountsData.map(x => x.id);
 	
 	// If no daily balances for this month
 	if (dailyBals.filter(x => moment(x.date).isSame(moment(activeMonth), 'month')).length === 0) {

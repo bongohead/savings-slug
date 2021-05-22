@@ -23,10 +23,11 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'login', 'request' => 'login', 'title' => 'Login', 'models' => ['destroySession'], 'js' => ['login']],
 			['template' => 'accounts', 'request' => ['accounts', 'home', ''], 'title' => 'Accounts', 'models' => ['checkSession'], 'js' => ['init', 'accounts']],
 			['template' => 'transactions', 'request' => ['transactions'], 'title' => 'Transactions Log', 'models' => ['checkSession'], 'js' => ['init', 'transactions']],
-			['template' => 'budget', 'request' => ['budget'], 'title' => 'Budget', 'models' => ['checkSession'], 'js' => ['init', 'budget']]
+			['template' => 'budget', 'request' => ['budget'], 'title' => 'Budget', 'models' => ['checkSession'], 'js' => ['init', 'budget']],
+			['template' => 'expenses', 'request' => ['expenses'], 'title' => 'Expense Tracker', 'models' => ['checkSession'], 'js' => ['init', 'expenses']]
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
-		baseJsFiles: ['functions', 'moment.min'],
+		baseJsFiles: ['functions', 'moment.min', 'moment-timezone-with-data-1970-2030.min'],
 		devMode: TRUE,
 		db: 'budget'
 	);

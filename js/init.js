@@ -37,7 +37,6 @@ $(document).ready(function() {
 	});
 	
 	Highcharts.theme = {
-		colors: ['#E10033', '#000000', '#767676', '#E4E4E4'],
 		chart: {
 		backgroundColor: "#FFF1E0",
 			style: {
@@ -261,7 +260,7 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 						}
 					}
 					dailyBals = dailyBals.flat(1);
-					dfd.resolve({dailyBals: dailyBals, dates: dates});
+					dfd.resolve({dailyBalsChange: dailyBalChange0.flat(), dailyBals: dailyBals, dates: dates});
 				});
 				return dfd.promise();
 			});
@@ -286,7 +285,7 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 		const accountsSidebarHtml =
 			finalData.accounts.map(account => 
 				'<a class="text-truncate" href="/transactions?account=' + account.id + '">' +
-					'<span style="font-size:.8rem;margin-left: ' + (1 + Math.round((account.nest_level - 1) * 1)) + 'rem">' +  account.name + '</span>' +
+					'<span style="font-size:.8rem;margin-right:1rem;margin-left: ' + (1 + Math.round((account.nest_level - 1) * 1)) + 'rem">' +  account.name + '</span>' +
 				'</a>'
 			).join('\n');
 		
