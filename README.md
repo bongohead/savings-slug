@@ -3,6 +3,11 @@ This is budget tracking software built for my own uses, hosted on https://budget
 
 # CHANGELOG
 
+## 2021-05-21
+- Added expense tracker - code and graph
+- Fixed bug with monthly budget not loading if no data for that month or previous month
+- Fixed bug with timezones a day off
+
 ## 2021-04-10
 - Added modify budget code
 - Added table to compare monthly budget level
