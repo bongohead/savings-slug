@@ -50,19 +50,29 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
     <meta name=keywords content=\"keyword1 keyword2 keyword3 keyword4\" />
     
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\" integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\">
+    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://econforecasting.com/static/style-bs.css\">
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">
 
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css\"/> 
+\t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
+\t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css\" integrity=\"sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg==\" crossorigin=\"anonymous\" />
 
-\t<script src=\"//code.jquery.com/jquery-3.4.1.min.js\" integrity=\"sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=\" crossorigin=\"anonymous\"></script>
+\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css\"/>
 
-\t<script src=\"//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js\" integrity=\"sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1\" crossorigin=\"anonymous\"></script>
-\t<script src=\"//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js\" integrity=\"sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM\" crossorigin=\"anonymous\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js\"></script>
+
+\t<script src=\"https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js\"></script>
+\t
+\t<script src=\"https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
+\t\t
+    <script src=\"//code.highcharts.com/stock/highstock.js\"></script>
+\t
+\t<script src=\"https://cmefi.github.io/gradient.js/gradient-min.js\"></script>
 
     ";
-        // line 25
+        // line 35
         echo ($context["pageJS"] ?? null);
         echo "
 
@@ -70,42 +80,35 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
 
 <body>
 <header>
-\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgba(10, 24, 66,1);\"></div>        
-\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top\">
-\t\t<a class=\"navbar-brand\" href=\"/\">Budget Log</a>
-\t\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
-\t\t
-\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
-\t\t\t<ul class=\"navbar-nav\">
-\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t<a class=\"nav-link\" href=\"/\">Work In Progress</a>
-\t\t\t\t</li>
-\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t<a class=\"nav-link\" href=\"/about\">Work in Progress</a>
-\t\t\t\t</li>
-\t\t\t</ul>
-\t\t</div>
-\t</nav>
+\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgba(10, 24, 66,1);\"></div>    
 </header>
 
 <main>
-   <div class=\"container-fluid\">
-\t\t<div class=\"row\">
+\t<div class=\"pt-5 row gx-0 justify-content-center\" style=\"min-height:95vh;background-color: #ffffff;
+background-image: url('/static/Liquid-Cheese.svg');
+background-attachment: fixed;
+background-size: cover;\">
+\t\t<div class=\"col-auto\">
 \t\t\t<!-- Form from https://getbootstrap.com/docs/4.0/examples/sign-in/ -->
-\t\t\t<form class=\"text-center p-5 mx-auto\">
-\t\t\t\t<img class=\"mb-4\" src=\"/static/slug.png\" alt=\"Savings Slug\" width=\"150\" height=\"150\">
+\t\t\t<form class=\"px-5 py-4 m-5 border border-2 rounded\" style=\"background-color: rgba(255, 255, 255, .7)\">
 \t\t\t\t<h1 class=\"h3 mb-3 font-weight-normal\">Please sign in</h1>
-\t\t\t\t\t<label for=\"inputEmail\" class=\"sr-only\">Email address</label>
-\t\t\t\t\t<input type=\"email\" id=\"inputEmail\" class=\"form-control mb-2 py-4 px-2\" placeholder=\"Email address\" required=\"\" autofocus=\"\">
-\t\t\t\t\t<label for=\"inputPassword\" class=\"sr-only\">Password</label>
-\t\t\t\t\t<input type=\"password\" id=\"inputPassword\" class=\"form-control mb-2 py-4 px-2\" placeholder=\"Password\" required=\"\">
-\t\t\t\t\t<div class=\"checkbox mb-2\">
-\t\t\t\t\t\t<label>
-\t\t\t\t\t\t\t<input type=\"checkbox\" value=\"remember-me\"> Remember me
-\t\t\t\t\t\t</label>
-\t\t\t\t\t</div>
-\t\t\t\t\t<button id=\"login-button\" class=\"btn btn-lg btn-primary\" type=\"submit\">Sign in</button>
-\t\t\t</form>
+\t\t\t\t<div class=\"row\">
+\t\t\t\t\t<img class=\"mb-4\" src=\"/static/slug.png\" alt=\"Savings Slug\" width=\"200\" height=\"200\">
+\t\t\t\t</div>
+\t\t\t\t<label for=\"inputEmail\" class=\"form-label\">Email address</label>
+\t\t\t\t<input type=\"email\" id=\"inputEmail\" class=\"form-control mb-2 px-2\" placeholder=\"\" required=\"\" autofocus=\"\">
+\t\t\t\t<label for=\"inputPassword\" class=\"form-label\">Password</label>
+\t\t\t\t<input type=\"password\" id=\"inputPassword\" class=\"form-control mb-2 px-2\" placeholder=\"\" required=\"\">
+\t\t\t\t<div class=\"checkbox mb-2\">
+\t\t\t\t<label>
+\t\t\t\t\t<input type=\"checkbox\" value=\"remember-me\"> Remember me
+\t\t\t\t</label>
+\t\t\t\t</div>
+\t\t\t\t<div id=\"inputValid\" class=\"invalid-feedback mb-1\" style=\"display:none\">Error: Invalid Username or Password.</div>
+\t\t\t\t<div class=\"d-grid gap-2\">
+\t\t\t\t\t<button id=\"login-button\" class=\"btn btn-primary\" type=\"submit\">Sign in</button>
+\t\t\t\t</div>
+\t\t</form>
 \t\t</div>
 \t</div>
 </main>
@@ -151,6 +154,7 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
 \t <!-- Copyright -->
 </footer>
         
+        
 
 \t<div class=\"overlay h-100\" id=\"overlay\" style=\"display:none\">
 \t\t<div class=\"row h-25\">
@@ -179,9 +183,10 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
 
 
 
+
 <script>
   ";
-        // line 141
+        // line 146
         echo ($context["bodyScript"] ?? null);
         echo "
 </script>
@@ -203,7 +208,7 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
 
     public function getDebugInfo()
     {
-        return array (  185 => 141,  66 => 25,  46 => 8,  37 => 1,);
+        return array (  190 => 146,  76 => 35,  46 => 8,  37 => 1,);
     }
 
     public function getSourceContext()
@@ -221,16 +226,26 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
     <meta name=keywords content=\"keyword1 keyword2 keyword3 keyword4\" />
     
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\" integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\">
+    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://econforecasting.com/static/style-bs.css\">
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">
 
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css\"/> 
+\t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
+\t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.3/css/all.min.css\" integrity=\"sha512-f2MWjotY+JCWDlE0+QAshlykvZUtIm35A6RHwfYZPdxKgLJpL8B+VVxjpHJwZDsZaWdyHVhlIHoblFYGkmrbhg==\" crossorigin=\"anonymous\" />
 
-\t<script src=\"//code.jquery.com/jquery-3.4.1.min.js\" integrity=\"sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=\" crossorigin=\"anonymous\"></script>
+\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css\"/>
 
-\t<script src=\"//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js\" integrity=\"sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1\" crossorigin=\"anonymous\"></script>
-\t<script src=\"//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js\" integrity=\"sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM\" crossorigin=\"anonymous\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js\"></script>
+
+\t<script src=\"https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js\"></script>
+\t
+\t<script src=\"https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
+\t\t
+    <script src=\"//code.highcharts.com/stock/highstock.js\"></script>
+\t
+\t<script src=\"https://cmefi.github.io/gradient.js/gradient-min.js\"></script>
 
     {{ pageJS | raw }}
 
@@ -238,42 +253,35 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
 
 <body>
 <header>
-\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgba(10, 24, 66,1);\"></div>        
-\t<nav class=\"navbar navbar-expand-md navbar-dark sticky-top\">
-\t\t<a class=\"navbar-brand\" href=\"/\">Budget Log</a>
-\t\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
-\t\t
-\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
-\t\t\t<ul class=\"navbar-nav\">
-\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t<a class=\"nav-link\" href=\"/\">Work In Progress</a>
-\t\t\t\t</li>
-\t\t\t\t<li class=\"nav-item\">
-\t\t\t\t\t<a class=\"nav-link\" href=\"/about\">Work in Progress</a>
-\t\t\t\t</li>
-\t\t\t</ul>
-\t\t</div>
-\t</nav>
+\t<div class=\"container-fluid\" style=\"height:.25rem;background-color:rgba(10, 24, 66,1);\"></div>    
 </header>
 
 <main>
-   <div class=\"container-fluid\">
-\t\t<div class=\"row\">
+\t<div class=\"pt-5 row gx-0 justify-content-center\" style=\"min-height:95vh;background-color: #ffffff;
+background-image: url('/static/Liquid-Cheese.svg');
+background-attachment: fixed;
+background-size: cover;\">
+\t\t<div class=\"col-auto\">
 \t\t\t<!-- Form from https://getbootstrap.com/docs/4.0/examples/sign-in/ -->
-\t\t\t<form class=\"text-center p-5 mx-auto\">
-\t\t\t\t<img class=\"mb-4\" src=\"/static/slug.png\" alt=\"Savings Slug\" width=\"150\" height=\"150\">
+\t\t\t<form class=\"px-5 py-4 m-5 border border-2 rounded\" style=\"background-color: rgba(255, 255, 255, .7)\">
 \t\t\t\t<h1 class=\"h3 mb-3 font-weight-normal\">Please sign in</h1>
-\t\t\t\t\t<label for=\"inputEmail\" class=\"sr-only\">Email address</label>
-\t\t\t\t\t<input type=\"email\" id=\"inputEmail\" class=\"form-control mb-2 py-4 px-2\" placeholder=\"Email address\" required=\"\" autofocus=\"\">
-\t\t\t\t\t<label for=\"inputPassword\" class=\"sr-only\">Password</label>
-\t\t\t\t\t<input type=\"password\" id=\"inputPassword\" class=\"form-control mb-2 py-4 px-2\" placeholder=\"Password\" required=\"\">
-\t\t\t\t\t<div class=\"checkbox mb-2\">
-\t\t\t\t\t\t<label>
-\t\t\t\t\t\t\t<input type=\"checkbox\" value=\"remember-me\"> Remember me
-\t\t\t\t\t\t</label>
-\t\t\t\t\t</div>
-\t\t\t\t\t<button id=\"login-button\" class=\"btn btn-lg btn-primary\" type=\"submit\">Sign in</button>
-\t\t\t</form>
+\t\t\t\t<div class=\"row\">
+\t\t\t\t\t<img class=\"mb-4\" src=\"/static/slug.png\" alt=\"Savings Slug\" width=\"200\" height=\"200\">
+\t\t\t\t</div>
+\t\t\t\t<label for=\"inputEmail\" class=\"form-label\">Email address</label>
+\t\t\t\t<input type=\"email\" id=\"inputEmail\" class=\"form-control mb-2 px-2\" placeholder=\"\" required=\"\" autofocus=\"\">
+\t\t\t\t<label for=\"inputPassword\" class=\"form-label\">Password</label>
+\t\t\t\t<input type=\"password\" id=\"inputPassword\" class=\"form-control mb-2 px-2\" placeholder=\"\" required=\"\">
+\t\t\t\t<div class=\"checkbox mb-2\">
+\t\t\t\t<label>
+\t\t\t\t\t<input type=\"checkbox\" value=\"remember-me\"> Remember me
+\t\t\t\t</label>
+\t\t\t\t</div>
+\t\t\t\t<div id=\"inputValid\" class=\"invalid-feedback mb-1\" style=\"display:none\">Error: Invalid Username or Password.</div>
+\t\t\t\t<div class=\"d-grid gap-2\">
+\t\t\t\t\t<button id=\"login-button\" class=\"btn btn-primary\" type=\"submit\">Sign in</button>
+\t\t\t\t</div>
+\t\t</form>
 \t\t</div>
 \t</div>
 </main>
@@ -319,6 +327,7 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
 \t <!-- Copyright -->
 </footer>
         
+        
 
 \t<div class=\"overlay h-100\" id=\"overlay\" style=\"display:none\">
 \t\t<div class=\"row h-25\">
@@ -344,6 +353,7 @@ class __TwigTemplate_330dad19afb5db667c7933c171aa46d318999b846a86e562564f0cfe89d
 \t\t\t</div>
 \t\t</div>
 \t</div>
+
 
 
 

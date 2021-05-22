@@ -123,7 +123,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t<a href=\"#transactions-links\" data-bs-toggle=\"collapse\" class=\"nav-link\">
 \t\t\t\t\t<div>
 \t\t\t\t\t\t<span class=\"fas fa-bars\"></span> 
-\t\t\t\t\t\t<span class=\"ps-2\">Add Transactions</span>
+\t\t\t\t\t\t<span class=\"ps-2\">Modify Transactions</span>
 \t\t\t\t\t\t<span class=\"fas fa-caret-down ms-1\"></span>
 \t\t\t\t\t</div>
 \t\t\t\t</a>
@@ -353,7 +353,7 @@ class __TwigTemplate_e52fec9a3898517f99edb6a646425eb3e8cd81509151c61faca22ebd09e
 \t\t\t\t<a href=\"#transactions-links\" data-bs-toggle=\"collapse\" class=\"nav-link\">
 \t\t\t\t\t<div>
 \t\t\t\t\t\t<span class=\"fas fa-bars\"></span> 
-\t\t\t\t\t\t<span class=\"ps-2\">Add Transactions</span>
+\t\t\t\t\t\t<span class=\"ps-2\">Modify Transactions</span>
 \t\t\t\t\t\t<span class=\"fas fa-caret-down ms-1\"></span>
 \t\t\t\t\t</div>
 \t\t\t\t</a>

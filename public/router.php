@@ -20,7 +20,7 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 		jsDir: __DIR__.'/../js',
 		routes : [
 			//['template' => 'home', 'request' => ['', 'home'], 'title' => 'Home', 'models' => ['checkSession'], 'js' => []],
-			['template' => 'login', 'request' => 'login', 'title' => 'Login', 'models' => [], 'js' => ['login']],
+			['template' => 'login', 'request' => 'login', 'title' => 'Login', 'models' => ['destroySession'], 'js' => ['login']],
 			['template' => 'accounts', 'request' => ['accounts', 'home', ''], 'title' => 'Accounts', 'models' => ['checkSession'], 'js' => ['init', 'accounts']],
 			['template' => 'transactions', 'request' => ['transactions'], 'title' => 'Transactions Log', 'models' => ['checkSession'], 'js' => ['init', 'transactions']],
 			['template' => 'budget', 'request' => ['budget'], 'title' => 'Budget', 'models' => ['checkSession'], 'js' => ['init', 'budget']]
