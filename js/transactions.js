@@ -316,7 +316,7 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 			}
 		}).concat({
 			input_row: true,
-			date: '<input id="add-transaction-date" type="text" class="form-control form-control-sm" style="text-align:center" value="'+new Date().toISOString().slice(0, 10)+'"><span style="display:none">9999-99-99</span></input>',
+			date: '<input id="add-transaction-date" type="text" class="form-control form-control-sm" style="text-align:center" value="'+moment().format('Y-MM-DD')+'"><span style="display:none">9999-99-99</span></input>',
 			description: '<span style="display:none">!!!!!</span><input id="add-transaction-description" type="text" class="form-control form-control-sm"></input>',
 			value_effect: null,
 			value: '<input type="text" id="add-transaction-value" class="form-control form-control-sm"></input>',
