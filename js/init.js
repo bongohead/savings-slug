@@ -280,10 +280,10 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 	// Once new data has been pulled, merge it with the default state variables, store the result in sessionStorage and set the UI
 	$.when(getNewData).done(function(newData) {
 		const finalData = $.extend(true, newData, _addDefaultState(newData));
-
+		
 		setAllData(finalData);
 		const accountsSidebarHtml =
-			finalData.accounts.map(account => 
+			finalData.accounts.filter(account => account.is_open === true).map(account => 
 				'<a class="text-truncate" href="/transactions?account=' + account.id + '">' +
 					'<span style="font-size:.8rem;margin-right:1rem;margin-left: ' + (1 + Math.round((account.nest_level - 1) * 1)) + 'rem">' +  account.name + '</span>' +
 				'</a>'

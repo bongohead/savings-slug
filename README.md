@@ -3,6 +3,11 @@ This is budget tracking software built for my own uses, hosted on https://budget
 
 # CHANGELOG
 
+## 2022-03-02
+- Added own style-bs file instead of econforecasting.com dependency
+- Fixed closed accounts showing up in sidebar
+- Updated BS, DataTables versions
+
 ## 2021-05-25
 - Fixed new transaction date to match local timezone
 
