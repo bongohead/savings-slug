@@ -209,7 +209,7 @@ function updateUi(userData) {
 	drawTable($('#accounts-table'), userData.accounts, userData.dailyBals, userData.dates, userData.page.useDate, userData.page.loadInstance);
 	drawChart('accounts-chart-div', userData.accounts, userData.dailyBals, userData.page.loadInstance);
 	
-	drawStatistics(userData.accounts, userData.dailyBals);
+	drawStatistics(userData.accounts, userData.dailyBals, userData.page.useDate);
 	$('div.overlay').hide();
 }
 
@@ -535,9 +535,45 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 }
 
 
-function drawStatistics(accounts, dailyBals)  {
+function drawStatistics(accounts, dailyBals, useDate)  {
 	
-	$('#statistics-card').append('<h3>Asset Balance</h3><div id="statistics-01"></div>');
+	const lastBals = dailyBals.filter(x => x.date === useDate);
+	
+	//const lastMonthEndDate = dates.filter(y => new Date(y) <= (new Date(new Date(useDate).getFullYear(), new Date(useDate).getMonth(), 1) - (24*60*60*1000))).pop();
+	//const lastMonthEndBals = dailyBals.filter(x => x.date === lastMonthEndDate);
+	const colors = ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];
+	
+	const asset_l1_data =
+		accounts.filter(x => x.name_path[0] === 'Assets' && x.name_path.length === 2).map(x => ({
+			...x,
+			bal: lastBals.filter(y => y.id == x.id)[0].bal
+		})).map((x, i) => ({name: x.name, y: x.bal, color: colors[i]}));
+		
+		
+	const asset_l2_data =
+		asset_l1_data.flatMap(function(x) {
+			const child_accounts = accounts.filter(y => y.name_path[0] === 'Assets' && y.name_path[1] === x.name && y.name_path.length === 3);
+			
+			if (child_accounts.length !== 0) {
+				return child_accounts.map((child, i) => ({
+					name: child.name,
+					y: lastBals.filter(z => z.id == child.id)[0].bal,
+					color: gradient.valToColor(.25, gradient.create([0, 1], [x.color, getColorArray()[i]], 'hex'), 'rgba'),
+					same_as_parent: false
+				}));
+			} else {
+				return [{
+					name: x.name,
+					y: x.bal,
+					color: x.color,
+					same_as_parent: true
+				}];
+			}
+		});
+		
+
+	$('#statistics-card').append('<h3 class="text-center">Asset Balance</h3><div id="statistics-01"></div>');
+	
 	Highcharts.chart('statistics-01', {
 		chart: {
 			type: 'pie'
@@ -548,54 +584,39 @@ function drawStatistics(accounts, dailyBals)  {
 		tooltip: {
 			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 		},
-		accessibility: {
-			point: {
-				valueSuffix: '%'
-			}
-		},
 		plotOptions: {
 			pie: {
 				allowPointSelect: true,
 				cursor: 'pointer',
 				dataLabels: {
-					enabled: true,
-					format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+					enabled: true
 				}
 			}
 		},
 		series: [{
-			name: 'Brands',
+			name: 'L1',
+			size: '60%',
 			colorByPoint: true,
-			data: [{
-				name: 'Chrome',
-				y: 61.41,
-				sliced: true,
-				selected: true
-			}, {
-				name: 'Internet Explorer',
-				y: 11.84
-			}, {
-				name: 'Firefox',
-				y: 10.85
-			}, {
-				name: 'Edge',
-				y: 4.67
-			}, {
-				name: 'Safari',
-				y: 4.18
-			}, {
-				name: 'Sogou Explorer',
-				y: 1.64
-			}, {
-				name: 'Opera',
-				y: 1.6
-			}, {
-				name: 'QQ',
-				y: 1.2
-			}, {
-				name: 'Other',
-				y: 2.61
-			}]
+			data: asset_l1_data,
+			dataLabels: {
+				formatter: function () {
+					return this.percentage > 0 ? this.point.name + ' ' + this.point.percentage.toFixed(0) + '%': null;
+				},
+				color: '#ffffff',
+				distance: -30
+			}
+
+		}, {
+			name: 'L2',
+			size: '80%',
+			innerSize: '60%',
+			dataLabels: {
+				formatter: function () {
+					return this.percentage > 2 ? '<b>' + this.point.name + ':</b> ' +
+						this.point.percentage.toFixed(0) + '%' : null;
+				}
+			},
+			data: asset_l2_data
 		}]
 	});
 }

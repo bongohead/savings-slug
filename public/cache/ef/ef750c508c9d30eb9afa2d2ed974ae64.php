@@ -94,6 +94,7 @@ class __TwigTemplate_8e320f00cfd70ecb6024694326fa03ff extends Template
 \t\t\t<div class=\"card shadow-sm\"><div class=\"card-body\" id=\"statistics-card\">
 \t\t\t\t<div class=\"mb-2\"><span style=\"vertical-align:middle;font-size:1.3rem;\">STATISTICS</span></div>
 \t\t\t</div></div>
+
 \t\t</div>
 
 \t\t
@@ -271,6 +272,7 @@ class __TwigTemplate_8e320f00cfd70ecb6024694326fa03ff extends Template
 \t\t\t<div class=\"card shadow-sm\"><div class=\"card-body\" id=\"statistics-card\">
 \t\t\t\t<div class=\"mb-2\"><span style=\"vertical-align:middle;font-size:1.3rem;\">STATISTICS</span></div>
 \t\t\t</div></div>
+
 \t\t</div>
 
 \t\t

@@ -30,25 +30,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	})();
 	
 	
-	Highcharts.setOptions({
-		time: {
-			timezone: 'America/New_York'
-		}
-	});
 	
-	Highcharts.theme = {
+	const hc_theme = {
 		chart: {
-		backgroundColor: "#FFF1E0",
 			style: {
-				fontFamily: '"Assistant", Arial, "sans-serif"',
-				color: '#000000'
+				fontFamily: 'var(--bs-font-sans-serif)'
 			}
 		},
+		
 		title: {
 			align: 'center',
 			style: {
 				fontFamily: '"Assistant", Arial, "sans-serif"',
-				color: '#000000'
+				color: '#000000',
+				fontSize: '1.2rem'
 			}
 		},
 		subtitle: {
@@ -127,15 +122,27 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				}
 			}
 		},
-	legendBackgroundColor: "rgba(0, 0, 0, 0.5)",
-	background2: "#505053",
-	dataLabelsColor: "#B0B0B3",
-	textColor: "#C0C0C0",
-	contrastTextColor: "#F0F0F3",
-	maskColor: "rgba(255,255,255,0.3)"
+		legendBackgroundColor: "rgba(0, 0, 0, 0.5)",
+		background2: "#505053",
+		dataLabelsColor: "#B0B0B3",
+		textColor: "#C0C0C0",
+		contrastTextColor: "#F0F0F3",
+		maskColor: "rgba(255,255,255,0.3)"
 	};
+	
+	Highcharts.setOptions({
+		chart: {
+			style: {
+				fontFamily: '"Assistant", Arial, "sans-serif"'
+			}
+		},
+		time: {
+			timezone: 'America/New_York'
+		},
+		colors: ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4']
+	});
 	// Apply the theme
-	Highcharts.setOptions(Highcharts.theme);
+	Highcharts.setOptions(hc_theme);
 	
 
 });
