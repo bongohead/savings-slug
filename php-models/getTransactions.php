@@ -11,8 +11,9 @@ $varsToBind =
 	);
 
 $transactions = $sql->select("
-	SELECT *
+	--	SELECT id, date, description, value * random()*(10-.1)+.1 AS value, debit, credit
+	SELECT id, date, description, value, debit, credit
 	FROM transactions
 	WHERE users_id = :id
-  ORDER by date ASC
+	ORDER by date ASC
 ", $varsToBind);
