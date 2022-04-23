@@ -1,4 +1,4 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function(event) {
 
 	(function(){
 		/*
@@ -284,21 +284,45 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 		setAllData(finalData);
 		const accountsSidebarHtml =
 			finalData.accounts.filter(account => account.is_open === true).map(account => 
-				'<a class="text-truncate" href="/transactions?account=' + account.id + '">' +
-					'<span style="font-size:.8rem;margin-right:1rem;margin-left: ' + (1 + Math.round((account.nest_level - 1) * 1)) + 'rem">' +  account.name + '</span>' +
+				'<a class="text-truncate py-0" href="/transactions?account=' + account.id + '">' +
+					'<span style="font-size:.8rem;margin-right:1rem;margin-left: ' + (1 + Math.round((account.nest_level - 1) * 1)) + 'rem">' + 
+						//(account.children.length === 0 ? '<i class="bi bi-align-end me-2"></i>' : '<i class="bi bi-align-end me-2" style="color:transparent"></i>')+
+						account.name +
+					'</span>' +
 				'</a>'
 			).join('\n');
 		
 		$('#transactions-links').html(accountsSidebarHtml);
 		// $(accountsSidebarHtml).appendTo('#transactions-links')
+		
+		//console.log(finalData);
+		
+		const accountsNavbarHtml = finalData.accounts.filter(x => x.name_path.length === 1).map(x =>
+			'<div>' +
+				'<div class="dropdown-header py-0 mx-3 mb-1 border-bottom border-black" style="font-size:1.0rem">' + x.name + '</div>' +
+				finalData.accounts.filter(y => y.name_path[0] === x.name & y.name !== x.name).map(y => 
+					'<a class="dropdown-item py-0 mt-1" href="/transactions?account=' + y.id + '">' + 
+						'<span style="margin-left: ' + Math.round((y.nest_level - 1) * 1) + 'rem">' +
+							y.name +
+						'</span>' +
+					'</a>'
+				).join('\n') +
+			'</div>'
+		);
+		//console.log(accountsNavbarHtml);
 
+		/*
 		const accountsNavbarHtml =
 			finalData.accounts.map(account => 
 				'<a class="dropdown-item" href="/transactions?account=' + account.id + '">' +
-					'<span style="margin-left: ' + Math.round((account.nest_level - 1) * 1) + 'rem">' +  account.name + '</span>' +
+					'<span style="margin-left: ' + Math.round((account.nest_level - 1) * 1) + 'rem">' +
+						account.name +
+						'</span>' +
+					//'<span style="margin-left: ' + Math.round((account.nest_level - 1) * 1) + 'rem">' +  account.name + '</span>' +
 				'</a>'
 			).join('\n');
-		$('#navbar-detailed-accounts').html(accountsNavbarHtml);
+		*/
+		$('#navbar-detailed-accounts > div').html(accountsNavbarHtml);
 
 
 

@@ -1,4 +1,4 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function(event) {
 
 	/********** Initialize **********/
 	$('div.overlay').show();
@@ -208,6 +208,8 @@ function updateUi(userData) {
 
 	drawTable($('#accounts-table'), userData.accounts, userData.dailyBals, userData.dates, userData.page.useDate, userData.page.loadInstance);
 	drawChart('accounts-chart-div', userData.accounts, userData.dailyBals, userData.page.loadInstance);
+	
+	drawStatistics(userData.accounts, userData.dailyBals);
 	$('div.overlay').hide();
 }
 
@@ -455,6 +457,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 	// Reload whole chart regardless
 		const chartOptions = {
 			chart: {
+				type: 'line',
 				spacingTop: 0,
 				backgroundColor: 'rgba(255, 255, 255, 0)',
 				plotBackgroundColor: '#FFFFFF',
@@ -529,4 +532,70 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 	
 	return true;
 	//chart.xAxis[0].setExtremes(Date.UTC(2009, 12, 31), Date.UTC(2020, 12, 31))
+}
+
+
+function drawStatistics(accounts, dailyBals)  {
+	
+	$('#statistics-card').append('<h3>Asset Balance</h3><div id="statistics-01"></div>');
+	Highcharts.chart('statistics-01', {
+		chart: {
+			type: 'pie'
+		},
+		title: {
+			text: null
+		},
+		tooltip: {
+			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		},
+		accessibility: {
+			point: {
+				valueSuffix: '%'
+			}
+		},
+		plotOptions: {
+			pie: {
+				allowPointSelect: true,
+				cursor: 'pointer',
+				dataLabels: {
+					enabled: true,
+					format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+				}
+			}
+		},
+		series: [{
+			name: 'Brands',
+			colorByPoint: true,
+			data: [{
+				name: 'Chrome',
+				y: 61.41,
+				sliced: true,
+				selected: true
+			}, {
+				name: 'Internet Explorer',
+				y: 11.84
+			}, {
+				name: 'Firefox',
+				y: 10.85
+			}, {
+				name: 'Edge',
+				y: 4.67
+			}, {
+				name: 'Safari',
+				y: 4.18
+			}, {
+				name: 'Sogou Explorer',
+				y: 1.64
+			}, {
+				name: 'Opera',
+				y: 1.6
+			}, {
+				name: 'QQ',
+				y: 1.2
+			}, {
+				name: 'Other',
+				y: 2.61
+			}]
+		}]
+	});
 }

@@ -26,19 +26,21 @@ footer {
 
 /* Top Navbar */
 nav.navbar {
-	background-color: var(--bs-primary);
+	background-color: var(--bs-green);
 }
 
 /* Top-level dropdown links */
 nav.navbar li.nav-item > a.nav-link {
-	color: rgba(255, 255, 255, .9);
-	font-size: .95rem;
-	border-radius: .25rem;
+	/*color: rgba(255, 255, 255, .9);*/
+	color: white;
+	font-size: .98rem;
+	border-radius: .15rem;
+	margin: 0rem .1rem;
 }
 
 /* When dropdown is opened */
 nav.navbar li.nav-item > a.nav-link.show {
-	background-color: var(--bs-info);
+	background-color: var(--bs-success);
 	color: white;
 }
 
@@ -46,26 +48,26 @@ nav.navbar li.nav-item > a.nav-link.show {
 /* Dropdown items */
 nav.navbar ul.dropdown-menu, nav.navbar div.dropdown-menu {
 	background-color: var(--bs-light);
-	border-color: var(--bs-info);
+	border-color: green;
 	border-radius: .25rem;
 	border-width: 1px;
-	font-size: .9rem;
+	font-size: .88rem;
 }
 
 nav.navbar ul.dropdown-menu a:hover, nav.navbar div.dropdown-menu a:hover {
-	background-color: var(--bs-info);
+	background-color: var(--bs-green);
 	color: white;
 }
 
 /* Dropdown items when active */
 nav.navbar a.dropdown-item.activepage {
-	background-color: var(--bs-info);
+	background-color: green;
 	color: white;
 }
 
 /* Top-level nav link when dropdown subitem is active */
 nav.navbar a.nav-link.activepage {
-	background-color: #31b0d5;
+	background-color: green;
 }
 
 
@@ -78,8 +80,8 @@ nav.sidebar {
 	overflow-x: hidden;
 	overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 	border-right: 1px solid #eee;
-	/*background-color: rgb(241, 241, 241);*/
 	max-width: 18rem;
+	min-width:18rem;
 }
 
 nav.sidebar a {

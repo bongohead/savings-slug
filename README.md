@@ -3,6 +3,10 @@ This is budget tracking software built for my own uses, hosted on https://budget
 
 # CHANGELOG
 
+## 2022-04-23
+- Added major styling changes to CSS & HTML
+- Added better consolidation for detailed accounts in navbar
+
 ## 2022-03-02
 - Added own style-bs file instead of econforecasting.com dependency
 - Fixed closed accounts showing up in sidebar
