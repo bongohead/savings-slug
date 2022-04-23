@@ -564,12 +564,13 @@ function drawStatistics(accounts, dailyBals, useDate)  {
 			} else {
 				return [{
 					name: x.name,
-					y: x.bal,
+					y: x.y,
 					color: x.color,
 					same_as_parent: true
 				}];
 			}
 		});
+	console.log(asset_l2_data);
 		
 
 	$('#statistics-card').append('<h3 class="text-center">Asset Balance</h3><div id="statistics-01"></div>');
@@ -617,7 +618,7 @@ function drawStatistics(accounts, dailyBals, useDate)  {
 			innerSize: '90%',
 			dataLabels: {
 				formatter: function () {
-					return this.percentage > 2 ? '<b>' + this.point.name + ':</b> ' +
+					return this.percentage > 2 && this.point.same_as_parent === false ? '<b>' + this.point.name + ':</b> ' +
 						this.point.percentage.toFixed(0) + '%' : null;
 				}
 			},
@@ -649,7 +650,7 @@ function drawStatistics(accounts, dailyBals, useDate)  {
 			} else {
 				return [{
 					name: x.name,
-					y: x.bal,
+					y: x.y,
 					color: x.color,
 					same_as_parent: true
 				}];
@@ -694,7 +695,7 @@ function drawStatistics(accounts, dailyBals, useDate)  {
 					return this.percentage > 0 ? this.point.name + ' ' + this.point.percentage.toFixed(0) + '%': null;
 				},
 				color: '#ffffff',
-				distance: -30
+				distance: -50
 			}
 
 		}, {
@@ -703,9 +704,10 @@ function drawStatistics(accounts, dailyBals, useDate)  {
 			innerSize: '90%',
 			dataLabels: {
 				formatter: function () {
-					return this.percentage > 2 ? '<b>' + this.point.name + ':</b> ' +
+					return this.percentage > 2 && this.point.same_as_parent === false ? '<b>' + this.point.name + ':</b> ' +
 						this.point.percentage.toFixed(0) + '%' : null;
-				}
+				},
+				distance: 20
 			},
 			data: liability_l2_data
 		}]
