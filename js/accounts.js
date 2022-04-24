@@ -209,7 +209,7 @@ function updateUi(userData) {
 	drawTable($('#accounts-table'), userData.accounts, userData.dailyBals, userData.dates, userData.page.useDate, userData.page.loadInstance);
 	drawChart('accounts-chart-div', userData.accounts, userData.dailyBals, userData.page.loadInstance);
 	
-	drawStatistics(userData.accounts, userData.dailyBals, userData.page.useDate);
+	drawStatistics(userData.accounts, userData.dailyBals, userData.dates, userData.page.useDate, userData.transactions);
 	$('div.overlay').hide();
 }
 
@@ -535,12 +535,33 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 }
 
 
-function drawStatistics(accounts, dailyBals, useDate)  {
+function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
 	
+
 	const lastBals = dailyBals.filter(x => x.date === useDate);
 	
-	//const lastMonthEndDate = dates.filter(y => new Date(y) <= (new Date(new Date(useDate).getFullYear(), new Date(useDate).getMonth(), 1) - (24*60*60*1000))).pop();
-	//const lastMonthEndBals = dailyBals.filter(x => x.date === lastMonthEndDate);
+	// Get equity change - later add whole row, YTD +/-, 30d +/-, etc.
+	const equityId = accounts.filter(x => x.name === 'Equity')[0].id;
+	const last_equity_val = lastBals.filter(x => x.id === equityId)[0].bal;
+	
+	const trail_30_date = dates.filter(y => new Date(y) <= moment(useDate).subtract(1, 'months').format('x')).pop();
+	const trail_30_bals = dailyBals.filter(x => x.date === trail_30_date);
+	const equity_30_change = last_equity_val - trail_30_bals.filter(x => x.id === equityId)[0].bal;
+	$('#net-worth-1 > span.base').html((equity_30_change > 0 ? '+' : '') + new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(equity_30_change));
+	$('#net-worth-1 > span.change').addClass(equity_30_change > 0 ? 'bg-success' : 'bg-danger').html((equity_30_change > 0 ? '<i class="bi bi-caret-up"></i>' : '<i class="bi bi-caret-down"></i>') + (equity_30_change/last_equity_val * 100).toFixed(1) + '%');
+	
+	const ytd_date = dates.filter(y => new Date(y) <= (new Date(new Date(useDate).getFullYear(), 0, 1) - (24*60*60*1000))).pop();
+	const ytd_bals = dailyBals.filter(x => x.date === ytd_date);
+	const equity_ytd_change = last_equity_val - ytd_bals.filter(x => x.id === equityId)[0].bal;
+	$('#net-worth-2 > span.base').html((equity_ytd_change > 0 ? '+' : '') + new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(equity_ytd_change));
+	$('#net-worth-2 > span.change').addClass(equity_ytd_change > 0 ? 'bg-success' : 'bg-danger').html((equity_ytd_change > 0 ? '<i class="bi bi-caret-up"></i>' : '<i class="bi bi-caret-down"></i>') + (equity_ytd_change/last_equity_val * 100).toFixed(1) + '%');
+
+	const trail_30_count = transactions.filter(x => moment(x.date) > moment(trail_30_date)).length;
+	const ytd_count = transactions.filter(x => moment(x.date) > moment(ytd_date)).length;
+	$('#net-worth-3 > span.base').html(trail_30_count);
+	$('#net-worth-4 > span.base').html(accounts.filter(x => x.is_open === true).length);
+
+	
 	const asset_colors = ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];
 	
 	const asset_l1_data =
