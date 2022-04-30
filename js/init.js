@@ -154,155 +154,125 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	@_addDefaultState (function) that takes returned newData0 and returns an object of state values to set on initial page load, these will be appended to userData
 	@_forceReload (boolean) that forces a reload of models, scenarios, params
 */
-function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
+function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 	
-	// Create new promise for full function
-	const initDfd = $.Deferred();
 	// First get user data
 	const userData = getAllData();
 	
 	// Now create secondary deferred object for getting data
-	const getNewData = $.Deferred(function(getNewDataDfd) {
+	const getNewData = new Promise(function(resolve, reject) {
 		// Skip if: _forceReload = TRUE, userData has never been set, or data has already been updated within last 5 minutes
 		if (_forceReload === false && !$.isEmptyObject(userData) && new Date() - new Date(userData.lastUpdated) <= 5 * 60 * 1000) {
 			console.log('Recycling userData');
 			const newData = userData;
-			getNewDataDfd.resolve(userData);
-		}
-		else {
-			const getAccounts = $.Deferred(function(dfd) {
-				getAJAX('getAccounts', toScript = ['accounts']).done(function(ajaxRes) {
-					// Recursive CTE already returns the correct order [descendants immediately following their parents]
-					const accounts0 =
-						JSON.parse(ajaxRes).accounts
-						.map(function(x, i) {
-							x.id_path = x.id_path.split(' > ').map(x => parseInt(x));
-							x.name_path = x.name_path.split(' > ');
-							x.full_order = i;
-						 return x;
-						});
-
-					// Get family relations	
-					const accounts =
-						accounts0.map(function(x) {
-							x.children = accounts0.filter(y => y.id !== x.id && y.id_path[y.id_path.length - 2] === x.id).map(y => y.id);
-							x.siblings = accounts0.filter(y => y.id_path.length >= 2 && y.id !== x.id && y.id_path[y.id_path.length - 2] === x.id_path[x.id_path.length - 2]).map(y => y.id); // Get siblings
-							x.parent = x.id_path[x.id_path.length - 2];
-							x.descendants = accounts0.filter(y => y.id !== x.id && y.id_path.includes(x.id)).map(y => y.id);
-							return(x);
-						});
-					dfd.resolve({accounts: accounts});
-				});
-				return dfd.promise();
-			});
+			resolve(userData);
+		} else {
 			
-			const getTransactions = $.Deferred(function(dfd) {
-				getAJAX('getTransactions', toScript = ['transactions']).done(function(ajaxRes) {
-					const transactions = JSON.parse(ajaxRes).transactions.map(function(x) {
-						x.date = (x.date);
-						x.value = parseFloat(x.value);
+			const getAccounts = getFetch('getAccounts', toScript = ['accounts']).then(function(ajaxRes) {
+				// Recursive CTE already returns the correct order [descendants immediately following their parents]
+				const accounts0 =
+					ajaxRes.accounts
+					.map(function(x, i) {
+						x.id_path = x.id_path.split(' > ').map(x => parseInt(x));
+						x.name_path = x.name_path.split(' > ');
+						x.full_order = i;
 						return x;
 					});
-					dfd.resolve({transactions: transactions});
+
+				// Get family relations	
+				const accounts =
+					accounts0.map(function(x) {
+						x.children = accounts0.filter(y => y.id !== x.id && y.id_path[y.id_path.length - 2] === x.id).map(y => y.id);
+						x.siblings = accounts0.filter(y => y.id_path.length >= 2 && y.id !== x.id && y.id_path[y.id_path.length - 2] === x.id_path[x.id_path.length - 2]).map(y => y.id); // Get siblings
+						x.parent = x.id_path[x.id_path.length - 2];
+						x.descendants = accounts0.filter(y => y.id !== x.id && y.id_path.includes(x.id)).map(y => y.id);
+						return(x);
+					});
+				return {accounts: accounts};
+			});
+			
+			const getTransactions = getFetch('getTransactions', toScript = ['transactions']).then(function(ajaxRes) {
+				const transactions = ajaxRes.transactions.map(function(x) {
+					x.date = (x.date);
+					x.value = parseFloat(x.value);
+					return x;
 				});
-				return dfd.promise();
+				return {transactions: transactions};
 			});
 			
 			
 			// Get all sim runs & active sim run
-			const calculateBalances = $.Deferred(function(dfd) {
-				$.when(getAccounts, getTransactions).done(function(r1, r2) {
-					const accounts = r1.accounts;
-					const transactions = r2.transactions;
-					
-					// Get dates by iterating through start date and end date
-					// https://stackoverflow.com/questions/29466944/how-to-list-all-month-between-2-dates-with-moment-js
-					// Use below line instead to only include dates with transactions
-					const dates = [...new Set(transactions.map(x => x.date))];
-					/*const startDate = transactions.reduce((x, accum) => moment(accum.date) < moment(x.date) ? accum : x).date;
-					const dates =
-						Array.from({length: moment().diff(moment(startDate), 'day') + 1 }).map((_, index) =>
-							moment(moment(startDate)).add(index, 'day').format('YYYY-MM-DD'),
-						);
-					console.log('dates', dates);
-					*/
-					// Get daily credit & debit changes at all dates (does not sum up to top-level elements)
-					const dailyBalChangeNested = dates.map(function(date) {
-						const dailyTransactions = transactions.filter(x => x.date === date);
-						const res =
-							accounts.map(function(account) {
-							return {
-								id: account.id,
-								descendants: account.descendants,
-								debit: dailyTransactions.filter(x => x.debit === account.id).map(x => x.value).reduce((a, b) => a + b, 0),
-								credit: dailyTransactions.filter(x => x.credit === account.id).map(x => x.value).reduce((a, b) => a + b, 0)
-								}
-							});
-						return (res);
-					});
-					
-					// Sum up to top-level elements
-					const dailyBalChange0 = dailyBalChangeNested.map(function(accountsByDate) {
-						return accountsByDate.map(function(account) {
-							return {
-								id: account.id,
-								descendants: account.descendants,
-								// Sum up over debit/credit values of descendants
-								debit: account.debit + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.debit).reduce((a, b) => a + b, 0),
-								credit: account.credit + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.credit).reduce((a, b) => a + b, 0)
-							}
-						});
-					});
-					
-					
-					// Get daily balances instead of debit/credit daily change -> accounts and dates indices must be same in dailyBalChange as in date and accounts constants
-					let dailyBals = dailyBalChange0;
-					for (d = 0; d < dates.length; d++) {
-						for (a = 0; a < accounts.length; a++) {
-							dailyBals[d][a].debit = Math.round(((d > 0 ? dailyBals[d - 1][a].debit : 0) + dailyBalChange0[d][a].debit) * 100)/100
-							dailyBals[d][a].credit = Math.round(((d > 0 ? dailyBals[d - 1][a].credit : 0) + dailyBalChange0[d][a].credit) * 100)/100
-							dailyBals[d][a].bal = Math.round((dailyBals[d][a].debit * accounts[a].debit_effect + dailyBals[d][a].credit * accounts[a].debit_effect * -1) * 100)/100;
-							dailyBals[d][a].balChange = Math.round((dailyBals[d][a].bal - (d > 0 ? dailyBals[d - 1][a].bal : 0)) * 100)/100;
-							dailyBals[d][a].date = dates[d];
-						}
-					}
-					dailyBals = dailyBals.flat(1);
-					dfd.resolve({dailyBalsChange: dailyBalChange0.flat(), dailyBals: dailyBals, dates: dates});
+			const calculateBalances = Promise.all([getAccounts, getTransactions]).then(function(r) {
+				const accounts = r[0].accounts;
+				const transactions = r[1].transactions;
+				
+				const dates = [...new Set(transactions.map(x => x.date))];
+				
+				// Get daily credit & debit changes at all dates (does not sum up to top-level elements)
+				const dailyBalChangeNested = dates.map(function(date) {
+					const dailyTransactions = transactions.filter(x => x.date === date);
+					const res = accounts.map(account => ({
+						id: account.id,
+						descendants: account.descendants,
+						debit: dailyTransactions.filter(x => x.debit === account.id).map(x => x.value).reduce((a, b) => a + b, 0),
+						credit: dailyTransactions.filter(x => x.credit === account.id).map(x => x.value).reduce((a, b) => a + b, 0)
+					}));
+					return res;
 				});
-				return dfd.promise();
+				
+				// Sum up to top-level elements
+				const dailyBalChange0 = dailyBalChangeNested.map(function(accountsByDate) {
+					return accountsByDate.map(account => ({
+						id: account.id,
+						descendants: account.descendants,
+						// Sum up over debit/credit values of descendants
+						debit: account.debit + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.debit).reduce((a, b) => a + b, 0),
+						credit: account.credit + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.credit).reduce((a, b) => a + b, 0)
+					}));
+				});
+				
+				// Get daily balances instead of debit/credit daily change -> accounts and dates indices must be same in dailyBalChange as in date and accounts constants
+				let dailyBals = dailyBalChange0;
+				for (d = 0; d < dates.length; d++) {
+					for (a = 0; a < accounts.length; a++) {
+						dailyBals[d][a].debit = Math.round(((d > 0 ? dailyBals[d - 1][a].debit : 0) + dailyBalChange0[d][a].debit) * 100)/100
+						dailyBals[d][a].credit = Math.round(((d > 0 ? dailyBals[d - 1][a].credit : 0) + dailyBalChange0[d][a].credit) * 100)/100
+						dailyBals[d][a].bal = Math.round((dailyBals[d][a].debit * accounts[a].debit_effect + dailyBals[d][a].credit * accounts[a].debit_effect * -1) * 100)/100;
+						dailyBals[d][a].balChange = Math.round((dailyBals[d][a].bal - (d > 0 ? dailyBals[d - 1][a].bal : 0)) * 100)/100;
+						dailyBals[d][a].date = dates[d];
+					}
+				}
+				dailyBals = dailyBals.flat(1);
+				return {dailyBalsChange: dailyBalChange0.flat(), dailyBals: dailyBals, dates: dates};
 			});
 
 
 			// Finally update user data and UI
-			$.when(getAccounts, getTransactions, calculateBalances).done(function(r1, r2, r3) {
-				const newData = $.extend(true, r1, r2, r3, {lastUpdated: new Date()});
-				getNewDataDfd.resolve(newData);
+			Promise.all([getAccounts, getTransactions, calculateBalances]).then(function(r) {
+				const newData = {...r[0], ...r[1], ...r[2], lastUpdated: new Date()};
+				resolve(newData);
 			});
 
 		}
-		return getNewDataDfd.promise();
 	});
 	
 	
 	// Once new data has been pulled, merge it with the default state variables, store the result in sessionStorage and set the UI
-	$.when(getNewData).done(function(newData) {
-		const finalData = $.extend(true, newData, _addDefaultState(newData));
+	const cleanedData = getNewData.then(function(newData, e) {
+		
+		const finalData = {...newData, ..._addDefaultState(newData)};
 		
 		setAllData(finalData);
-		const accountsSidebarHtml =
-			finalData.accounts.filter(account => account.is_open === true).map(account => 
+		
+		const accountsSidebarHtml = finalData.accounts.filter(account => account.is_open === true).map(account => 
 				'<a class="text-truncate py-0" href="/transactions?account=' + account.id + '">' +
 					'<span style="font-size:.8rem;margin-right:1rem;margin-left: ' + (1 + Math.round((account.nest_level - 1) * 1)) + 'rem">' + 
-						//(account.children.length === 0 ? '<i class="bi bi-align-end me-2"></i>' : '<i class="bi bi-align-end me-2" style="color:transparent"></i>')+
 						account.name +
 					'</span>' +
 				'</a>'
 			).join('\n');
 		
 		$('#transactions-links').html(accountsSidebarHtml);
-		// $(accountsSidebarHtml).appendTo('#transactions-links')
-		
-		//console.log(finalData);
 		
 		const accountsNavbarHtml = finalData.accounts.filter(x => x.name_path.length === 1).map(x =>
 			'<div>' +
@@ -316,24 +286,10 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				).join('\n') +
 			'</div>'
 		);
-		//console.log(accountsNavbarHtml);
-
-		/*
-		const accountsNavbarHtml =
-			finalData.accounts.map(account => 
-				'<a class="dropdown-item" href="/transactions?account=' + account.id + '">' +
-					'<span style="margin-left: ' + Math.round((account.nest_level - 1) * 1) + 'rem">' +
-						account.name +
-						'</span>' +
-					//'<span style="margin-left: ' + Math.round((account.nest_level - 1) * 1) + 'rem">' +  account.name + '</span>' +
-				'</a>'
-			).join('\n');
-		*/
 		$('#navbar-detailed-accounts > div').html(accountsNavbarHtml);
 
 
-
-		// Set navbar activepage - this has been moved down from the initial init so that now if on transactions? page, if can detect that detailed accoutns should be highlighted in the navbar
+		// Set navbar activepage - this has been moved down from the initial init so that now if on transactions? page, if can detect that detailed accounts should be highlighted in the navbar
 		const pathname = window.location.pathname + window.location.search;
 		const navbar = document.querySelector('nav.navbar');
 
@@ -357,15 +313,11 @@ function init (_addDefaultState = (newData0) => ({}), _forceReload = false) {
 			})
 		}
 
-
-		// Also, make "add transactions" open on sidebar if on transactions page
-		console.log('finalData', finalData);
-
-		initDfd.resolve(finalData);
+		// console.log('finalData', finalData);
+		return finalData;
 	});
 	
-		
-	return initDfd.promise();
+	return cleanedData;
 }
 
 

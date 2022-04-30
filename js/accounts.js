@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			useDate: newData.dates[newData.dates.length - 1],
 			loadInstance: 0
 			}};
-	}, true).done((userData) => updateUi(userData));
+	}, true).then((userData) => updateUi(userData));
 	
 	
 	
@@ -280,8 +280,7 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 							/* If row itself has children & children are shown (1) - */
 							/* Else if row has children & children are hidden (0) + */
 							/* Else if row has no children (-1) */
-							return
-							'<span style="padding-left: ' + Math.round((row.nest_level - 1) * 15) + 'px">' +
+							return '<span style="padding-left: ' + Math.round((row.nest_level - 1) * 15) + 'px">' +
 							'<a style="font-size:0.95rem;font-weight:bold" href="transactions?account=' + row.id + '">' +
 								row.name +
 							'</a>' +
@@ -400,7 +399,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 					type: (category.category !== 'equity' ? 'areaspline' : 'line'),
 					stacking: (category.category !== 'equity' ? 'normal' : false),
 					stack: (category.category !== 'equity' ? category.category : false),
-					data: dailyBals.filter(x => x.id === account.id).map(x => [new Date(x.date).getTime(), x.bal * (category.category === 'liabilities' ? -1 : 1)]);
+					data: dailyBals.filter(x => x.id === account.id).map(x => [new Date(x.date).getTime(), x.bal * (category.category === 'liabilities' ? -1 : 1)])
 				}
 				return res;
 			});

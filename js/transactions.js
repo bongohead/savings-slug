@@ -1,4 +1,4 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function(event) {
 
 	/********** Initialize **********/
 	$('div.overlay').show();
@@ -6,12 +6,22 @@ $(document).ready(function() {
 		const accountId = parseInt(getUrlVars()['account']);
 		const account = newData.accounts.filter(x => x.id === accountId)[0];
 		if (typeof(account) === 'undefined') window.location.replace('/login');
+		
+		const child_accounts = newData.accounts;
+		console.log(child_accounts);
+		
 		const transactions = newData.transactions.filter(x => x.credit === accountId || x.debit === accountId);
 		const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
 		// @loadInstance gives an indicator of page load: 0 = initial load, 1 = later load
-		return {page: {accountId: accountId, account: account, transactions: transactions, dailyBals: dailyBals, loadInstance: 0}};
-	}, true).done((userData) => updateUi(userData));
-	
+		return {page: {
+			accountId: accountId,
+			account: account,
+			transactions: transactions,
+			dailyBals: dailyBals,
+			loadInstance: 0
+		}};		
+	}, true).then((userData) => updateUi(userData));
+
 	
 	
 	/********** Attach Table Event Listener to Submit New Transaction **********/

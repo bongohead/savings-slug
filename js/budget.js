@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$('div.overlay').show();
 	const initialize = init(_addDefaultState = function(newData) {
 		return {page: {activeMonth: moment.max(newData.dates.map(x => moment(x))).format('YYYY-MM-DD'), loadInstance: 0}};
-	}, true).done((userData) => updateUi(userData));
+	}, true).then((userData) => updateUi(userData));
 	
 	
 	/********** Attach Button Event Listener to New Budget **********/
@@ -336,34 +336,41 @@ function drawBudgetTable(tbl, accounts, dailyBals, activeMonth, loadInstance) {
 						: x.data === 'monthly_spending' ? (data, type, row) => Number(data).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})
 						: x.data === 'monthly_budget' ? (data, type, row) => Number(data).toLocaleString('en-US', {minimumFractionDigits: 0, maximumFractionDigits: 0})
 						: x.data === 'monthly_spending_percent' ? (data, type, row) => {
-							if (data === null) return '';
+							if (data === null) {
+								return '';
+							}
 							// https://stackoverflow.com/questions/12937470/twitter-bootstrap-center-text-on-progress-bar
-							else if (data <= .8) return 
-								'<div class="progress position-relative" style="width:5rem">' +
+							else if (data <= .8) {
+								return '<div class="progress position-relative" style="width:5rem">' +
 									'<div class="progress-bar progress-bar-striped" style="background-color: lawngreen; width:' + (data * 100/1).toFixed(0) + '%" role="progressbar"></div>' +
 									//'<div class="progress-bar progress-bar-striped" style="background-color: salmon; width:' + Math.max(0, (data - .5) * 100/2).toFixed(0) + '%" role="progressbar"></div>' +
 									'<small class="justify-content-center d-flex position-absolute w-100">' + (data * 100).toFixed(0) + '%' + '</small>' +
 								'</div>';
-							else if (data <= 1.0) return 
-								'<div class="progress position-relative" style="width:5rem">' +
+							}
+							else if (data <= 1.0) {
+								return  '<div class="progress position-relative" style="width:5rem">' +
 									'<div class="progress-bar progress-bar-striped" style="background-color: #0dcaf0; width:100%" role="progressbar"></div>' +
 									'<small class="justify-content-center d-flex position-absolute w-100">' + (data * 100).toFixed(0) + '%' + '</small>' +
 								'</div>';
-							else if (data <= 1.5) return 
-								'<div class="progress position-relative" style="width:5rem">' +
+							}
+							else if (data <= 1.5) {
+								return  '<div class="progress position-relative" style="width:5rem">' +
 									'<div class="progress-bar progress-bar-striped" style="background-color: #ffc107; width:100%" role="progressbar"></div>' +
 									'<small class="justify-content-center d-flex position-absolute w-100">' + (data * 100).toFixed(0) + '%' + '</small>' +
 								'</div>';
-							else if (data <= 2.0) return 
-								'<div class="progress position-relative" style="width:5rem">' +
+							}
+							else if (data <= 2.0) {
+								return  '<div class="progress position-relative" style="width:5rem">' +
 									'<div class="progress-bar progress-bar-striped" style="background-color: salmon; width:100%" role="progressbar"></div>' +
 									'<small class="justify-content-center d-flex position-absolute w-100">' + (data * 100).toFixed(0) + '%' + '</small>' +
 								'</div>';
-							else return
-								'<div class="progress position-relative" style="width:5rem">' +
+							}
+							else {
+								return '<div class="progress position-relative" style="width:5rem">' +
 									'<div class="progress-bar progress-bar-striped" style="background-color: orangered; width:100%" role="progressbar"></div>' +
 									'<small class="justify-content-center d-flex position-absolute w-100">' + (data * 100).toFixed(0) + '%' + '</small>' +
 								'</div>';
+							}
 						}
 						: false
 				}};

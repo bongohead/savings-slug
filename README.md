@@ -3,6 +3,10 @@ This is budget tracking software built for my own uses, hosted on https://budget
 
 # CHANGELOG
 
+## 2022-04-30
+- Added major cleanup of init file
+- Replaced $.Deferred with Promises
+
 ## 2022-04-23
 - Added major styling changes to CSS & HTML
 - Added better consolidation for detailed accounts in navbar
