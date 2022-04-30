@@ -14,16 +14,16 @@ $varsToBind =
 $accounts = $sql -> select("
 WITH RECURSIVE category_path AS
 (
-  SELECT
-		users_id, id, name, debit_effect, is_open, rel_order, date_created, date_closed, monthly_budget,
+	SELECT
+		users_id, id, name, debit_effect, is_open, rel_order, date_created, date_closed, monthly_budget, is_fixed,
 		name::text AS name_path, id::text AS id_path, CONCAT(LPAD(rel_order::text, 10, '0'), '(', LPAD(id::text, 10, '0'), ')') AS order_path
 	FROM accounts
-  WHERE parent_id IS NULL AND users_id = :id1
+	WHERE parent_id IS NULL AND users_id = :id1
   
 	UNION ALL
   
 	SELECT
-		c.users_id, c.id, c.name, c.debit_effect, c.is_open, c.rel_order, c.date_created, c.date_closed, c.monthly_budget,
+		c.users_id, c.id, c.name, c.debit_effect, c.is_open, c.rel_order, c.date_created, c.date_closed, c.monthly_budget, c.is_fixed,
 		CONCAT(cp.name_path, ' > ', c.name::text), CONCAT(cp.id_path, ' > ', c.id::text), CONCAT(cp.order_path, ' > ', LPAD(c.rel_order::text, 10, '0'), '(', LPAD(c.id::text, 10, '0'), ')')
 	FROM category_path AS cp JOIN accounts AS c
 		ON cp.id = c.parent_id

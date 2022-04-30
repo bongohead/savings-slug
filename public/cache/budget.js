@@ -435,17 +435,8 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				const accounts = r[0].accounts;
 				const transactions = r[1].transactions;
 				
-				// Get dates by iterating through start date and end date
-				// https://stackoverflow.com/questions/29466944/how-to-list-all-month-between-2-dates-with-moment-js
-				// Use below line instead to only include dates with transactions
 				const dates = [...new Set(transactions.map(x => x.date))];
-				/*const startDate = transactions.reduce((x, accum) => moment(accum.date) < moment(x.date) ? accum : x).date;
-				const dates =
-					Array.from({length: moment().diff(moment(startDate), 'day') + 1 }).map((_, index) =>
-						moment(moment(startDate)).add(index, 'day').format('YYYY-MM-DD'),
-					);
-				console.log('dates', dates);
-				*/
+				
 				// Get daily credit & debit changes at all dates (does not sum up to top-level elements)
 				const dailyBalChangeNested = dates.map(function(date) {
 					const dailyTransactions = transactions.filter(x => x.date === date);
@@ -460,15 +451,13 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				
 				// Sum up to top-level elements
 				const dailyBalChange0 = dailyBalChangeNested.map(function(accountsByDate) {
-					return accountsByDate.map(function(account) {
-						return {
-							id: account.id,
-							descendants: account.descendants,
-							// Sum up over debit/credit values of descendants
-							debit: account.debit + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.debit).reduce((a, b) => a + b, 0),
-							credit: account.credit + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.credit).reduce((a, b) => a + b, 0)
-						}
-					});
+					return accountsByDate.map(account => ({
+						id: account.id,
+						descendants: account.descendants,
+						// Sum up over debit/credit values of descendants
+						debit: account.debit + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.debit).reduce((a, b) => a + b, 0),
+						credit: account.credit + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.credit).reduce((a, b) => a + b, 0)
+					}));
 				});
 				
 				// Get daily balances instead of debit/credit daily change -> accounts and dates indices must be same in dailyBalChange as in date and accounts constants
@@ -489,7 +478,7 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 
 			// Finally update user data and UI
 			Promise.all([getAccounts, getTransactions, calculateBalances]).then(function(r) {
-				const newData = $.extend(true, r[0], r[1], r[2], {lastUpdated: new Date()});
+				const newData = {...r[0], ...r[1], ...r[2], lastUpdated: new Date()};
 				resolve(newData);
 			});
 
@@ -500,23 +489,19 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 	// Once new data has been pulled, merge it with the default state variables, store the result in sessionStorage and set the UI
 	const cleanedData = getNewData.then(function(newData, e) {
 		
-		const finalData = $.extend(true, newData, _addDefaultState(newData));
+		const finalData = {...newData, ..._addDefaultState(newData)};
 		
 		setAllData(finalData);
-		const accountsSidebarHtml =
-			finalData.accounts.filter(account => account.is_open === true).map(account => 
+		
+		const accountsSidebarHtml = finalData.accounts.filter(account => account.is_open === true).map(account => 
 				'<a class="text-truncate py-0" href="/transactions?account=' + account.id + '">' +
 					'<span style="font-size:.8rem;margin-right:1rem;margin-left: ' + (1 + Math.round((account.nest_level - 1) * 1)) + 'rem">' + 
-						//(account.children.length === 0 ? '<i class="bi bi-align-end me-2"></i>' : '<i class="bi bi-align-end me-2" style="color:transparent"></i>')+
 						account.name +
 					'</span>' +
 				'</a>'
 			).join('\n');
 		
 		$('#transactions-links').html(accountsSidebarHtml);
-		// $(accountsSidebarHtml).appendTo('#transactions-links')
-		
-		//console.log(finalData);
 		
 		const accountsNavbarHtml = finalData.accounts.filter(x => x.name_path.length === 1).map(x =>
 			'<div>' +
@@ -530,24 +515,10 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				).join('\n') +
 			'</div>'
 		);
-		//console.log(accountsNavbarHtml);
-
-		/*
-		const accountsNavbarHtml =
-			finalData.accounts.map(account => 
-				'<a class="dropdown-item" href="/transactions?account=' + account.id + '">' +
-					'<span style="margin-left: ' + Math.round((account.nest_level - 1) * 1) + 'rem">' +
-						account.name +
-						'</span>' +
-					//'<span style="margin-left: ' + Math.round((account.nest_level - 1) * 1) + 'rem">' +  account.name + '</span>' +
-				'</a>'
-			).join('\n');
-		*/
 		$('#navbar-detailed-accounts > div').html(accountsNavbarHtml);
 
 
-
-		// Set navbar activepage - this has been moved down from the initial init so that now if on transactions? page, if can detect that detailed accoutns should be highlighted in the navbar
+		// Set navbar activepage - this has been moved down from the initial init so that now if on transactions? page, if can detect that detailed accounts should be highlighted in the navbar
 		const pathname = window.location.pathname + window.location.search;
 		const navbar = document.querySelector('nav.navbar');
 
@@ -571,16 +542,11 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 			})
 		}
 
-
-		// Also, make "add transactions" open on sidebar if on transactions page
 		// console.log('finalData', finalData);
 		return finalData;
 	});
 	
 	return cleanedData;
-	
-	
-	//return initDfd.promise();
 }
 
 

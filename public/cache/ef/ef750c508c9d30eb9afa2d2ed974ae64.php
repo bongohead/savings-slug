@@ -76,27 +76,32 @@ class __TwigTemplate_8e320f00cfd70ecb6024694326fa03ff extends Template
 
 \t<div class=\"row g-0\">
 \t\t<div class=\"col-12 px-0\">
-\t\t\t<div class=\"card mt-0 mb-3 py-2 mx-0 rounded shadow-sm\"><div class=\"card-body\">
+\t\t\t<div class=\"card mt-0 mb-3 py-0 mx-0 rounded shadow-sm\"><div class=\"card-body py-0\">
 \t\t\t\t<div class=\"row\">
-\t\t\t\t\t<div class=\"col-3 text-center\" id=\"net-worth-1\">
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-1\" style=\"color:var(--bs-gray-700)\">
 \t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">30-Day Equity Change</h6>
-\t\t\t\t\t\t<span class=\"base fw-bolder\" style=\"color:var(--bs-gray-700)\"></span>
-\t\t\t\t\t\t<span class=\"change badge rounded-pill\"></span>
 \t\t\t\t\t</div>
-\t\t\t\t\t<div class=\"col-3 text-center\" id=\"net-worth-2\">
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-2\" style=\"color:var(--bs-gray-700)\">
 \t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">YTD Equity Change</h6>
-\t\t\t\t\t\t<span class=\"base fw-bolder\" style=\"color:var(--bs-gray-700)\"></span>
-\t\t\t\t\t\t<span class=\"change badge rounded-pill\"></span>
 \t\t\t\t\t</div>
-\t\t\t\t\t<div class=\"col-3 text-center\" id=\"net-worth-3\">
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-3\" style=\"color:var(--bs-gray-700)\">
 \t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">30-Day Transaction Count</h6>
-\t\t\t\t\t\t<span class=\"base fw-bolder\" style=\"color:var(--bs-gray-700)\"></span>
 \t\t\t\t\t</div>
-\t\t\t\t\t<div class=\"col-3 text-center\" id=\"net-worth-4\">
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-4\" style=\"color:var(--bs-gray-700)\">
 \t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">Total Accounts</h6>
-\t\t\t\t\t\t<span class=\"base fw-bolder\" style=\"color:var(--bs-gray-700)\"></span>
 \t\t\t\t\t</div>
-
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-5\" style=\"color:var(--bs-gray-700)\">
+\t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">30-Day Income</h6>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-6\" style=\"color:var(--bs-gray-700)\">
+\t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">30-Day Liabilities</h6>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-7\" style=\"color:var(--bs-gray-700)\">
+\t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">30-Day Assets Change</h6>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-8\" style=\"color:var(--bs-gray-700)\">
+\t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">30-Day Liabilities Change</h6>
+\t\t\t\t\t</div>
 \t\t\t\t</div>
 \t\t\t\t
 \t\t\t</div></div>
@@ -284,27 +289,32 @@ class __TwigTemplate_8e320f00cfd70ecb6024694326fa03ff extends Template
 
 \t<div class=\"row g-0\">
 \t\t<div class=\"col-12 px-0\">
-\t\t\t<div class=\"card mt-0 mb-3 py-2 mx-0 rounded shadow-sm\"><div class=\"card-body\">
+\t\t\t<div class=\"card mt-0 mb-3 py-0 mx-0 rounded shadow-sm\"><div class=\"card-body py-0\">
 \t\t\t\t<div class=\"row\">
-\t\t\t\t\t<div class=\"col-3 text-center\" id=\"net-worth-1\">
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-1\" style=\"color:var(--bs-gray-700)\">
 \t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">30-Day Equity Change</h6>
-\t\t\t\t\t\t<span class=\"base fw-bolder\" style=\"color:var(--bs-gray-700)\"></span>
-\t\t\t\t\t\t<span class=\"change badge rounded-pill\"></span>
 \t\t\t\t\t</div>
-\t\t\t\t\t<div class=\"col-3 text-center\" id=\"net-worth-2\">
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-2\" style=\"color:var(--bs-gray-700)\">
 \t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">YTD Equity Change</h6>
-\t\t\t\t\t\t<span class=\"base fw-bolder\" style=\"color:var(--bs-gray-700)\"></span>
-\t\t\t\t\t\t<span class=\"change badge rounded-pill\"></span>
 \t\t\t\t\t</div>
-\t\t\t\t\t<div class=\"col-3 text-center\" id=\"net-worth-3\">
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-3\" style=\"color:var(--bs-gray-700)\">
 \t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">30-Day Transaction Count</h6>
-\t\t\t\t\t\t<span class=\"base fw-bolder\" style=\"color:var(--bs-gray-700)\"></span>
 \t\t\t\t\t</div>
-\t\t\t\t\t<div class=\"col-3 text-center\" id=\"net-worth-4\">
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-4\" style=\"color:var(--bs-gray-700)\">
 \t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">Total Accounts</h6>
-\t\t\t\t\t\t<span class=\"base fw-bolder\" style=\"color:var(--bs-gray-700)\"></span>
 \t\t\t\t\t</div>
-
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-5\" style=\"color:var(--bs-gray-700)\">
+\t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">30-Day Income</h6>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-6\" style=\"color:var(--bs-gray-700)\">
+\t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">30-Day Liabilities</h6>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-7\" style=\"color:var(--bs-gray-700)\">
+\t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">30-Day Assets Change</h6>
+\t\t\t\t\t</div>
+\t\t\t\t\t<div class=\"col-lg-3 py-3 col-sm-4 text-center\" id=\"stats-8\" style=\"color:var(--bs-gray-700)\">
+\t\t\t\t\t\t<h6 style=\"font-size:.8rem;color:var(--bs-gray-500)\" class=\"text-muted\">30-Day Liabilities Change</h6>
+\t\t\t\t\t</div>
 \t\t\t\t</div>
 \t\t\t\t
 \t\t\t</div></div>

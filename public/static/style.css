@@ -1,7 +1,4 @@
 /** Bootstrap Style Changes **/
-@import url(//fonts.googleapis.com/css?family=Assistant);
-@import url(//fonts.googleapis.com/css?family=Molengo);
-
 header {
     top: 0;
     z-index: 100;
@@ -33,7 +30,7 @@ nav.navbar {
 nav.navbar li.nav-item > a.nav-link {
 	/*color: rgba(255, 255, 255, .9);*/
 	color: white;
-	font-size: .98rem;
+	font-size: 1.05rem;
 	border-radius: .15rem;
 	margin: 0rem .1rem;
 }
@@ -51,7 +48,7 @@ nav.navbar ul.dropdown-menu, nav.navbar div.dropdown-menu {
 	border-color: green;
 	border-radius: .25rem;
 	border-width: 1px;
-	font-size: .88rem;
+	font-size: .9rem;
 }
 
 nav.navbar ul.dropdown-menu a:hover, nav.navbar div.dropdown-menu a:hover {
@@ -108,7 +105,7 @@ nav.sidebar div.sidebar-submenu > a {
   padding-bottom: .25rem;
   padding-right: 1.2rem;
   display: block;
-  font-size: .85rem;
+  font-size: .98rem;
 }
 
 nav.sidebar div.sidebar-submenu > a.activepage {
@@ -125,14 +122,14 @@ nav.sidebar div.sidebar-submenu > a:hover {
 
 /* Datatable */
 table.dataTable th {
-	background-color: var(--bs-dark);
-	color: white;
-	padding: .4rem .6rem;
+	/*background-color: var(--bs-dark);*/
+	/*color: white;*/
+	/*padding: .4rem .6rem;*/
 }
 
 table.dataTable td {
     padding: .25rem .5rem;
-    font-size: 0.82rem;
+    font-size: 0.95rem;
 	border: none;
 	vertical-align: middle;
 }
@@ -166,11 +163,11 @@ table.dataTable tr {
 }
 
 table.dataTable tr.odd {
-    background-color: rgba(200, 230, 245, .2);
+    background-color: rgba(200, 230, 200, .3);
 }
 
 table.dataTable tr:hover {
-	background-color: rgba(200, 230, 245, .5) !important;
+	background-color: rgba(200, 230, 200, .5) !important;
 }
 
 div.dataTables_filter input {

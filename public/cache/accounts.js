@@ -590,7 +590,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			this.data(rowData);
 		});
 		dt.draw();
-		console.log(showAllAccounts);
+		// console.log(showAllAccounts);
 	});
 
 	
@@ -620,7 +620,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			
 		$('input[name="edit-account-debit-effect"]')
 			.each(function() {
-				console.log($(this));
+				// console.log($(this));
 				if (parseInt($(this).val()) === thisRowData.debit_effect) {
 					$(this).prop('checked', true);
 				} else {
@@ -658,14 +658,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const is_open = $('#edit-account-is-open').prop('checked') ? 1 : 0;
 		console.log('inputs', id, name, rel_order, parent_id, debit_effect, is_open);
 				
-		getAJAX('editAccount', toScript = ['updatedAccounts'], fromAjax = {id: id, name: name, rel_order: rel_order, parent_id: parent_id, debit_effect: debit_effect, is_open: is_open}).done(function(ajaxRes) {
-			console.log(ajaxRes);
-			if (JSON.parse(ajaxRes).updatedAccounts === 1) {
+		getFetch('editAccount', toScript = ['updatedAccounts'], fromAjax = {id: id, name: name, rel_order: rel_order, parent_id: parent_id, debit_effect: debit_effect, is_open: is_open}).then(function(ajaxRes) {
+			//console.log(ajaxRes);
+			if (ajaxRes.updatedAccounts === 1) {
 				$('#edit-account-modal').modal('hide');
 				$('div.overlay').show();
 				init(_addDefaultState = function(newData) {
 					return {page: {useDate: newData.dates[newData.dates.length - 1], loadInstance: 1}};
-				}, true).done((userData) => updateUi(userData));
+				}, true).then((userData) => updateUi(userData));
 			} else {
 				$(this).closest('form').find('.invalid-feedback').text('SQL Error').show();
 			}
@@ -738,14 +738,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		}
 		console.log('submitted', name, parent_id, rel_order, debit_effect);
 
-		getAJAX('addAccount', toScript = ['addedAccounts'], fromAjax = {name: name, rel_order: rel_order, parent_id: parent_id, debit_effect: debit_effect}).done(function(ajaxRes) {
-		console.log(ajaxRes);
-			if (JSON.parse(ajaxRes).addedAccounts === 1) {
+		getFetch('addAccount', toScript = ['addedAccounts'], fromAjax = {name: name, rel_order: rel_order, parent_id: parent_id, debit_effect: debit_effect}).then(function(ajaxRes) {
+			//console.log(ajaxRes);
+			if (ajaxRes.addedAccounts === 1) {
 				$('#add-account-modal').modal('hide');
 				$('div.overlay').show();
 				init(_addDefaultState = function(newData) {
 					return {page: {useDate: newData.dates[newData.dates.length - 1], loadInstance: 1}};
-				}, true).done((userData) => updateUi(userData));
+				}, true).then((userData) => updateUi(userData));
 			} else {
 				form.find('.invalid-feedback').text('SQL Error').show();
 			}
@@ -761,11 +761,10 @@ function updateUi(userData) {
 	equityId = userData.accounts.filter(x => x.name === 'Equity')[0].id;
 	equityBal = userData.dailyBals.filter(x => x.id === equityId).pop().bal;
 	$('#net-worth').html(equityBal.toLocaleString('en-US', {style: 'currency', currency: 'USD'}));
-	console.log('equityBal', equityBal);
+	//console.log('equityBal', equityBal);
 
 	drawTable($('#accounts-table'), userData.accounts, userData.dailyBals, userData.dates, userData.page.useDate, userData.page.loadInstance);
 	drawChart('accounts-chart-div', userData.accounts, userData.dailyBals, userData.page.loadInstance);
-	
 	drawStatistics(userData.accounts, userData.dailyBals, userData.dates, userData.page.useDate, userData.transactions);
 	$('div.overlay').hide();
 }
@@ -797,15 +796,13 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 	const lastMonthEndDate = dates.filter(y => new Date(y) <= (new Date(new Date(useDate).getFullYear(), new Date(useDate).getMonth(), 1) - (24*60*60*1000))).pop();
 	const lastMonthEndBals = dailyBals.filter(x => x.date === lastMonthEndDate);
 	
-	const dtData =
-		accounts.map(function(account) {
-			return {...account, ... {
-				showAllAccounts: 0,
-				bal: lastBals.filter(x => x.id === account.id)[0].bal,
-				childrenState: account.descendants.length > 0 ? (account.id_path.length <= 1 ? 1 : 0) : -1,
-				changeThisMonth: lastBals.filter(x => x.id === account.id)[0].bal - lastMonthEndBals.filter(x => x.id === account.id)[0].bal
-			}}
-		});
+	const dtData = accounts.map(account => ({
+		...account,
+		showAllAccounts: 0,
+		bal: lastBals.filter(x => x.id === account.id)[0].bal,
+		childrenState: account.descendants.length > 0 ? (account.id_path.length <= 1 ? 1 : 0) : -1,
+		changeThisMonth: lastBals.filter(x => x.id === account.id)[0].bal - lastMonthEndBals.filter(x => x.id === account.id)[0].bal
+	}));
 		
 	// console.log('dtData', dtData);
 
@@ -823,10 +820,12 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 				{title: '', data: null},
 				{title: '#', data: 'id'},
 				{title: 'Balance', data: 'bal'},
-				{title: 'Change This Month', data: 'changeThisMonth'}
+				{title: 'Change This Month', data: 'changeThisMonth'},
+				{title: 'Fixed', data: 'is_fixed'}
 			].map(function(x, i) {
-				return {...x, ...{
-					visible: (!['Row Number', 'Descendants', 'Children State', 'Nest Level'].includes(x.title)),
+				return {
+					...x,
+					visible: (!['Row Number', 'Descendants', 'Children State', 'Nest Level', 'Fixed', '#'].includes(x.title)),
 					orderable: false,
 					ordering: (x.title === 'Row Number' ? true : false),
 					searchable: (x.title === 'Account'),
@@ -841,41 +840,49 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 							'<a style="font-size:0.95rem;font-weight:bold" href="transactions?account=' + row.id + '">' +
 								row.name +
 							'</a>' +
-							(row.childrenState === -1 ? '' : ('<a class="expandable" style="cursor:pointer">' + (row.childrenState === 1 ? '<span class="fas fa-minus ms-2"></span>' : '<span class="fas fa-plus ms-2"></span>') + '</a>'));
+							(row.childrenState === -1 ? '' : ('<a class="expandable" style="cursor:pointer">' + (row.childrenState === 1 ? '<i class="ps-2 bi bi-dash-lg"></i>' : '<i class="ps-2 bi bi-plus-lg"></i>') + '</a>'));
 						}
+						: x.title === '' ? (data, type, row) => (row.is_fixed === true ? '' : '<button type="button" class="btn btn-secondary btn-sm edit-account" style="font-size:.75rem;padding: .05rem .4rem">Edit</button>')
+						/*
 						: x.title === '' ? (data, type, row) => (row.id_path.length === 1 ? '<button type="button" class="btn btn-primary btn-sm" disabled>Edit</button>' : '<button type="button" class="btn btn-primary btn-sm edit-account">Edit</button>')
+						*/
 						: x.title === 'Balance' ? (data, type, row) => '<span style="font-weight:500;font-size:0.95rem;">' + data.toLocaleString('en-US', {style: 'currency', currency: 'USD'}) + '</span>'
 						: x.title === 'Change This Month' ?  (data, type, row) => '<span class="small">' + (data < 0 ? '<span class="fas fa-arrow-down text-danger me-1"></span>' : (data === 0 ? '<span class="fas fa-arrows-alt-h me-1"></span>' : '<span class="fas fa-arrow-up text-success me-1"></span>')) + data.toFixed(2) + '</span>'
 						: false
-				}};
+				};
 			});
 				
-		const dt =
-			tbl
-			.DataTable({
-				data: dtData,
-				columns: dtCols,
-				iDisplayLength: 1000,
-				dom:
-					"<'row'<'col-6 px-0 justify-content-start d-flex'f><'col-6 px-0 justify-content-end d-flex toggle-container'>>" +
-					"<'row'<'px-0'tr>>" +
-					"<'row'<'col-2'i><'col-10 justify-content-end d-flex px-0'B>>", // Flex display needed for right alignment
-				buttons: [ // https://datatables.net/reference/option/buttons.buttons
-					{extend: 'copyHtml5', text: 'Copy to clipboard', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn-sm btn-primary btn' },
-					{extend: 'csvHtml5', text: 'Export to CSV', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn-sm btn-primary btn'}
-					//{extend: 'excelHtml5', text: 'Export to Excel', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn-sm'} requires jszip
-				],
-				order: [[0, 'asc']],
-				language: {
-					search: '',
-					searchPlaceholder: 'Search by Account',
-					info: "_START_ - _END_ (_TOTAL_ total rows)"
-				},
-				//ordering: true,
-				paging: false,
-				info: false
-				})
-			.draw();
+		const dt = tbl.DataTable({
+			data: dtData,
+			columns: dtCols,
+			iDisplayLength: 1000,
+			dom:
+				"<'row'<'col-6 px-0 justify-content-start d-flex'f><'col-6 px-0 justify-content-end d-flex toggle-container'>>" +
+				"<'row my-2'<'px-0'tr>>" +
+				"<'row'<'col-2'i><'col-10 justify-content-end d-flex px-0'B>>", // Flex display needed for right alignment
+			buttons: [ // https://datatables.net/reference/option/buttons.buttons
+				{extend: 'copyHtml5', text: 'Copy to clipboard', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn-sm btn-secondary btn' },
+				{extend: 'csvHtml5', text: 'Export to CSV', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn-sm btn-secondary btn'}
+				//{extend: 'excelHtml5', text: 'Export to Excel', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn-sm'} requires jszip
+			],
+			order: [[0, 'asc']],
+			language: {
+				search: '',
+				searchPlaceholder: 'Search by Account',
+				info: "_START_ - _END_ (_TOTAL_ total rows)"
+			},
+			//ordering: true,
+			paging: false,
+			info: false,
+			createdRow: function(row, data, index) {
+				if (data.nest_level === 1) {
+					$(row).css('border-top', '1px dashed gray');
+				} else {
+					
+				}
+				$(row).css('height', '2rem');
+			}
+		}).draw();
 				
 		// Filter: show things with parents that have childrenState = 1, and showAllAccounts = 1 or is_open = 1
 		$.fn.dataTable.ext.search.push(function(settings, searchData, rowIndex, originalData, searchCounter) { // https://datatables.net/manual/plug-ins/search
@@ -915,19 +922,6 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 		</div>
 
 		`);
-		/*
-		Bootstrap 5 prestyling
-		<div class="input-group input-group-sm my-0 justify-content-end"> 
-			<div><span class="input-group-text">Show All Accounts</div>
-
-			<div class="btn-group" role="group" id="show-all-accounts">
-				<input id="btnradio1" type="radio" class="btn-check" name="btnradio" value="1" autocomplete="off" checked>
-				<label class="btn btn-outline-primary" for="btnradio1">No</label>
-				<input id="btnradio2" type="radio" class="btn-check" name="btnradio" value="0" autocomplete="off">
-				<label class="btn btn-outline-primary" for="btnradio2">Yes</label>
-			</div>
-		</div>
-		*/
 	return true;
 }
 
@@ -942,7 +936,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 		{category: 'liabilities', colors: ['firebrick', 'lightsalmon'], accounts: accounts.filter(x => x.name_path[0] === 'Liabilities' && x.name_path.length === 2)},
 		{category: 'equity', colors: ['black'], accounts: accounts.filter(x => x.name_path[0] === 'Equity' && x.name_path.length === 1)}
 		]
-	console.log('accountsByCategory', accountsByCategory);
+	// console.log('accountsByCategory', accountsByCategory);
 		
 	const chartData =
 		accountsByCategory.map(function(category) {
@@ -977,22 +971,22 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 			},
 			tooltip: {
 				style: {
-					fontWeight: 'bold',
-					fontSize: '0.85rem'
+					/*fontWeight: 'bold',*/
+					fontSize: '0.9rem'
 				}
 			},
 			rangeSelector: {
 				buttonTheme: { // styles for the buttons
-					fill: 'var(--bs-econblue)',
+					fill: 'var(--bs-secondary)',
 					style: {
 						color: 'white'
 					},
 					states: {
 						hover: {
-							fill: 'var(--bs-econdblue)'
+							fill: 'var(--bs-primary)'
 						},
 						select: {
-							fill: 'var(--bs-econlblue)',
+							fill: 'var(--bs-primary)',
 							style: {
 								color: 'white'
 							}
@@ -1017,10 +1011,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 				spacingTop: 0,
 				backgroundColor: 'rgba(255, 255, 255, 0)',
 				plotBackgroundColor: '#FFFFFF',
-				style: {
-					fontColor: 'var(--bs-econgreen)'
-				},
-				height: 280,
+				height: 300,
 				plotBorderColor: 'black',
 				plotBorderWidth: 2
 			},
@@ -1042,8 +1033,9 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 			},
 			legend: {
 				title: {
-					text: 'Accounts<br/><span style="font-size: 9px; color: #666; font-weight: normal">(Click to hide)</span>'
+					text: 'Accounts<br/><span style="font-size: .8remrem; color: #666; font-weight: normal">(Click to hide)</span>'
 				},
+				useHTML: true,
 				enabled: true,
 				align: 'right',
 				verticalAlign: 'top',
@@ -1062,7 +1054,8 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 				title: {
 					text: ''
 				},
-				opposite: false
+				opposite: false,
+				//min: 0
 			},
 			plotOptions: {
 				series: {
@@ -1097,6 +1090,7 @@ function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
 	const lastBals = dailyBals.filter(x => x.date === useDate);
 	
 	// Get equity change - later add whole row, YTD +/-, 30d +/-, etc.
+	/*
 	const equityId = accounts.filter(x => x.name === 'Equity')[0].id;
 	const last_equity_val = lastBals.filter(x => x.id === equityId)[0].bal;
 	
@@ -1116,6 +1110,67 @@ function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
 	const ytd_count = transactions.filter(x => moment(x.date) > moment(ytd_date)).length;
 	$('#net-worth-3 > span.base').html(trail_30_count);
 	$('#net-worth-4 > span.base').html(accounts.filter(x => x.is_open === true).length);
+	*/
+
+	// Get expenses	
+	const tr30_date = dates.filter(y => new Date(y) <= moment(useDate).subtract(1, 'months').format('x')).pop();
+	const tr30_bals = dailyBals.filter(x => x.date === tr30_date);
+	const ytd_date = dates.filter(y => new Date(y) <= (new Date(new Date(useDate).getFullYear(), 0, 1) - (24*60*60*1000))).pop();
+	const ytd_bals = dailyBals.filter(x => x.date === ytd_date);
+	
+	const change_stats = ['Equity', 'Income', 'Expenses', 'Liabilities', 'Assets'].map(function(x) {
+		const id = accounts.filter(y => y.name === x)[0].id;
+		const last_bal = lastBals.filter(y => y.id === id)[0].bal;
+		const tr30_change = last_bal - tr30_bals.filter(y => y.id === id)[0].bal;
+		const ytd_change = last_bal - ytd_bals.filter(y => y.id === id)[0].bal;
+		return {
+			account_name: x,
+			tr30_change: 
+				'<span class="base fw-bolder pe-1">' +
+					(tr30_change > 0 ? '+' : '') + new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(tr30_change) +
+				'</span>' +
+				(['Income', 'Expenses'].includes(x) === false ?
+				'<span class="badge rounded-pill ' + (tr30_change > 0 ? 'bg-success' : 'bg-danger') + '">' +
+					(tr30_change > 0 ? '<i class="bi bi-caret-up"></i>' : '<i class="bi bi-caret-down"></i>') +
+					(tr30_change/(tr30_bals.filter(y => y.id === id)[0].bal) * 100).toFixed(1) + '%' +
+				'</span>'
+				: ''),
+			ytd_change: 
+				'<span class="base fw-bolder pe-1">' +
+					(ytd_change > 0 ? '+' : '') + new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(ytd_change) +
+				'</span>' +
+				(['Income', 'Expenses'].includes(x) === false ?
+				'<span class="badge rounded-pill ' + (ytd_change > 0 ? 'bg-success' : 'bg-danger') + '">' +
+					(ytd_change > 0 ? '<i class="bi bi-caret-up"></i>' : '<i class="bi bi-caret-down"></i>') +
+					(ytd_change/(ytd_bals.filter(y => y.id === id)[0].bal) * 100).toFixed(1) + '%' +
+				'</span>'
+				: ''),
+		};
+	});
+	
+	$('#stats-1').append(change_stats.filter(x => x.account_name === 'Equity')[0].tr30_change);
+	$('#stats-2').append(change_stats.filter(x => x.account_name === 'Equity')[0].ytd_change);
+	
+	const tr30_count = transactions.filter(x => moment(x.date) > moment(tr30_date)).length;
+	const ytd_count = transactions.filter(x => moment(x.date) > moment(ytd_date)).length;
+	$('#stats-3').append(tr30_count);
+	$('#stats-4').append(accounts.filter(x => x.is_open === true).length);
+
+	$('#stats-5').append(change_stats.filter(x => x.account_name === 'Income')[0].tr30_change);
+	$('#stats-6').append(change_stats.filter(x => x.account_name === 'Expenses')[0].tr30_change);
+	
+	$('#stats-7').append(change_stats.filter(x => x.account_name === 'Assets')[0].tr30_change);
+	$('#stats-8').append(change_stats.filter(x => x.account_name === 'Liabilities')[0].tr30_change);
+
+	/*
+	$('#net-worth-1 > span.base').html((equity_30_change > 0 ? '+' : '') + new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(equity_30_change));
+	$('#net-worth-1 > span.change').addClass(equity_30_change > 0 ? 'bg-success' : 'bg-danger').html((equity_30_change > 0 ? '<i class="bi bi-caret-up"></i>' : '<i class="bi bi-caret-down"></i>') + (equity_30_change/last_equity_val * 100).toFixed(1) + '%');
+*/
+	// console.log(change_stats);
+	
+	
+	const expenseId = accounts.filter(x => x.name === 'Expenses')[0].id;
+	
 
 	
 	const asset_colors = ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];
@@ -1147,10 +1202,10 @@ function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
 				}];
 			}
 		});
-	console.log(asset_l2_data);
+	// console.log(asset_l2_data);
 		
 
-	$('#statistics-card').append('<h3 class="text-center">Asset Balance</h3><div id="statistics-01"></div>');
+	$('#statistics-card').append('<h3 class="text-center">Asset Mix</h3><div id="statistics-01"></div>');
 	
 	Highcharts.chart('statistics-01', {
 		chart: {
@@ -1235,7 +1290,7 @@ function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
 		});
 		
 
-	$('#statistics-card').append('<h3 class="text-center">Liabilities Balance</h3><div id="statistics-02"></div>');
+	$('#statistics-card').append('<h3 class="text-center">Liabilities Mix</h3><div id="statistics-02"></div>');
 	
 	Highcharts.chart('statistics-02', {
 		chart: {

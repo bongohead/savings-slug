@@ -56,8 +56,12 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css\">
 \t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css\"/>
 
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css\"/>
-\t
+\t<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css\"/>-->
+\t<link rel=\"preload\" href=\"https://fonts.googleapis.com/css?family=Assistant\" as=\"style\">
+\t<link rel=\"preload\" href=\"https://fonts.googleapis.com/css?family=Merriweather\" as=\"style\">
+\t<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Assistant\">
+\t<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Merriweather\">
+
 \t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js\"></script>
 \t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js\"></script>
 
@@ -71,15 +75,15 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t
 \t<script src=\"https://cmefi.github.io/gradient.js/gradient-min.js\"></script>
 \t";
-        // line 32
+        // line 36
         echo ($context["pageJS"] ?? null);
         echo "
 
 
     ";
-        // line 35
+        // line 39
         $this->displayBlock('staticlinks', $context, $blocks);
-        // line 36
+        // line 40
         echo "</head>
 
 <body>
@@ -165,9 +169,9 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t\t\t<div class=\"col mx-2 pb-5\">
 \t\t\t\t<div class=\"container-xxl\">
 \t\t\t\t\t";
-        // line 120
+        // line 124
         $this->displayBlock('content', $context, $blocks);
-        // line 122
+        // line 126
         echo "\t\t\t\t</div>
 \t\t\t</div>
 \t\t</div>
@@ -220,7 +224,7 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 
 \t<script>
 \t  ";
-        // line 173
+        // line 177
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -231,17 +235,17 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 ";
     }
 
-    // line 35
+    // line 39
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 120
+    // line 124
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 121
+        // line 125
         echo "\t\t\t\t\t";
     }
 
@@ -257,7 +261,7 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 
     public function getDebugInfo()
     {
-        return array (  245 => 121,  241 => 120,  235 => 35,  224 => 173,  171 => 122,  169 => 120,  83 => 36,  81 => 35,  75 => 32,  49 => 9,  39 => 1,);
+        return array (  249 => 125,  245 => 124,  239 => 39,  228 => 177,  175 => 126,  173 => 124,  87 => 40,  85 => 39,  79 => 36,  49 => 9,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -279,8 +283,12 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css\">
 \t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css\"/>
 
-\t<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css\"/>
-\t
+\t<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css\"/>-->
+\t<link rel=\"preload\" href=\"https://fonts.googleapis.com/css?family=Assistant\" as=\"style\">
+\t<link rel=\"preload\" href=\"https://fonts.googleapis.com/css?family=Merriweather\" as=\"style\">
+\t<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Assistant\">
+\t<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Merriweather\">
+
 \t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js\"></script>
 \t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js\"></script>
 
