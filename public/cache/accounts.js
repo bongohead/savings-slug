@@ -254,9 +254,7 @@ function getDates(startDate, stopDate, interval = 1, unit = 'days') {
 			
 			document.querySelector('header').insertBefore(newDiv, document.querySelector('nav.navbar'));
 		*/
-		// Enables tooltips
-		$('[data-toggle="tooltip"]').tooltip();
-	})();
+  })();
 	
 	
 	
@@ -922,6 +920,8 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 		</div>
 
 		`);
+		
+
 	return true;
 }
 

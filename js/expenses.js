@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$('div.overlay').show();
 	const initialize = init(_addDefaultState = function(newData) {
 		return {page: {activeMonth: moment.max(newData.dates.map(x => moment(x))).format('YYYY-MM-DD'), loadInstance: 0}};
-	}, true).done((userData) => updateUi(userData));
+	}, true).then((userData) => updateUi(userData));
 	
 	
 	
@@ -14,7 +14,7 @@ $(document).ready(function() {
 		
 		init(_addDefaultState = function(newData) {
 			return {page: {activeMonth: newActiveMonth, loadInstance: 1}};
-		}, true).done((userData) => updateUi(userData));
+		}, true).then((userData) => updateUi(userData));
 	});
 
 });
@@ -72,9 +72,9 @@ function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
 			backgroundColor: 'rgba(255, 255, 255, 0)',
 			plotBackgroundColor: '#FFFFFF',
 			style: {
-				fontColor: 'var(--bs-econgreen)'
+				fontColor: 'var(--bs-green)'
 			},
-			height: 500,
+			height: 550,
 			plotBorderColor: 'black',
 			plotBorderWidth: 2
         },
@@ -161,7 +161,7 @@ function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
             buttonTheme: {
                 width: 160
             },
-            selected: 1
+            selected: 2
         },
 		legend: {
 			enabled: true,
@@ -174,10 +174,29 @@ function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
 				text: 'Expense Categories <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click to hide/show)</span>',
 			}
 		},
+		navigator: {
+			enabled: false
+		},
         tooltip: {
             useHTML: true,
 			shared: true,
-			valueDecimals: 2
+			// valueDecimals: 2,
+			formatter: function() {
+				const dataGrouping = this.points[0].series.currentDataGrouping.unitName;
+				console.log(dataGrouping);
+				const table = '<div>' +
+					'<h5 class="text-right">' +
+						(dataGrouping === 'month' ? moment(this.x).format('MMM Y') : dataGrouping === 'week' ? moment(this.x).format('[Week of] M/D/Y') : moment(this.x).format('M/D/Y')) +
+					'</h5>' +
+					this.points.sort((a, b) => a.y < b.y ? 1 : -1).slice(0, 10).map(x => 
+						'<span class="fw-bolder" style="color:'+ x.color +'">' + x.series.name + '</span>:  ' + x.y.toFixed(2)
+					).join('<br>') +
+					'<hr>' +
+					'<span class="fw-bold" >Total Expenses:  ' + this.points.map(x => x.y).reduce((a, b) => a + b, 0).toFixed(2) + '</span><br>' +
+				'</div>';
+				// return table;
+				return table;
+			}
         },
         series: chartData
 	};

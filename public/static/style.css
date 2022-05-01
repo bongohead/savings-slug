@@ -167,11 +167,27 @@ table.dataTable tr.odd {
 }
 
 table.dataTable tr:hover {
-	background-color: rgba(200, 230, 200, .5) !important;
+	background-color: rgba(200, 230, 200, .5);
 }
 
 div.dataTables_filter input {
 	margin: 0px !important;
+}
+
+#transactions-table td {
+	padding: .15rem .4rem;
+	font-size: .92rem;
+}
+#transactions-table tr.from-child {
+	background-color: var(--bs-gray-400);
+}
+
+#transactions-table tr.from-child:hover {
+	background-color: var(--bs-gray-400);
+}
+
+#transactions-table tr {
+	height: 2.3rem;
 }
 
 /** Loading Spinner **/

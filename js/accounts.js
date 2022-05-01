@@ -365,6 +365,8 @@ function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 		</div>
 
 		`);
+		
+
 	return true;
 }
 

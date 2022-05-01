@@ -254,9 +254,7 @@ function getDates(startDate, stopDate, interval = 1, unit = 'days') {
 			
 			document.querySelector('header').insertBefore(newDiv, document.querySelector('nav.navbar'));
 		*/
-		// Enables tooltips
-		$('[data-toggle="tooltip"]').tooltip();
-	})();
+  })();
 	
 	
 	
@@ -564,10 +562,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const account = newData.accounts.filter(x => x.id === accountId)[0];
 		if (typeof(account) === 'undefined') window.location.replace('/login');
 		
-		const child_accounts = newData.accounts;
-		console.log(child_accounts);
+		const child_accounts = newData.accounts.filter(x => x.id_path.includes(accountId) && x.id !== accountId).map(x => x.id);
 		
-		const transactions = newData.transactions.filter(x => x.credit === accountId || x.debit === accountId);
+		const transactions =
+			newData.transactions.filter(x => x.credit === accountId || x.debit === accountId).map(x => ({...x, from_child: false}))
+			.concat(newData.transactions.filter(x => child_accounts.includes(x.credit) || child_accounts.includes(x.debit)).map(x => ({...x, from_child: true})));
+
 		const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
 		// @loadInstance gives an indicator of page load: 0 = initial load, 1 = later load
 		return {page: {
@@ -582,7 +582,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	
 	
 	/********** Attach Table Event Listener to Submit New Transaction **********/
-	$('#transactions-table').on('change keyup click', 'input, select, #add-transaction-submit', function() {
+	$('#transactions-table').on('change keyup click', 'input, #add-transaction-submit', function() {
 		const inputs = [
 			{key: 'date', htmlId: 'add-transaction-date', type: 'input', validate: (x => typeof(x) === 'string' && x.length === 10 && !isNaN(new Date(x))), parse: x => x},
 			{key: 'description', htmlId: 'add-transaction-description', type: 'input', validate: (x => typeof(x) === 'string' && x.length >= 1), parse: x => x},
@@ -623,17 +623,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		
 		
 		getAJAX('addTransaction', toScript = ['addedTransactions'], fromAjax = {date: date, description: description, value: valuePositive, debit: debit, credit: credit}).done(function(ajaxRes) {
-			console.log(ajaxRes);
 			if (JSON.parse(ajaxRes).addedTransactions === 1) {
 				$('div.overlay').show();
 				init(_addDefaultState = function(newData) {
+					console.log('Added transaction', ajaxRes);
 					const accountId = parseInt(getUrlVars()['account']);
 					const account = newData.accounts.filter(x => x.id === accountId)[0];
 					if (typeof(account) === 'undefined') window.location.replace('/login');
-					const transactions = newData.transactions.filter(x => x.credit === accountId || x.debit === accountId);
+					const child_accounts = newData.accounts.filter(x => x.id_path.includes(accountId) && x.id !== accountId).map(x => x.id);
+					const transactions =
+						newData.transactions.filter(x => x.credit === accountId || x.debit === accountId).map(x => ({...x, from_child: false}))
+						.concat(newData.transactions.filter(x => child_accounts.includes(x.credit) || child_accounts.includes(x.debit)).map(x => ({...x, from_child: true})));
 					const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
 					return {page: {accountId: accountId, account: account, transactions: transactions, dailyBals: dailyBals, loadInstance: 1}};
-				}, true).done((userData) => updateUi(userData));
+				}, true).then((userData) => updateUi(userData));
 			}
 		});
 
@@ -672,7 +675,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		$(this).after(html);
 	});
 	
-	/********** Attach Autocomplete Event Listerner when Clicked **********/
+	/********** Attach Autocomplete Event Listener when Clicked **********/
 	$('#transactions-table').on('click', '#autocomplete-description > .autocomplete-description-item', function() {
 		//console.log($(this).data('description'));
 		$('#add-transaction-description').val($(this).data('description'));
@@ -797,13 +800,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				$('div.overlay').show();
 				$('#edit-transaction-modal').modal('hide');
 				init(_addDefaultState = function(newData) {
+					console.log('Edited Transaction!');
 					const accountId = parseInt(getUrlVars()['account']);
 					const account = newData.accounts.filter(x => x.id === accountId)[0];
 					if (typeof(account) === 'undefined') window.location.replace('/login');
-					const transactions = newData.transactions.filter(x => x.credit === accountId || x.debit === accountId);
+					const child_accounts = newData.accounts.filter(x => x.id_path.includes(accountId) && x.id !== accountId).map(x => x.id);
+					const transactions =
+						newData.transactions.filter(x => x.credit === accountId || x.debit === accountId).map(x => ({...x, from_child: false}))
+						.concat(newData.transactions.filter(x => child_accounts.includes(x.credit) || child_accounts.includes(x.debit)).map(x => ({...x, from_child: true})));
 					const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
 					return {page: {accountId: accountId, account: account, transactions: transactions, dailyBals: dailyBals, loadInstance: 1}};
-				}, true).done((userData) => updateUi(userData));
+				}, true).then((userData) => updateUi(userData));
 			}
 		});
 	});
@@ -823,13 +830,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				$('#edit-transaction-modal').modal('hide');
 				$('div.overlay').show();
 				init(_addDefaultState = function(newData) {
+					console.log('Deleted Transaction!');
 					const accountId = parseInt(getUrlVars()['account']);
 					const account = newData.accounts.filter(x => x.id === accountId)[0];
 					if (typeof(account) === 'undefined') window.location.replace('/login');
-					const transactions = newData.transactions.filter(x => x.credit === accountId || x.debit === accountId);
+					const child_accounts = newData.accounts.filter(x => x.id_path.includes(accountId) && x.id !== accountId).map(x => x.id);
+					const transactions =
+						newData.transactions.filter(x => x.credit === accountId || x.debit === accountId).map(x => ({...x, from_child: false}))
+						.concat(newData.transactions.filter(x => child_accounts.includes(x.credit) || child_accounts.includes(x.debit)).map(x => ({...x, from_child: true})));
 					const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
 					return {page: {accountId: accountId, account: account, transactions: transactions, dailyBals: dailyBals, loadInstance: 1}};
-				}, true).done((userData) => updateUi(userData));
+				}, true).then((userData) => updateUi(userData));
 			}
 		});
 
@@ -855,6 +866,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 function updateUi(userData) {
+	console.log('userData', userData);
 	$('#account-name').text(userData.page.account.name);
 	$('#account-balance').text(Number(userData.page.dailyBals[userData.page.dailyBals.length - 1].bal).toLocaleString('en-US', {style: 'currency',currency: 'USD'}));
 
@@ -871,15 +883,18 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 		accountTransactions.map(function(x) {
 			return {
 				id: x.id,
+				from_child: x.from_child,
 				input_row: false,
 				date: x.date,
 				description: x.description,
 				value_effect: ((x.debit === thisAccount.id & thisAccount.debit_effect === 1 ) || (x.credit === thisAccount.id & thisAccount.debit_effect === -1)) ? 1 : -1,
 				value: x.value,
+				account: accounts.filter(y => y.id === (x.debit === thisAccount.id ? x.debit : x.credit))[0].id,
+				account_name: accounts.filter(y => y.id === (x.debit === thisAccount.id ? x.debit : x.credit))[0].name,
 				other_account: accounts.filter(y => y.id === (x.debit === thisAccount.id ? x.credit : x.debit))[0].id,
 				other_account_name: accounts.filter(y => y.id === (x.debit === thisAccount.id ? x.credit : x.debit))[0].name,
-				debited_account_id: x.debit,
-				credited_account_id: x.credit
+				debited_account: x.debit,
+				credited_account: x.credit
 			}
 		}).concat({
 			input_row: true,
@@ -887,13 +902,16 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 			description: '<span style="display:none">!!!!!</span><input id="add-transaction-description" type="text" class="form-control form-control-sm"></input>',
 			value_effect: null,
 			value: '<input type="text" id="add-transaction-value" class="form-control form-control-sm"></input>',
+			account: -1,
+			account_name: '',
+			other_account: -1,
 			other_account_name: '<select id="add-transaction-other-account" class="form-control form-control-sm form-select form-select-sm"><option value="none"></option>' +
 				accounts.map(account =>
 					(account.id !== thisAccount.id ? '<option value="'+account.id+'"' + (account.descendants.length !== 0 ? 'disabled': '') + '>' + '&nbsp;'.repeat(account.name_path.length) + account.name + '</option>' : '')
 					).join('') +
 			'</select>',
-			debited_account_id: '<input id="add-transaction-debit" type="text" class="text-center form-control form-control-sm" readonly></input>',
-			credited_account_id: '<input id="add-transaction-credit" type="text" class="text-center form-control form-control-sm" readonly></input>'
+			debited_account: '',
+			credited_account: '',
 		});
 
 		
@@ -907,59 +925,70 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 				{title: 'Transaction Date', data: 'date'},
 				{title: 'Description', data: 'description'},
 				{title: 'Funds In/Out', data: 'value'},
+				{title: 'Account', data: 'account_name'},
 				{title: 'Other Account', data: 'other_account_name'},
-				{title: 'Debit', data: 'debited_account_id'},
-				{title: 'Credit', data: 'credited_account_id'},
+				{title: 'Debit ID', data: 'debited_account'},
+				{title: 'Credit ID', data: 'credited_account'},
 				{title: 'Action', data: null}
 			].map(function(x, i) {
 				return {...x, ...{
-					visible: (!['Test'].includes(x.title)),
+					visible: (!['debited_account', 'credited_account', 'other_account_id'].includes(x.data)),
 					orderable: true,
 					ordering: (x.title === 'Transaction Date' ? true : false),
 					searchable: (x.title === 'Description'),
 					type: (x.title === 'Transaction Date' ? 'html' : ['value', 'debited_account_id', 'credited_account_id'].includes(x.data) ? 'html-num' : 'html'),
-					className: (x.title === 'Description' || x.title === 'Other Account' ? 'dt-left' : 'dt-center' ),
+					className: ['Description', 'Other Account', 'Account'].includes(x.title) === true ? 'dt-left' : 'dt-center',
 					render:
 						x.data === 'value' ? function(data, type, row) {
 							if (row.input_row === false) return (row.value_effect === -1 ? '<span style="color:red">-' + data.toFixed(2) + '</span>' : data.toFixed(2));
 							else return data;
 						}
 						: x.title === 'Action' ? function(data, type, row) {
-							if (row.input_row === false) return '<button type="button" class="btn btn-warning btn-sm edit-transaction">Edit</button><button type="button" class="btn btn-info btn-sm clone-transaction">Clone</button>';
+							if (row.input_row === false && row.from_child === false) return '<button type="button" style="font-size:.8rem;padding:.2rem .4rem" class="btn btn-warning btn-sm edit-transaction me-1">Edit</button><button style="font-size:.8rem;padding:.2rem .4rem" type="button" class="btn btn-info btn-sm clone-transaction">Clone</button>';
+							else if (row.input_row === false && row.from_child === true) return '<button type="button" style="font-size:.8rem;padding:.2rem .4rem" class=" me-1 btn btn-secondary btn-sm"  data-bs-toggle="tooltip" data-bs-placement="left" title="This transactions belongs to a child account - please use the child account page to edit.">Edit</button><button type="button" style="font-size:.8rem;padding:.2rem .4rem" class="btn btn-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="left" title="This transactions belongs to a child account - please use the child account page to edit.">Clone</button>';
 							else return '<button type="button" class="btn btn-success btn-sm " id="add-transaction-submit">Add</button>';
 						}
 						: x.title === 'Description' ? (data, type, row) => '<span>' + /* (data.includes('add-transaction') === false && data.length > 40 ? data.substr(0, 40) + '...' : data)*/ data + '</span>' 
+						: x.title === 'Account' ? function(data, type, row){
+							if (row.from_child === true) return '<a href="/transactions?account='+row.account+'">' + data + '</span>'
+							else return data;
+						}
+						: x.title === 'Other Account' ? function(data, type, row){
+							if (row.input_row === false) return '<a href="/transactions?account=' + row.other_account + '">' + data + '</a>';
+							else return data;
+						}
 						: false
 				}};
 			});
 		//console.log(dtCols);
-		const dt =
-			tbl
-			.DataTable({
-				data: dtData,
-				columns: dtCols,
-				iDisplayLength: 50,
-				dom:
-					"<'row'<'col-6 px-0 justify-content-start d-flex'f><'col-md-6 px-0 justify-content-end d-flex'B>>" +
-					"<'row'<'col-12 px-0'tr>>" +
-					"<'row'<'col-6'i><'col-6'p>>",
-				buttons: [
-					{extend: 'copyHtml5', text: 'Copy to clipboard', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn btn-sm btn-secondary'},
-					{extend: 'csvHtml5', text: 'Export to CSV', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn btn-sm btn-secondary'}
-				],
-				order: [[0, 'asc']],
-				language: {
-					search: "",
-					searchPlaceholder: "Filter by description",
-					info: "_START_ - _END_ (_TOTAL_ total transactions)"
-				},
-				order: [[0, 'desc']],
-				paging: true,
-				info: true
-				//responsive: true
-				//scrollX: true
-				})
-			.draw();
+		const dt = tbl.DataTable({
+			data: dtData,
+			columns: dtCols,
+			iDisplayLength: 50,
+			dom:
+				"<'row'<'col-6 px-0 justify-content-start d-flex'f><'col-md-6 px-0 justify-content-end d-flex'B>>" +
+				"<'row'<'col-12 pt-4 pb-1 px-0'tr>>" +
+				"<'row'<'col-auto me-auto'i><'col-auto'p>>",
+			buttons: [
+				{extend: 'copyHtml5', text: 'Copy to clipboard', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn btn-sm btn-secondary'},
+				{extend: 'csvHtml5', text: 'Export to CSV', exportOptions: {columns: seq(3, dtCols.length - 1)}, className: 'btn btn-sm btn-secondary'}
+			],
+			language: {
+				search: "",
+				searchPlaceholder: "Filter by description",
+				info: "_START_ - _END_ (_TOTAL_ total transactions)"
+			},
+			order: [[0, 'desc']],
+			paging: true,
+			info: true,
+			//responsive: true
+			//scrollX: true
+			createdRow: function(row, data, index) {
+				if (data.from_child === true) {
+					$(row).addClass('from-child');
+				}
+			}
+		}).draw();
 
 	} else {
 	
@@ -970,6 +999,8 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 		dt.rows.add(dtData); // Add new data
 		dt.draw();
 	}
+
+	tbl.get(0).querySelectorAll('[data-bs-toggle="tooltip"]').forEach(x => new bootstrap.Tooltip(x))
 
 	/********** Attach Table Event Listener to Expand Rows **********/
 	return true;

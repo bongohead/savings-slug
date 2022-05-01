@@ -25,9 +25,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			
 			document.querySelector('header').insertBefore(newDiv, document.querySelector('nav.navbar'));
 		*/
-		// Enables tooltips
-		$('[data-toggle="tooltip"]').tooltip();
-	})();
+  })();
 	
 	
 	

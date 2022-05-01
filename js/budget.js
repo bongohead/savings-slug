@@ -1,4 +1,4 @@
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function(event) {
 
 	/********** Initialize **********/
 	$('div.overlay').show();
@@ -38,38 +38,38 @@ $(document).ready(function() {
 	var typingTimer;                //timer identifier
 	// https://stackoverflow.com/questions/4220126/run-javascript-function-when-user-finishes-typing-instead-of-on-key-up
 	$('#add-budget-table').on('change keyup', 'input.add-budget-value:enabled', function(event) {
-			clearTimeout(typingTimer);
-			typingTimer = setTimeout(function() {
-				console.log('Done typing');
-				const dt = $('#add-budget-table').DataTable();
-				const thisRow = dt.row($(this).closest('tr'));
-				const thisRowData = thisRow.data();
-				let newRowData = thisRowData;
-				newRowData['monthly_budget'] = Number($(this).val());
-				newRowData['validValue'] = (typeof(newRowData['monthly_budget']) === 'number' && !isNaN(newRowData['monthly_budget']));
-				thisRow.data(newRowData);
-				// console.log(thisRowData);
-				
-				const thisId = thisRow.index()
-				const lastIndex = dt.rows().count() - 1
-				// Get any ancestors
-				seq(0, thisId).filter(i => dt.row(i).data().descendants.includes(thisRowData.id))
-				.sort((a, b) => dt.row(a).data().nest_level > dt.row(b).data().nest_level ? -1 : 1)
-				// Iterate through ancestors (in reverse order of nest_level) and add through descendants
-				.forEach(function(i) {
-					const parentId = dt.row(i).data().id;
-					// console.log('parentId', parentId);
-					let newRowData = dt.row(i).data();
-					// Iterate through and get any rows which are direct descendants
-					const res = seq(0, lastIndex).filter(j => dt.row(j).data().parent == parentId).map(j => Number(dt.row(j).data().monthly_budget) || 0);
-					newRowData['monthly_budget'] = res.reduce((a, b) => a + b);
-					newRowData['validValue'] =  (typeof(newRowData['monthly_budget']) === 'number' && !isNaN(newRowData['monthly_budget']));
-					// console.log(res);
-					dt.row(i).data(newRowData);
-				});
-				
-			}.bind(this), 1000); // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind 
-			// Also set done Typing Interval here
+		clearTimeout(typingTimer);
+		typingTimer = setTimeout(function() {
+			console.log('Done typing');
+			const dt = $('#add-budget-table').DataTable();
+			const thisRow = dt.row($(this).closest('tr'));
+			const thisRowData = thisRow.data();
+			let newRowData = thisRowData;
+			newRowData['monthly_budget'] = Number($(this).val());
+			newRowData['validValue'] = (typeof(newRowData['monthly_budget']) === 'number' && !isNaN(newRowData['monthly_budget']));
+			thisRow.data(newRowData);
+			// console.log(thisRowData);
+			
+			const thisId = thisRow.index()
+			const lastIndex = dt.rows().count() - 1
+			// Get any ancestors
+			seq(0, thisId).filter(i => dt.row(i).data().descendants.includes(thisRowData.id))
+			.sort((a, b) => dt.row(a).data().nest_level > dt.row(b).data().nest_level ? -1 : 1)
+			// Iterate through ancestors (in reverse order of nest_level) and add through descendants
+			.forEach(function(i) {
+				const parentId = dt.row(i).data().id;
+				// console.log('parentId', parentId);
+				let newRowData = dt.row(i).data();
+				// Iterate through and get any rows which are direct descendants
+				const res = seq(0, lastIndex).filter(j => dt.row(j).data().parent == parentId).map(j => Number(dt.row(j).data().monthly_budget) || 0);
+				newRowData['monthly_budget'] = res.reduce((a, b) => a + b);
+				newRowData['validValue'] =  (typeof(newRowData['monthly_budget']) === 'number' && !isNaN(newRowData['monthly_budget']));
+				// console.log(res);
+				dt.row(i).data(newRowData);
+			});
+			
+		}.bind(this), 1000); // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind 
+		// Also set done Typing Interval here
 	});
 	
 
@@ -95,13 +95,13 @@ $(document).ready(function() {
 
 		// Send to SQL 
 		getAJAX('editAccountBudgets', toScript = ['updatedAccounts'], fromAjax = {ids_budgets: ids_budgets}).done(function(ajaxRes) {
-		console.log(ajaxRes);
+			console.log(ajaxRes);
 			if (JSON.parse(ajaxRes).updatedAccounts >= 1) {
 				$('#add-budget-modal').modal('hide');
 				$('div.overlay').show();
 				init(_addDefaultState = function(newData) {
 					return {page: {loadInstance: 1}};
-				}, true).done((userData) => updateUi(userData));
+				}, true).then((userData) => updateUi(userData));
 			} else {
 				form.find('.invalid-feedback').text('SQL Error').show();
 			}
@@ -117,7 +117,7 @@ $(document).ready(function() {
 		
 		init(_addDefaultState = function(newData) {
 			return {page: {activeMonth: newActiveMonth, loadInstance: 1}};
-		}, true).done((userData) => updateUi(userData));
+		}, true).then((userData) => updateUi(userData));
 	});
 
 });
@@ -179,8 +179,7 @@ function drawTable(tbl, accounts, loadInstance) {
 					className: (x.title === 'Account' ? 'dt-left' : 'dt-center'),
 					render:
 						x.title === 'Account' ? (data, type, row) => {
-							return
-							'<span style="padding-left: ' + Math.round((row.nest_level - 2) * 1) + 'rem">' +
+							return '<span style="padding-left: ' + Math.round((row.nest_level - 2) * 1) + 'rem">' +
 							'<a style="font-size:0.90rem;font-weight:bold" href="transactions?account=' + row.id + '">' +
 								row.name +
 							'</a>';
@@ -327,8 +326,7 @@ function drawBudgetTable(tbl, accounts, dailyBals, activeMonth, loadInstance) {
 					className: (x.title === 'Account' ? 'dt-left' : 'dt-center'),
 					render:
 						x.title === 'Account' ? (data, type, row) => {
-							return
-							'<span style="padding-left: ' + Math.round((row.nest_level - 2) * 1) + 'rem">' +
+							return '<span style="padding-left: ' + Math.round((row.nest_level - 2) * 1) + 'rem">' +
 							'<a style="font-size:0.90rem;font-weight:bold" href="transactions?account=' + row.id + '">' +
 								row.name +
 							'</a>';

@@ -54,7 +54,26 @@ class __TwigTemplate_eabfedc66a2f240b10f35913ae8464ab extends Template
     {
         $macros = $this->macros;
         // line 7
-        echo "
+        echo "<div class=\"row g-0\">
+\t<div class=\"col-12 px-0\">
+\t\t<div class=\"card my-3 py-1 mx-0 rounded shadow-sm\"><div class=\"card-body\">
+\t\t\t\t<h2 class=\"text-center\"><span id=\"account-name\">Account</span>: <span id=\"account-balance\" class=\"text-success\"></span></h2>
+\t\t\t\t<div class=\"col-lg-8 col-md-12 mx-auto\" id=\"transactions-chart-div\"></div>
+\t\t</div></div>
+\t</div>
+</div>
+
+<div class=\"row g-0\">
+\t<div class=\"col-12 px-0\">
+\t\t<div class=\"card mx-0 shadow-sm rounded\"><div class=\"card-body\">
+\t\t\t<div class=\"mb-2\"><span style=\"vertical-align:middle;font-size:1.3rem;\">TRANSACTIONS</span></div>
+\t\t\t<div class=\"px-4 py-4\"><table class=\"table w-100\" id=\"transactions-table\"></table></div>
+\t\t</div></div>
+\t</div>
+</div>
+
+<!--
+
 <section class=\"container-fluid\">
 \t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
 \t\t<div class=\"row justify-content-center my-3\">
@@ -78,7 +97,9 @@ class __TwigTemplate_eabfedc66a2f240b10f35913ae8464ab extends Template
 \t\t</div>
 \t</div>
 
+
 </section>
+-->
 
 <!-- Add Edit Modal -->
 <div class=\"modal fade\" id=\"edit-transaction-modal\" tabindex=\"-1\" role=\"dialog\">
@@ -159,6 +180,25 @@ class __TwigTemplate_eabfedc66a2f240b10f35913ae8464ab extends Template
 
 
 {% block content %}
+<div class=\"row g-0\">
+\t<div class=\"col-12 px-0\">
+\t\t<div class=\"card my-3 py-1 mx-0 rounded shadow-sm\"><div class=\"card-body\">
+\t\t\t\t<h2 class=\"text-center\"><span id=\"account-name\">Account</span>: <span id=\"account-balance\" class=\"text-success\"></span></h2>
+\t\t\t\t<div class=\"col-lg-8 col-md-12 mx-auto\" id=\"transactions-chart-div\"></div>
+\t\t</div></div>
+\t</div>
+</div>
+
+<div class=\"row g-0\">
+\t<div class=\"col-12 px-0\">
+\t\t<div class=\"card mx-0 shadow-sm rounded\"><div class=\"card-body\">
+\t\t\t<div class=\"mb-2\"><span style=\"vertical-align:middle;font-size:1.3rem;\">TRANSACTIONS</span></div>
+\t\t\t<div class=\"px-4 py-4\"><table class=\"table w-100\" id=\"transactions-table\"></table></div>
+\t\t</div></div>
+\t</div>
+</div>
+
+<!--
 
 <section class=\"container-fluid\">
 \t<div class=\"col-12 col-lg-8 col-xl-9 col-xxl-9 m-auto pt-0 px-2 pb-5\">
@@ -183,7 +223,9 @@ class __TwigTemplate_eabfedc66a2f240b10f35913ae8464ab extends Template
 \t\t</div>
 \t</div>
 
+
 </section>
+-->
 
 <!-- Add Edit Modal -->
 <div class=\"modal fade\" id=\"edit-transaction-modal\" tabindex=\"-1\" role=\"dialog\">
