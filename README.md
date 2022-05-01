@@ -5,6 +5,9 @@ This is budget tracking software built for my own uses, hosted on https://budget
 
 ## 2022-04-30
 - Added major cleanup of init file
+- Added child accounts to transactions page
+- Added more statistics to assets page
+- Improved styling of transactions and expense pages
 - Replaced $.Deferred with Promises
 
 ## 2022-04-23
