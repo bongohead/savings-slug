@@ -96,7 +96,7 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 
 \t\t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
-\t\t\t\t\t<ul class=\"navbar-nav\">
+\t\t\t\t\t<ul class=\"navbar-nav me-auto\">
 \t\t\t\t\t\t<li class=\"nav-item\">
 \t\t\t\t\t\t\t<a class=\"nav-link\" href=\"/accounts\"><i class=\"bi bi-piggy-bank me-1\"></i>Accounts Summary</a>
 \t\t\t\t\t\t</li>
@@ -118,6 +118,11 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t\t\t\t\t\t\t<a class=\"nav-link\" href=\"/expenses\"><i class=\"bi bi-graph-up me-1\"></i>Expenses Summary</a>
 \t\t\t\t\t\t</li>
 
+\t\t\t\t\t</ul>
+\t\t\t\t\t<ul class=\"navbar-nav\">
+\t\t\t\t\t\t<li class=\"nav-item\">
+\t\t\t\t\t\t\t<a class=\"btn btn-dark\" href=\"/login\"><i class=\"bi bi-power me-1\"></i>Logout</a>
+\t\t\t\t\t\t</li>
 \t\t\t\t\t</ul>
 \t\t\t\t</div>
 \t\t\t\t
@@ -169,9 +174,9 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t\t\t<div class=\"col mx-2 pb-5\">
 \t\t\t\t<div class=\"container-xxl\">
 \t\t\t\t\t";
-        // line 124
+        // line 129
         $this->displayBlock('content', $context, $blocks);
-        // line 126
+        // line 131
         echo "\t\t\t\t</div>
 \t\t\t</div>
 \t\t</div>
@@ -224,7 +229,7 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 
 \t<script>
 \t  ";
-        // line 177
+        // line 182
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -241,11 +246,11 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
         $macros = $this->macros;
     }
 
-    // line 124
+    // line 129
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 125
+        // line 130
         echo "\t\t\t\t\t";
     }
 
@@ -261,7 +266,7 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 
     public function getDebugInfo()
     {
-        return array (  249 => 125,  245 => 124,  239 => 39,  228 => 177,  175 => 126,  173 => 124,  87 => 40,  85 => 39,  79 => 36,  49 => 9,  39 => 1,);
+        return array (  254 => 130,  250 => 129,  244 => 39,  233 => 182,  180 => 131,  178 => 129,  87 => 40,  85 => 39,  79 => 36,  49 => 9,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -317,7 +322,7 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t\t\t\t<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collapsingNavbarLg\"><span class=\"navbar-toggler-icon\"></span></button>
 
 \t\t\t\t<div class=\"navbar-collapse collapse\" id=\"collapsingNavbarLg\">
-\t\t\t\t\t<ul class=\"navbar-nav\">
+\t\t\t\t\t<ul class=\"navbar-nav me-auto\">
 \t\t\t\t\t\t<li class=\"nav-item\">
 \t\t\t\t\t\t\t<a class=\"nav-link\" href=\"/accounts\"><i class=\"bi bi-piggy-bank me-1\"></i>Accounts Summary</a>
 \t\t\t\t\t\t</li>
@@ -339,6 +344,11 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t\t\t\t\t\t\t<a class=\"nav-link\" href=\"/expenses\"><i class=\"bi bi-graph-up me-1\"></i>Expenses Summary</a>
 \t\t\t\t\t\t</li>
 
+\t\t\t\t\t</ul>
+\t\t\t\t\t<ul class=\"navbar-nav\">
+\t\t\t\t\t\t<li class=\"nav-item\">
+\t\t\t\t\t\t\t<a class=\"btn btn-dark\" href=\"/login\"><i class=\"bi bi-power me-1\"></i>Logout</a>
+\t\t\t\t\t\t</li>
 \t\t\t\t\t</ul>
 \t\t\t\t</div>
 \t\t\t\t
