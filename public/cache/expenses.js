@@ -451,7 +451,7 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				const dailyBalChange0 = dailyBalChangeNested.map(function(accountsByDate) {
 					return accountsByDate.map(account => ({
 						id: account.id,
-						descendants: account.descendants,
+						// descendants: account.descendants,
 						// Sum up over debit/credit values of descendants
 						debit: account.debit + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.debit).reduce((a, b) => a + b, 0),
 						credit: account.credit + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.credit).reduce((a, b) => a + b, 0)
@@ -467,6 +467,7 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 						dailyBals[d][a].bal = Math.round((dailyBals[d][a].debit * accounts[a].debit_effect + dailyBals[d][a].credit * accounts[a].debit_effect * -1) * 100)/100;
 						dailyBals[d][a].balChange = Math.round((dailyBals[d][a].bal - (d > 0 ? dailyBals[d - 1][a].bal : 0)) * 100)/100;
 						dailyBals[d][a].date = dates[d];
+						// Clear space in storage
 					}
 				}
 				dailyBals = dailyBals.flat(1);
@@ -487,7 +488,9 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 	// Once new data has been pulled, merge it with the default state variables, store the result in sessionStorage and set the UI
 	const cleanedData = getNewData.then(function(newData, e) {
 		
-		const finalData = {...newData, ..._addDefaultState(newData)};
+		const finalData = $.extend(true, newData, _addDefaultState(newData));
+		console.log('finalData', finalData);
+		// {...newData, ..._addDefaultState(newData)};
 		
 		setAllData(finalData);
 		

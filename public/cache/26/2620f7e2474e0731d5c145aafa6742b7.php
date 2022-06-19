@@ -50,7 +50,7 @@ class __TwigTemplate_3c89bafbb14b479ae8c875724622dc1d extends Template
     <meta name=keywords content=\"keyword1 keyword2 keyword3 keyword4\" />
     
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://econforecasting.com/static/style-bs.css\">
+    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://econforecasting.com/static/style.css\">
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">
 
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">
@@ -226,7 +226,7 @@ background-size: cover;\">
     <meta name=keywords content=\"keyword1 keyword2 keyword3 keyword4\" />
     
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
-    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://econforecasting.com/static/style-bs.css\">
+    <link rel=\"stylesheet\" type=\"text/css\" href=\"https://econforecasting.com/static/style.css\">
 \t<link rel=\"stylesheet\" type=\"text/css\" href=\"//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css\">
 
 \t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css\">

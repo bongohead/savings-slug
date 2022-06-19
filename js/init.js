@@ -242,7 +242,7 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 					}
 				}
 				dailyBals = dailyBals.flat(1);
-				return {/*dailyBalsChange: dailyBalChange0.flat(),*/ dailyBals: dailyBals, dates: dates};
+				return {dailyBalsChange: dailyBalChange0.flat(), dailyBals: dailyBals, dates: dates};
 			});
 
 
