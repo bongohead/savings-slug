@@ -377,8 +377,8 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 	
 	
 	const accountsByCategory = [
-		{category: 'assets', colors: ['forestgreen', 'cadetblue'], accounts: accounts.filter(x => x.name_path[0] === 'Assets' && x.name_path.length === 2)},
-		{category: 'liabilities', colors: ['firebrick', 'lightsalmon'], accounts: accounts.filter(x => x.name_path[0] === 'Liabilities' && x.name_path.length === 2)},
+		{category: 'assets', colors: ['forestgreen', 'cadetblue'], accounts: accounts.filter(x => x.name_path[0] === 'Assets' && x.name_path.length <= 2)},
+		{category: 'liabilities', colors: ['firebrick', 'lightsalmon'], accounts: accounts.filter(x => x.name_path[0] === 'Liabilities' && x.name_path.length <= 2)},
 		{category: 'equity', colors: ['black'], accounts: accounts.filter(x => x.name_path[0] === 'Equity' && x.name_path.length === 1)}
 		]
 	// console.log('accountsByCategory', accountsByCategory);
@@ -388,7 +388,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 			return category.accounts.map(function(account, i) {
 				const res = {
 					name: account.name,
-					visible: true,
+					visible: ['Equity', 'Assets', 'Liabilities'].includes(account.name),
 					color: (category.accounts.length >= 2 ? gradient.valToColor(i, gradient.create([0,  category.accounts.length - 1], category.colors, 'htmlcolor'), 'rgba') : category.colors[0]),
 					lineWidth: (category.category !== 'equity' ? 2 : 5),
 					category: category.category,
@@ -521,7 +521,27 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 		};
 		
 		const chart = new Highcharts.stockChart(chartId, chartOptions);
+		chart.addSeries({ 
+			name: 'Target: 100k',
+			color: 'red',
+			type:'line',
+			dashStyle: 'shortdash',
+			lineWidth: 2,
+			visible: false,
+			data: [[chart.xAxis[0].dataMin, 100000], {x: chart.xAxis[0].dataMax, y: 100000, dataLabels: { enabled: true }}]
+		});
 		
+		chart.addSeries({
+			name: 'Target: 1m',
+			color: 'orange',
+			type:'line',
+			dashStyle: 'shortdash',
+			lineWidth: 2,
+			visible: false,
+			data: [[chart.xAxis[0].dataMin, 1000000], {x: chart.xAxis[0].dataMax, y: 1000000, dataLabels: { enabled: true }}]
+		});
+		
+
 	}
 	
 	return true;

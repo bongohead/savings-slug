@@ -459,13 +459,14 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				});
 				
 				// Get daily balances instead of debit/credit daily change -> accounts and dates indices must be same in dailyBalChange as in date and accounts constants
+				// bc == balchange
 				let dailyBals = dailyBalChange0;
 				for (d = 0; d < dates.length; d++) {
 					for (a = 0; a < accounts.length; a++) {
 						dailyBals[d][a].debit = Math.round(((d > 0 ? dailyBals[d - 1][a].debit : 0) + dailyBalChange0[d][a].debit) * 100)/100
 						dailyBals[d][a].credit = Math.round(((d > 0 ? dailyBals[d - 1][a].credit : 0) + dailyBalChange0[d][a].credit) * 100)/100
 						dailyBals[d][a].bal = Math.round((dailyBals[d][a].debit * accounts[a].debit_effect + dailyBals[d][a].credit * accounts[a].debit_effect * -1) * 100)/100;
-						dailyBals[d][a].balChange = Math.round((dailyBals[d][a].bal - (d > 0 ? dailyBals[d - 1][a].bal : 0)) * 100)/100;
+						dailyBals[d][a].bc = Math.round((dailyBals[d][a].bal - (d > 0 ? dailyBals[d - 1][a].bal : 0)) * 100)/100;
 						dailyBals[d][a].date = dates[d];
 						// Clear space in storage
 					}
@@ -935,8 +936,8 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 	
 	
 	const accountsByCategory = [
-		{category: 'assets', colors: ['forestgreen', 'cadetblue'], accounts: accounts.filter(x => x.name_path[0] === 'Assets' && x.name_path.length === 2)},
-		{category: 'liabilities', colors: ['firebrick', 'lightsalmon'], accounts: accounts.filter(x => x.name_path[0] === 'Liabilities' && x.name_path.length === 2)},
+		{category: 'assets', colors: ['forestgreen', 'cadetblue'], accounts: accounts.filter(x => x.name_path[0] === 'Assets' && x.name_path.length <= 2)},
+		{category: 'liabilities', colors: ['firebrick', 'lightsalmon'], accounts: accounts.filter(x => x.name_path[0] === 'Liabilities' && x.name_path.length <= 2)},
 		{category: 'equity', colors: ['black'], accounts: accounts.filter(x => x.name_path[0] === 'Equity' && x.name_path.length === 1)}
 		]
 	// console.log('accountsByCategory', accountsByCategory);
@@ -946,7 +947,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 			return category.accounts.map(function(account, i) {
 				const res = {
 					name: account.name,
-					visible: true,
+					visible: ['Equity', 'Assets', 'Liabilities'].includes(account.name),
 					color: (category.accounts.length >= 2 ? gradient.valToColor(i, gradient.create([0,  category.accounts.length - 1], category.colors, 'htmlcolor'), 'rgba') : category.colors[0]),
 					lineWidth: (category.category !== 'equity' ? 2 : 5),
 					category: category.category,
@@ -1079,7 +1080,27 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 		};
 		
 		const chart = new Highcharts.stockChart(chartId, chartOptions);
+		chart.addSeries({ 
+			name: 'Target: 100k',
+			color: 'red',
+			type:'line',
+			dashStyle: 'shortdash',
+			lineWidth: 2,
+			visible: false,
+			data: [[chart.xAxis[0].dataMin, 100000], {x: chart.xAxis[0].dataMax, y: 100000, dataLabels: { enabled: true }}]
+		});
 		
+		chart.addSeries({
+			name: 'Target: 1m',
+			color: 'orange',
+			type:'line',
+			dashStyle: 'shortdash',
+			lineWidth: 2,
+			visible: false,
+			data: [[chart.xAxis[0].dataMin, 1000000], {x: chart.xAxis[0].dataMax, y: 1000000, dataLabels: { enabled: true }}]
+		});
+		
+
 	}
 	
 	return true;

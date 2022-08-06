@@ -50,7 +50,7 @@ function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
 	
 	const chartData = accountsData.map(function(account, i) {
 		
-		const accountTransactions = dailyBalsChange.filter(x => x.id === account.id).map(x => [x.date, x.balChange]);	
+		const accountTransactions = dailyBalsChange.filter(x => x.id === account.id).map(x => [x.date, x.bc]);	
 		const accountData = allDates.map(function(date) {
 			return [parseInt(moment(date).format('x')), accountTransactions.filter(x => x[0] === date).reduce((accum, x) => accum + x[1], null)]
 		}).map(x => [x[0], x[1] === 0 ? null : x[1]]);

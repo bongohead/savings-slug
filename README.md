@@ -3,6 +3,9 @@ This is budget tracking software built for my own uses, hosted on https://budget
 
 # CHANGELOG
 
+## 2022-08-05
+- Minor optimization
+
 ## 2022-04-30
 - Added major cleanup of init file
 - Added child accounts to transactions page
