@@ -33,7 +33,7 @@ function drawActiveMonth(activeMonth, loadInstance) {
 
 function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
 	
-	const accountsData = accounts.filter(x => x.name_path.includes('Expenses') );
+	const accountsData = accounts.filter(x => x.name_path.includes('Income') );
 	
 	function dateSeq(startDate, stopDate) {
 		var dateArray = [];
@@ -192,7 +192,7 @@ function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
 						'<span class="fw-bolder" style="color:'+ x.color +'">' + x.series.name + '</span>:  ' + x.y.toFixed(2)
 					).join('<br>') +
 					'<hr>' +
-					'<span class="fw-bold" >Total Income:  ' + this.points.map(x => x.y).reduce((a, b) => a + b, 0).toFixed(2) + '</span><br>' +
+					'<span class="fw-bold" >Total Expenses:  ' + this.points.map(x => x.y).reduce((a, b) => a + b, 0).toFixed(2) + '</span><br>' +
 				'</div>';
 				// return table;
 				return table;

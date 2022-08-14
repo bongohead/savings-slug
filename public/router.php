@@ -25,6 +25,8 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'transactions', 'request' => ['transactions'], 'title' => 'Transactions Log', 'models' => ['checkSession'], 'js' => ['init', 'transactions']],
 			['template' => 'budget', 'request' => ['budget'], 'title' => 'Budget', 'models' => ['checkSession'], 'js' => ['init', 'budget']],
 			['template' => 'expenses', 'request' => ['expenses'], 'title' => 'Expense Tracker', 'models' => ['checkSession'], 'js' => ['init', 'expenses']],
+			['template' => 'expenses', 'request' => ['income'], 'title' => 'Income Tracker', 'models' => ['checkSession'], 'js' => ['init', 'income']],
+
 			['template' => 'calendar', 'request' => ['calendar'], 'title' => 'Printable Monthly Calendar', 'models' => ['checkSession'], 'js' => ['init', 'calendar']]
 
 		],

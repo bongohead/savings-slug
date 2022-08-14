@@ -275,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 				$('#edit-transaction-modal').modal('hide');
 				$('div.overlay').show();
 				init(_addDefaultState = function(newData) {
-					console.log('Deleted Transaction!');
+					console.log('Deleted Transaction: id', id);
 					const accountId = parseInt(getUrlVars()['account']);
 					const account = newData.accounts.filter(x => x.id === accountId)[0];
 					if (typeof(account) === 'undefined') window.location.replace('/login');
@@ -524,7 +524,7 @@ function drawChart(chartId, thisAccount, accountDailyBals, loadInstance) {
 						text = '';
 						for (i = 0; i < this.points.length; i++) {
 								text += '<span style="font-weight:bold;color:'+this.points[i].series.color+'">' + this.points[i].series.name + ': </span>' +
-								this.points[i].y.toLocaleString('en-US', {style: 'currency',currency: 'USD'}) + '<br>';
+								this.points[i].y.toLocaleString('en-US', {style: 'currency',currency: 'USD'}) + ' [' + moment(this.x).format('MM/DD/YYYY') + ']' + '<br>' ;
 						}
 						return text;
 				},

@@ -9,6 +9,7 @@ This is budget tracking software built for my own uses, hosted on https://budget
 ## 2022-08-14
 - Added monthly calendar - JS generated + nicely printable
 - Added more optimization (reduced SQL load + key size)
+- Added dates to transaction graph
 - Removed Font Awesome dependency
 - Upgraded BS Icons dependency
 
