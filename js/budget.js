@@ -245,7 +245,7 @@ function drawBudgetTable(tbl, accounts, dailyBals, activeMonth, loadInstance) {
 	//const accountIds = accountsData.map(x => x.id);
 	
 	// If no daily balances for this month
-	if (dailyBals.filter(x => moment(x.date).isSame(moment(activeMonth), 'month')).length === 0) {
+	if (dailyBals.filter(x => moment(x.dt).isSame(moment(activeMonth), 'month')).length === 0) {
 		console.log('No data for table');
 		tbl.DataTable().clear().draw();
 		return;
@@ -279,25 +279,25 @@ function drawBudgetTable(tbl, accounts, dailyBals, activeMonth, loadInstance) {
 		// Get last balance for this account for this month
 		const endValue =
 			dailyBals
-			.filter(x => x.id === account.id && moment(x.date).isSame(moment(activeMonth), 'month'))
+			.filter(x => x.id === account.id && moment(x.dt).isSame(moment(activeMonth), 'month'))
 			// Get max date
-			.reduce((accum, x) => moment(x.date) >= moment(accum.date) ? x : accum, {date: '2000-01-01', debit: 0}).debit;
+			.reduce((accum, x) => moment(x.dt) >= moment(accum.dt) ? x : accum, {dt: '2000-01-01', db: 0}).db;
 			
 		console.log(			dailyBals
-			.filter(x => x.id === account.id && moment(x.date).isSame(moment(activeMonth), 'month'))
+			.filter(x => x.id === account.id && moment(x.dt).isSame(moment(activeMonth), 'month'))
 			);
 		// Get last balance for this account before this month if exists; otherwise 0;
 		const startValue =
 			dailyBals
-			.filter(x => x.id === account.id && moment(x.date).isBefore(moment(activeMonth), 'month'))
+			.filter(x => x.id === account.id && moment(x.dt).isBefore(moment(activeMonth), 'month'))
 			// Uncomment below to always use last months value instead of last value before this month
 			// .filter(x => x.id === account.id && moment(x.date).isSame(moment(activeMonth).add(-1, 'month'), 'month'))
 			// Get max date
-			.reduce((accum, x) => moment(x.date) >= moment(accum.date) ? x : accum, {date: '2000-01-01', debit: 0}).debit;
+			.reduce((accum, x) => moment(x.dt) >= moment(accum.dt) ? x : accum, {dt: '2000-01-01', db: 0}).db;
 			
 			
-		//const startValue = thisAccountBals.reduce((accum, x) => moment(accum.date) < moment(x.date) ? accum : x, activeMonth).debit || 0;
-		//const endValue = thisAccountBals.reduce((accum, x) => moment(x.date) >= moment(accum.date) ? accum : x, activeMonth).debit || 0;
+		//const startValue = thisAccountBals.reduce((accum, x) => moment(accum.dt) < moment(x.dt) ? accum : x, activeMonth).db || 0;
+		//const endValue = thisAccountBals.reduce((accum, x) => moment(x.dt) >= moment(accum.dt) ? accum : x, activeMonth).db || 0;
 		console.log(startValue, endValue);
 		const monthly_spending = endValue - startValue;
 		const monthly_spending_percent = typeof(Number(account.monthly_budget)) === 'number' && Number(account.monthly_budget) !== 0 ? monthly_spending/Number(account.monthly_budget) : null;

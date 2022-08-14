@@ -3,13 +3,17 @@ This is budget tracking software built for my own uses, hosted on https://budget
 
 # CHANGELOG
 
+## TBD
+- Full SCSS migration to BS52 w/macroblog style
+
 ## 2022-08-14
 - Added monthly calendar - JS generated + nicely printable
+- Added more optimization (reduced SQL load + key size)
 - Removed Font Awesome dependency
 - Upgraded BS Icons dependency
 
 ## 2022-08-05
-- Minor optimization (localStorage space)
+- Added minor optimization (localStorage space)
 
 ## 2022-04-30
 - Added major cleanup of init file

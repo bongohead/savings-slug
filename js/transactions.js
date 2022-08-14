@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const child_accounts = newData.accounts.filter(x => x.id_path.includes(accountId) && x.id !== accountId).map(x => x.id);
 		
 		const transactions =
-			newData.transactions.filter(x => x.credit === accountId || x.debit === accountId).map(x => ({...x, from_child: false}))
-			.concat(newData.transactions.filter(x => child_accounts.includes(x.credit) || child_accounts.includes(x.debit)).map(x => ({...x, from_child: true})));
+			newData.transactions.filter(x => x.cr === accountId || x.db === accountId).map(x => ({...x, from_child: false}))
+			.concat(newData.transactions.filter(x => child_accounts.includes(x.cr) || child_accounts.includes(x.db)).map(x => ({...x, from_child: true})));
 
 		const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
 		// @loadInstance gives an indicator of page load: 0 = initial load, 1 = later load
@@ -77,8 +77,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					if (typeof(account) === 'undefined') window.location.replace('/login');
 					const child_accounts = newData.accounts.filter(x => x.id_path.includes(accountId) && x.id !== accountId).map(x => x.id);
 					const transactions =
-						newData.transactions.filter(x => x.credit === accountId || x.debit === accountId).map(x => ({...x, from_child: false}))
-						.concat(newData.transactions.filter(x => child_accounts.includes(x.credit) || child_accounts.includes(x.debit)).map(x => ({...x, from_child: true})));
+						newData.transactions.filter(x => x.cr === accountId || x.db === accountId).map(x => ({...x, from_child: false}))
+						.concat(newData.transactions.filter(x => child_accounts.includes(x.cr) || child_accounts.includes(x.db)).map(x => ({...x, from_child: true})));
 					const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
 					return {page: {accountId: accountId, account: account, transactions: transactions, dailyBals: dailyBals, loadInstance: 1}};
 				}, true).then((userData) => updateUi(userData));
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		if (descriptionInput.length < 2) return;
 		
 		// Get account transactions, sorted by reverse date
-		const accountTransactionsDescriptions = getData('page').transactions.sort((a, b) => new Date(b.date) > new Date(a.date)).map(x => x.description);
+		const accountTransactionsDescriptions = getData('page').transactions.sort((a, b) => new Date(b.dt) > new Date(a.dt)).map(x => x.desc);
 		
 		// Finding matching transactions
 		// const matchingAccountTransactionsDescriptions = accountTransactionsDescriptions.filter(x => x.substr(0, descriptionInput.length).toUpperCase() === descriptionInput.toUpperCase());
@@ -251,8 +251,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					if (typeof(account) === 'undefined') window.location.replace('/login');
 					const child_accounts = newData.accounts.filter(x => x.id_path.includes(accountId) && x.id !== accountId).map(x => x.id);
 					const transactions =
-						newData.transactions.filter(x => x.credit === accountId || x.debit === accountId).map(x => ({...x, from_child: false}))
-						.concat(newData.transactions.filter(x => child_accounts.includes(x.credit) || child_accounts.includes(x.debit)).map(x => ({...x, from_child: true})));
+						newData.transactions.filter(x => x.cr === accountId || x.db === accountId).map(x => ({...x, from_child: false}))
+						.concat(newData.transactions.filter(x => child_accounts.includes(x.cr) || child_accounts.includes(x.db)).map(x => ({...x, from_child: true})));
 					const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
 					return {page: {accountId: accountId, account: account, transactions: transactions, dailyBals: dailyBals, loadInstance: 1}};
 				}, true).then((userData) => updateUi(userData));
@@ -281,8 +281,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					if (typeof(account) === 'undefined') window.location.replace('/login');
 					const child_accounts = newData.accounts.filter(x => x.id_path.includes(accountId) && x.id !== accountId).map(x => x.id);
 					const transactions =
-						newData.transactions.filter(x => x.credit === accountId || x.debit === accountId).map(x => ({...x, from_child: false}))
-						.concat(newData.transactions.filter(x => child_accounts.includes(x.credit) || child_accounts.includes(x.debit)).map(x => ({...x, from_child: true})));
+						newData.transactions.filter(x => x.cr === accountId || x.db === accountId).map(x => ({...x, from_child: false}))
+						.concat(newData.transactions.filter(x => child_accounts.includes(x.cr) || child_accounts.includes(x.db)).map(x => ({...x, from_child: true})));
 					const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
 					return {page: {accountId: accountId, account: account, transactions: transactions, dailyBals: dailyBals, loadInstance: 1}};
 				}, true).then((userData) => updateUi(userData));
@@ -330,16 +330,16 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 				id: x.id,
 				from_child: x.from_child,
 				input_row: false,
-				date: x.date,
-				description: x.description,
-				value_effect: ((x.debit === thisAccount.id & thisAccount.debit_effect === 1 ) || (x.credit === thisAccount.id & thisAccount.debit_effect === -1)) ? 1 : -1,
-				value: x.value,
-				account: accounts.filter(y => y.id === (x.debit === thisAccount.id ? x.debit : x.credit))[0].id,
-				account_name: accounts.filter(y => y.id === (x.debit === thisAccount.id ? x.debit : x.credit))[0].name,
-				other_account: accounts.filter(y => y.id === (x.debit === thisAccount.id ? x.credit : x.debit))[0].id,
-				other_account_name: accounts.filter(y => y.id === (x.debit === thisAccount.id ? x.credit : x.debit))[0].name,
-				debited_account: x.debit,
-				credited_account: x.credit
+				date: x.dt,
+				description: x.desc,
+				value_effect: ((x.db === thisAccount.id & thisAccount.debit_effect === 1 ) || (x.cr === thisAccount.id & thisAccount.debit_effect === -1)) ? 1 : -1,
+				value: x.val,
+				account: accounts.filter(y => y.id === (x.db === thisAccount.id ? x.db : x.cr))[0].id,
+				account_name: accounts.filter(y => y.id === (x.db === thisAccount.id ? x.db : x.cr))[0].name,
+				other_account: accounts.filter(y => y.id === (x.db === thisAccount.id ? x.cr : x.db))[0].id,
+				other_account_name: accounts.filter(y => y.id === (x.db === thisAccount.id ? x.cr : x.db))[0].name,
+				debited_account: x.db,
+				credited_account: x.cr
 			}
 		}).concat({
 			input_row: true,
@@ -460,7 +460,7 @@ function drawChart(chartId, thisAccount, accountDailyBals, loadInstance) {
 		visible: true,
 		lineWidth: 4,
 		type: 'area',
-		data: accountDailyBals.map(x => [new Date(x.date).getTime(), x.bal])
+		data: accountDailyBals.map(x => [new Date(x.dt).getTime(), x.bal])
 		}];
 	//console.log('chartData', chartData);
 
