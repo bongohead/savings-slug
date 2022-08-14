@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block staticlinks %}
+	<link rel="stylesheet" href="static/calendar.css" media="print">
+	<link rel="stylesheet" href="static/calendar.css" media="screen">
+{% endblock %}
+
+{% block content %}
+<!-- Print wityh margins 0 top+bottom, .1 left+right-->
+<div id="calendar"></div>
+{% endblock %}

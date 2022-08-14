@@ -459,13 +459,14 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				});
 				
 				// Get daily balances instead of debit/credit daily change -> accounts and dates indices must be same in dailyBalChange as in date and accounts constants
+				// bc == balchange
 				let dailyBals = dailyBalChange0;
 				for (d = 0; d < dates.length; d++) {
 					for (a = 0; a < accounts.length; a++) {
 						dailyBals[d][a].debit = Math.round(((d > 0 ? dailyBals[d - 1][a].debit : 0) + dailyBalChange0[d][a].debit) * 100)/100
 						dailyBals[d][a].credit = Math.round(((d > 0 ? dailyBals[d - 1][a].credit : 0) + dailyBalChange0[d][a].credit) * 100)/100
 						dailyBals[d][a].bal = Math.round((dailyBals[d][a].debit * accounts[a].debit_effect + dailyBals[d][a].credit * accounts[a].debit_effect * -1) * 100)/100;
-						dailyBals[d][a].balChange = Math.round((dailyBals[d][a].bal - (d > 0 ? dailyBals[d - 1][a].bal : 0)) * 100)/100;
+						dailyBals[d][a].bc = Math.round((dailyBals[d][a].bal - (d > 0 ? dailyBals[d - 1][a].bal : 0)) * 100)/100;
 						dailyBals[d][a].date = dates[d];
 						// Clear space in storage
 					}
@@ -608,7 +609,7 @@ function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
 	
 	const chartData = accountsData.map(function(account, i) {
 		
-		const accountTransactions = dailyBalsChange.filter(x => x.id === account.id).map(x => [x.date, x.balChange]);	
+		const accountTransactions = dailyBalsChange.filter(x => x.id === account.id).map(x => [x.date, x.bc]);	
 		const accountData = allDates.map(function(date) {
 			return [parseInt(moment(date).format('x')), accountTransactions.filter(x => x[0] === date).reduce((accum, x) => accum + x[1], null)]
 		}).map(x => [x[0], x[1] === 0 ? null : x[1]]);

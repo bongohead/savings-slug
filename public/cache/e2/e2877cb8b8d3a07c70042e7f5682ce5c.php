@@ -53,8 +53,9 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style-bs.css\">
 
-\t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css\">
-\t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css\"/>
+\t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css\">
+\t
+\t<!--<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css\"/>-->
 
 \t<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css\"/>-->
 \t<link rel=\"preload\" href=\"https://fonts.googleapis.com/css?family=Assistant\" as=\"style\">
@@ -63,27 +64,27 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Merriweather\">
 
 \t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js\"></script>
-\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js\"></script>
 
-\t<script src=\"https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js\"></script>
-\t<script src=\"https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js\"></script>
 \t
-\t<script src=\"https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js\"></script>
-\t<script src=\"https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
+\t<script src=\"https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
 \t\t
    \t<script src=\"//code.highcharts.com/stock/highstock.js\"></script>
 \t
 \t<script src=\"https://cmefi.github.io/gradient.js/gradient-min.js\"></script>
 \t";
-        // line 36
+        // line 37
         echo ($context["pageJS"] ?? null);
         echo "
 
 
     ";
-        // line 39
-        $this->displayBlock('staticlinks', $context, $blocks);
         // line 40
+        $this->displayBlock('staticlinks', $context, $blocks);
+        // line 41
         echo "</head>
 
 <body>
@@ -102,7 +103,7 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbar-detailed-accounts-label\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-pencil me-1\"></i>Detailed Accounts
+\t\t\t\t\t\t\t\t<i class=\"bi bi-journal-richtext me-1\"></i>Detailed Accounts
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t\t<div class=\"dropdown-menu\" id=\"navbar-detailed-accounts\">
 \t\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-start justify-content-start\">
@@ -120,6 +121,20 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 
 \t\t\t\t\t</ul>
 \t\t\t\t\t<ul class=\"navbar-nav\">
+\t\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
+\t\t\t\t\t\t\t\t<i class=\"bi bi-hammer\"></i>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t\t<div class=\"dropdown-menu dropdown-menu-lg-end\" >
+\t\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-end justify-content-start\">
+\t\t\t\t\t\t\t\t\t<div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-black\" style=\"font-size:1.0rem\">Links</div>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/calendar\">Printable Monthly Calendar</a>
+\t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t</li>
+
 \t\t\t\t\t\t<li class=\"nav-item\">
 \t\t\t\t\t\t\t<a class=\"btn btn-dark\" href=\"/login\"><i class=\"bi bi-power me-1\"></i>Logout</a>
 \t\t\t\t\t\t</li>
@@ -174,9 +189,9 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t\t\t<div class=\"col mx-2 pb-5\">
 \t\t\t\t<div class=\"container-xxl\">
 \t\t\t\t\t";
-        // line 129
+        // line 144
         $this->displayBlock('content', $context, $blocks);
-        // line 131
+        // line 146
         echo "\t\t\t\t</div>
 \t\t\t</div>
 \t\t</div>
@@ -229,7 +244,7 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 
 \t<script>
 \t  ";
-        // line 182
+        // line 197
         echo ($context["bodyScript"] ?? null);
         echo "
 \t</script>
@@ -240,17 +255,17 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 ";
     }
 
-    // line 39
+    // line 40
     public function block_staticlinks($context, array $blocks = [])
     {
         $macros = $this->macros;
     }
 
-    // line 129
+    // line 144
     public function block_content($context, array $blocks = [])
     {
         $macros = $this->macros;
-        // line 130
+        // line 145
         echo "\t\t\t\t\t";
     }
 
@@ -266,7 +281,7 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 
     public function getDebugInfo()
     {
-        return array (  254 => 130,  250 => 129,  244 => 39,  233 => 182,  180 => 131,  178 => 129,  87 => 40,  85 => 39,  79 => 36,  49 => 9,  39 => 1,);
+        return array (  269 => 145,  265 => 144,  259 => 40,  248 => 197,  195 => 146,  193 => 144,  88 => 41,  86 => 40,  80 => 37,  49 => 9,  39 => 1,);
     }
 
     public function getSourceContext()
@@ -285,8 +300,9 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style.css\">
     <link rel=\"stylesheet\" type=\"text/css\" href=\"/static/style-bs.css\">
 
-\t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css\">
-\t<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css\"/>
+\t<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css\">
+\t
+\t<!--<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css\"/>-->
 
 \t<!--<link rel=\"stylesheet\" type=\"text/css\" href=\"https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css\"/>-->
 \t<link rel=\"preload\" href=\"https://fonts.googleapis.com/css?family=Assistant\" as=\"style\">
@@ -295,13 +311,13 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Merriweather\">
 
 \t<script src=\"https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js\"></script>
-\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js\"></script>
+\t<script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js\"></script>
 
-\t<script src=\"https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js\"></script>
-\t<script src=\"https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js\"></script>
 \t
-\t<script src=\"https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js\"></script>
-\t<script src=\"https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
+\t<script src=\"https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js\"></script>
+\t<script src=\"https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js\"></script> <!-- HTML export buttons -->
 \t\t
    \t<script src=\"//code.highcharts.com/stock/highstock.js\"></script>
 \t
@@ -328,7 +344,7 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 \t\t\t\t\t\t</li>
 \t\t\t\t\t\t<li class=\"nav-item dropdown\">
 \t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbar-detailed-accounts-label\" data-bs-toggle=\"dropdown\">
-\t\t\t\t\t\t\t\t<i class=\"bi bi-pencil me-1\"></i>Detailed Accounts
+\t\t\t\t\t\t\t\t<i class=\"bi bi-journal-richtext me-1\"></i>Detailed Accounts
 \t\t\t\t\t\t\t</a>
 \t\t\t\t\t\t\t<div class=\"dropdown-menu\" id=\"navbar-detailed-accounts\">
 \t\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-start justify-content-start\">
@@ -346,6 +362,20 @@ class __TwigTemplate_4135d0e50b6d70cbc24baea66c1aad18 extends Template
 
 \t\t\t\t\t</ul>
 \t\t\t\t\t<ul class=\"navbar-nav\">
+\t\t\t\t\t\t<li class=\"nav-item dropdown\">
+\t\t\t\t\t\t\t<a class=\"nav-link dropdown-toggle\" href=\"#\" data-bs-toggle=\"dropdown\">
+\t\t\t\t\t\t\t\t<i class=\"bi bi-hammer\"></i>
+\t\t\t\t\t\t\t</a>
+\t\t\t\t\t\t\t<div class=\"dropdown-menu dropdown-menu-lg-end\" >
+\t\t\t\t\t\t\t\t<div class=\"d-md-flex align-items-end justify-content-start\">
+\t\t\t\t\t\t\t\t\t<div>
+\t\t\t\t\t\t\t\t\t\t<div class=\"dropdown-header py-0 mx-3 mb-1 border-bottom border-black\" style=\"font-size:1.0rem\">Links</div>
+\t\t\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"/calendar\">Printable Monthly Calendar</a>
+\t\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t\t</div>
+\t\t\t\t\t\t</li>
+
 \t\t\t\t\t\t<li class=\"nav-item\">
 \t\t\t\t\t\t\t<a class=\"btn btn-dark\" href=\"/login\"><i class=\"bi bi-power me-1\"></i>Logout</a>
 \t\t\t\t\t\t</li>

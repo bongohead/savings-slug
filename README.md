@@ -3,8 +3,13 @@ This is budget tracking software built for my own uses, hosted on https://budget
 
 # CHANGELOG
 
+## 2022-08-14
+- Added monthly calendar - JS generated + nicely printable
+- Removed Font Awesome dependency
+- Upgraded BS Icons dependency
+
 ## 2022-08-05
-- Minor optimization
+- Minor optimization (localStorage space)
 
 ## 2022-04-30
 - Added major cleanup of init file

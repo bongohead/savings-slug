@@ -191,8 +191,8 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 			
 			const getTransactions = getFetch('getTransactions', toScript = ['transactions']).then(function(ajaxRes) {
 				const transactions = ajaxRes.transactions.map(function(x) {
-					x.date = (x.date);
-					x.value = parseFloat(x.value);
+					x.dt = (x.dt);
+					x.val = parseFloat(x.val);
 					return x;
 				});
 				return {transactions: transactions};
@@ -204,16 +204,16 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				const accounts = r[0].accounts;
 				const transactions = r[1].transactions;
 				
-				const dates = [...new Set(transactions.map(x => x.date))];
+				const dates = [...new Set(transactions.map(x => x.dt))];
 				
 				// Get daily credit & debit changes at all dates (does not sum up to top-level elements)
 				const dailyBalChangeNested = dates.map(function(date) {
-					const dailyTransactions = transactions.filter(x => x.date === date);
+					const dailyTransactions = transactions.filter(x => x.dt === date);
 					const res = accounts.map(account => ({
 						id: account.id,
 						descendants: account.descendants,
-						debit: dailyTransactions.filter(x => x.debit === account.id).map(x => x.value).reduce((a, b) => a + b, 0),
-						credit: dailyTransactions.filter(x => x.credit === account.id).map(x => x.value).reduce((a, b) => a + b, 0)
+						db: dailyTransactions.filter(x => x.db === account.id).map(x => x.val).reduce((a, b) => a + b, 0),
+						cr: dailyTransactions.filter(x => x.cr === account.id).map(x => x.val).reduce((a, b) => a + b, 0)
 					}));
 					return res;
 				});
@@ -224,8 +224,8 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 						id: account.id,
 						// descendants: account.descendants,
 						// Sum up over debit/credit values of descendants
-						debit: account.debit + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.debit).reduce((a, b) => a + b, 0),
-						credit: account.credit + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.credit).reduce((a, b) => a + b, 0)
+						db: account.db + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.db).reduce((a, b) => a + b, 0),
+						cr: account.cr + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.cr).reduce((a, b) => a + b, 0)
 					}));
 				});
 				
@@ -234,11 +234,11 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				let dailyBals = dailyBalChange0;
 				for (d = 0; d < dates.length; d++) {
 					for (a = 0; a < accounts.length; a++) {
-						dailyBals[d][a].debit = Math.round(((d > 0 ? dailyBals[d - 1][a].debit : 0) + dailyBalChange0[d][a].debit) * 100)/100
-						dailyBals[d][a].credit = Math.round(((d > 0 ? dailyBals[d - 1][a].credit : 0) + dailyBalChange0[d][a].credit) * 100)/100
-						dailyBals[d][a].bal = Math.round((dailyBals[d][a].debit * accounts[a].debit_effect + dailyBals[d][a].credit * accounts[a].debit_effect * -1) * 100)/100;
+						dailyBals[d][a].db = Math.round(((d > 0 ? dailyBals[d - 1][a].db : 0) + dailyBalChange0[d][a].db) * 100)/100
+						dailyBals[d][a].cr = Math.round(((d > 0 ? dailyBals[d - 1][a].cr : 0) + dailyBalChange0[d][a].cr) * 100)/100
+						dailyBals[d][a].bal = Math.round((dailyBals[d][a].db * accounts[a].debit_effect + dailyBals[d][a].cr * accounts[a].debit_effect * -1) * 100)/100;
 						dailyBals[d][a].bc = Math.round((dailyBals[d][a].bal - (d > 0 ? dailyBals[d - 1][a].bal : 0)) * 100)/100;
-						dailyBals[d][a].date = dates[d];
+						dailyBals[d][a].dt = dates[d];
 						// Clear space in storage
 					}
 				}

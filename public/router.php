@@ -24,7 +24,9 @@ if (isset($_POST) && isset($_POST['isAjax'])) {
 			['template' => 'accounts', 'request' => ['accounts', 'home', ''], 'title' => 'Accounts', 'models' => ['checkSession'], 'js' => ['init', 'accounts']],
 			['template' => 'transactions', 'request' => ['transactions'], 'title' => 'Transactions Log', 'models' => ['checkSession'], 'js' => ['init', 'transactions']],
 			['template' => 'budget', 'request' => ['budget'], 'title' => 'Budget', 'models' => ['checkSession'], 'js' => ['init', 'budget']],
-			['template' => 'expenses', 'request' => ['expenses'], 'title' => 'Expense Tracker', 'models' => ['checkSession'], 'js' => ['init', 'expenses']]
+			['template' => 'expenses', 'request' => ['expenses'], 'title' => 'Expense Tracker', 'models' => ['checkSession'], 'js' => ['init', 'expenses']],
+			['template' => 'calendar', 'request' => ['calendar'], 'title' => 'Printable Monthly Calendar', 'models' => ['checkSession'], 'js' => ['init', 'calendar']]
+
 		],
 		errorRoute: ['template' => 'error', 'request' => 'error', 'title' => 'Error', 'js' => []],
 		baseJsFiles: ['functions', 'moment.min', 'moment-timezone-with-data-1970-2030.min'],

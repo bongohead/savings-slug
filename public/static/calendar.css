@@ -1,0 +1,101 @@
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #calendar, #calendar * {
+    visibility: visible;
+  }
+  #calendar {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+
+
+/* Other Styling */
+#calendar {
+	margin: 0;
+	padding: 0;
+}
+
+div.calendar-month {
+	display: flex;
+	flex-direction: column;
+	/*width: 100vw;*/
+	height: 100vh;
+}
+
+div.calendar-month:not(:first-child) {
+	page-break-before: always;
+}
+
+div.text-container {
+	display: flex;
+	align-items: center;
+	height: 50px;
+	margin: 0;
+	padding: 0;
+}
+div.text-container > h1 {
+	font-size: 24px;
+	margin: 0;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.8em;
+	font-family: sans-serif;
+	/*box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);*/
+	height: calc(100vh - 50px); /*100vh minus padding minus text-container*/
+	table-layout: fixed;
+}
+
+thead tr {
+	background-color: #D3D3D3;
+	color: black;
+	text-align: left;
+	height: 2rem;
+	border: 1px solid black;
+}
+
+
+th {
+	padding: 2px 15px;
+	font-size: 0.75rem;
+	font-weight: normal;
+	vertical-align: middle;
+}
+
+td {
+	padding: 8px 15px;
+	vertical-align:top;
+	text-align:left;
+	border: 1px solid black;
+}
+
+td.muted {
+	background-color: #D3D3D3;
+}
+
+tbody tr {
+	border-bottom: 1px solid #dddddd;
+}
+
+@media print{
+	@page {
+		size: landscape letter;
+		margin-top: .1in;
+		margin-bottom: .1in;
+		margin-left: .2in;
+		margin-right: .2in;
+		/*margin: 0in;*/
+	}
+	
+	body {
+		margin: 0;
+	}
+}
+
