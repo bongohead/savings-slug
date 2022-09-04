@@ -409,7 +409,7 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 		const dt = tbl.DataTable({
 			data: dtData,
 			columns: dtCols,
-			iDisplayLength: 50,
+			iDisplayLength: 100,
 			dom:
 				"<'row'<'col-6 px-0 justify-content-start d-flex'f><'col-md-6 px-0 justify-content-end d-flex'B>>" +
 				"<'row'<'col-12 pt-4 pb-1 px-0'tr>>" +
@@ -434,7 +434,8 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 				}
 			}
 		}).draw();
-
+		
+		
 	} else {
 	
 		const dt =
@@ -444,6 +445,10 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 		dt.rows.add(dtData); // Add new data
 		dt.draw();
 	}
+	
+	
+	
+	
 
 	tbl.get(0).querySelectorAll('[data-bs-toggle="tooltip"]').forEach(x => new bootstrap.Tooltip(x))
 
