@@ -243,13 +243,13 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 					}
 				}
 				dailyBals = dailyBals.flat(1);
-				return {dailyBalsChange: dailyBalChange0.flat(), dailyBals: dailyBals, dates: dates};
+				return {dailyBals: dailyBals, dates: dates};
 			});
 
 
 			// Finally update user data and UI
 			Promise.all([getAccounts, getTransactions, calculateBalances]).then(function(r) {
-				const newData = {...r[0], ...r[1], ...r[2], lastUpdated: new Date()};
+				const newData = {...r[0], ...r[1], lastUpdated: new Date()};
 				resolve(newData);
 			});
 

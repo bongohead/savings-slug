@@ -22,7 +22,7 @@ $(document).ready(function() {
 
 function updateUi(userData) {
 	drawActiveMonth(userData.page.activeMonth, userData.page.loadInstance);
-	drawChart(userData.accounts, userData.dailyBalsChange, userData.dates, userData.page.loadInstance);
+	drawChart(userData.accounts, userData.dailyBals, userData.dates, userData.page.loadInstance);
 
 	$('div.overlay').hide();
 }
