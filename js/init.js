@@ -249,7 +249,7 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 
 			// Finally update user data and UI
 			Promise.all([getAccounts, getTransactions, calculateBalances]).then(function(r) {
-				const newData = {...r[0], ...r[1], lastUpdated: new Date()};
+				const newData = {...r[0], ...r[1], ...r[2], lastUpdated: new Date()};
 				resolve(newData);
 			});
 
