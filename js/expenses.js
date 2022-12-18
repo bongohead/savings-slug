@@ -165,13 +165,13 @@ function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
         },
 		legend: {
 			enabled: true,
-			align: 'center',
-			backgroundColor: 'rgba(244, 241, 187, .9)',
+			align: 'left',
+			// backgroundColor: 'rgba(244, 241, 187, .9)',
 			borderColor: 'var(--bs-black)',
-			verticalAlign: 'bottom',
-			layout: 'horizontal',
+			verticalAlign: 'middle',
+			layout: 'vertical',
 			title: {
-				text: 'Expense Categories <span style="font-size: .8rem; color: #666; font-weight: normal; font-style: italic">(click to hide/show)</span>',
+				text: 'Expense Categories <span style="font-size: .7rem; color: #666; font-weight: normal; font-style: italic">(click to hide/show)</span>',
 			}
 		},
 		navigator: {

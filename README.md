@@ -8,6 +8,7 @@ This is budget tracking software built for my own uses, hosted on https://budget
 
 ## 2022-12-18
 - Improved speed of after-data init processing (300ms -> 100ms)
+- Fixed bug with cloning negative values in transactions
 
 ## 2022-08-14
 - Added monthly calendar - JS generated + nicely printable

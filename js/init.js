@@ -242,6 +242,7 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 
 				// Get daily balances instead of debit/credit daily change -> accounts and dates indices must be same in dailyBalChange as in date and accounts constants
 				// bc == balchange
+				
 				let dailyBals = dailyBalChange0;
 				for (d = 0; d < dates.length; d++) {
 					for (a = 0; a < accounts.length; a++) {
@@ -256,6 +257,17 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				// console.log('MS Runtime X3:', (new Date()).getTime() - start_time.getTime());
 				dailyBals = dailyBals.flat(1);
 				
+				// Idea: use hashmap instead for dailybals to reduce space; reduces roughly 40% (2.5MB -> 1.5MB)
+				// const dailyBals2Keys = {
+					// 'id': 0, // Account ID
+					// 'dt': 1, // Date
+					// 'db': 2, // Debit
+					// 'cr': 3, // Credit
+					// 'bal': 4, // Balance
+					// 'bc': 5, // Balance change 
+				// };
+				// const dailyBals2 = dailyBals.map((x) => [x.id, x.dt, x.db, x.cr, x.bal, x.bc]);
+
 				return {dailyBals: dailyBals, dates: dates};
 			});
 
