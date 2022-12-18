@@ -298,7 +298,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		const thisRowData = dt.row($(this).closest('tr')).data();
 		
 		$('#add-transaction-description').val(thisRowData.description);
-		$('#add-transaction-value').val(thisRowData.value);
+		$('#add-transaction-value').val(thisRowData.value * (thisRowData.value_effect));
 		$('#add-transaction-other-account').val(thisRowData.other_account);
 		
 		// Trigger on change calback (requires event binding to have also been done with jQuery)
