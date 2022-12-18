@@ -7,6 +7,7 @@ This is budget tracking software built for my own uses, hosted on https://budget
 - Full SCSS migration to BS52 w/macroblog style
 
 ## 2022-12-18
+- Added savings graph
 - Improved speed of after-data init processing (300ms -> 100ms)
 - Fixed bug with cloning negative values in transactions
 
