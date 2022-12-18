@@ -83,7 +83,7 @@ function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
         },
         title: {
 			useHTML: true,
-			text: '<span style="font-size:1.8rem">Expense Tracker</span>',
+			text: '<span style="font-size:1.8rem">Income Tracker</span>',
         },
 		plotOptions: {
 			series: {

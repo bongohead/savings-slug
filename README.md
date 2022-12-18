@@ -6,6 +6,9 @@ This is budget tracking software built for my own uses, hosted on https://budget
 ## TBD
 - Full SCSS migration to BS52 w/macroblog style
 
+## 2022-12-18
+- Improved speed of after-data init processing (300ms -> 100ms)
+
 ## 2022-08-14
 - Added monthly calendar - JS generated + nicely printable
 - Added more optimization (reduced SQL load + key size)

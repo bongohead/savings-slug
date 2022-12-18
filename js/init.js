@@ -165,7 +165,8 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 			const newData = userData;
 			resolve(userData);
 		} else {
-			
+			// Log time difference for calculation
+			const start_time = new Date();
 			const getAccounts = getFetch('getAccounts', toScript = ['accounts']).then(function(ajaxRes) {
 				// Recursive CTE already returns the correct order [descendants immediately following their parents]
 				const accounts0 =
@@ -173,17 +174,19 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 					.map(function(x, i) {
 						x.id_path = x.id_path.split(' > ').map(x => parseInt(x));
 						x.name_path = x.name_path.split(' > ');
-						x.full_order = i;
+						x.full_order = i; // Important for JS path
 						return x;
 					});
 
 				// Get family relations	
 				const accounts =
 					accounts0.map(function(x) {
-						x.children = accounts0.filter(y => y.id !== x.id && y.id_path[y.id_path.length - 2] === x.id).map(y => y.id);
+						x.children = accounts0.filter(y => y.id !== x.id && y.id_path[y.id_path.length - 2] === x.id).map(y => y.id); 
+						// JS array order for speed of matching to sum up for children elements
 						x.siblings = accounts0.filter(y => y.id_path.length >= 2 && y.id !== x.id && y.id_path[y.id_path.length - 2] === x.id_path[x.id_path.length - 2]).map(y => y.id); // Get siblings
 						x.parent = x.id_path[x.id_path.length - 2];
 						x.descendants = accounts0.filter(y => y.id !== x.id && y.id_path.includes(x.id)).map(y => y.id);
+						x.descendants_order = accounts0.filter(y => y.id !== x.id && y.id_path.includes(x.id)).map(y => y.full_order);
 						return(x);
 					});
 				return {accounts: accounts};
@@ -201,34 +204,42 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 			
 			// Get all sim runs & active sim run
 			const calculateBalances = Promise.all([getAccounts, getTransactions]).then(function(r) {
+				console.log('MS Runtime (End Data Get):', (new Date()).getTime() - start_time.getTime());
 				const accounts = r[0].accounts;
 				const transactions = r[1].transactions;
-				
+				console.log('accounts', accounts);
+				// All dates in set
 				const dates = [...new Set(transactions.map(x => x.dt))];
 				
-				// Get daily credit & debit changes at all dates (does not sum up to top-level elements)
+				// Get daily credit & debit changes at all dates (does not sum up to top-level elements) -> 
+				// returns date-level array with each containing an array of hashmaps corresponding to each account
 				const dailyBalChangeNested = dates.map(function(date) {
 					const dailyTransactions = transactions.filter(x => x.dt === date);
 					const res = accounts.map(account => ({
 						id: account.id,
-						descendants: account.descendants,
+						// descendants: account.descendants,
 						db: dailyTransactions.filter(x => x.db === account.id).map(x => x.val).reduce((a, b) => a + b, 0),
 						cr: dailyTransactions.filter(x => x.cr === account.id).map(x => x.val).reduce((a, b) => a + b, 0)
 					}));
 					return res;
 				});
-				
-				// Sum up to top-level elements
+				// console.log('MS Runtime X1:', (new Date()).getTime() - start_time.getTime(), dailyBalChangeNested);
+
+				// Recurse through each date, modify db + cr up to top-level elements
 				const dailyBalChange0 = dailyBalChangeNested.map(function(accountsByDate) {
-					return accountsByDate.map(account => ({
+					// Moved to hashmap for speed 12/18/22
+					return accountsByDate.map((account, account_order) => ({
 						id: account.id,
-						// descendants: account.descendants,
 						// Sum up over debit/credit values of descendants
-						db: account.db + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.db).reduce((a, b) => a + b, 0),
-						cr: account.cr + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.cr).reduce((a, b) => a + b, 0)
+						db: account.db + accounts[account_order].descendants_order.map(i => accountsByDate[i].db).reduce((a, b) => a + b, 0),
+						// cr: account.cr + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.cr).reduce((a, b) => a + b, 0)
+						// Replaced by using ID as hashmap instead of searching through all descendents for match
+						cr: account.cr + accounts[account_order].descendants_order.map(i => accountsByDate[i].cr).reduce((a, b) => a + b, 0)
 					}));
+					
 				});
-				
+				// console.log('MS Runtime X2:', (new Date()).getTime() - start_time.getTime(), dailyBalChange0);
+
 				// Get daily balances instead of debit/credit daily change -> accounts and dates indices must be same in dailyBalChange as in date and accounts constants
 				// bc == balchange
 				let dailyBals = dailyBalChange0;
@@ -242,13 +253,16 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 						// Clear space in storage
 					}
 				}
+				// console.log('MS Runtime X3:', (new Date()).getTime() - start_time.getTime());
 				dailyBals = dailyBals.flat(1);
+				
 				return {dailyBals: dailyBals, dates: dates};
 			});
 
 
 			// Finally update user data and UI
 			Promise.all([getAccounts, getTransactions, calculateBalances]).then(function(r) {
+				console.log('MS Runtime :', (new Date()).getTime() - start_time.getTime());
 				const newData = {...r[0], ...r[1], ...r[2], lastUpdated: new Date()};
 				resolve(newData);
 			});
