@@ -351,8 +351,10 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 			account_name: '',
 			other_account: -1,
 			other_account_name: '<select id="add-transaction-other-account" class="form-control form-control-sm form-select form-select-sm"><option value="none"></option>' +
-				accounts.map(account =>
-					(account.id !== thisAccount.id ? '<option value="'+account.id+'"' + (account.descendants.length !== 0 ? 'disabled': '') + '>' + '&nbsp;'.repeat(account.name_path.length) + account.name + '</option>' : '')
+				accounts
+					.filter(account => account.is_open === true)
+					.map(account => 
+						(account.id !== thisAccount.id ? '<option value="'+account.id+'"' + (account.descendants.length !== 0 ? 'disabled': '') + '>' + '&nbsp;'.repeat(account.name_path.length) + account.name + '</option>' : '')
 					).join('') +
 			'</select>',
 			debited_account: '',

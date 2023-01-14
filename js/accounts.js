@@ -474,6 +474,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 			},
 			rangeSelector: {
 				enabled: true,
+
 				//buttonTheme: {display: 'none'}
 			},
 			legend: {
