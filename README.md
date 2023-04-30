@@ -3,8 +3,11 @@ This is budget tracking software built for my own uses, hosted on https://budget
 
 # CHANGELOG
 
-## TBD
-- Full SCSS migration to BS52 w/macroblog style
+## 2023-04-29
+- Minor external libs update
+
+## 2023-01-13
+- Removed closed=false accounts from transactions addition input
 
 ## 2022-12-18
 - Added savings graph
