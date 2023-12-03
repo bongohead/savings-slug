@@ -388,9 +388,9 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 			return category.accounts.map(function(account, i) {
 				const res = {
 					name: account.name,
-					visible: ['Equity', 'Assets', 'Liabilities'].includes(account.name),
+					visible: ['Equity'].includes(account.name),
 					color: (category.accounts.length >= 2 ? gradient.valToColor(i, gradient.create([0,  category.accounts.length - 1], category.colors, 'htmlcolor'), 'rgba') : category.colors[0]),
-					lineWidth: (category.category !== 'equity' ? 2 : 5),
+					lineWidth: (category.category !== 'equity' ? 2 : 3),
 					category: category.category,
 					type: (category.category !== 'equity' ? 'areaspline' : 'line'),
 					stacking: (category.category !== 'equity' ? 'normal' : false),
@@ -474,7 +474,32 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 			},
 			rangeSelector: {
 				enabled: true,
-
+				allButtonsEnabled: true,
+				buttons: [{
+					type: 'month',
+					count: 3,
+					text: '3m',
+					title: 'View 3 months'
+				}, {
+					type: 'month',
+					count: 6,
+					text: '6m',
+					title: 'View 6 months'
+				}, {
+					type: 'ytd',
+					text: 'YTD',
+					title: 'View year to date'
+				}, {
+					type: 'year',
+					count: 1,
+					text: '1y',
+					title: 'View 1 year'
+				}, {
+					type: 'all',
+					text: 'All',
+					title: 'View all'
+				}],
+				selected: 3
 				//buttonTheme: {display: 'none'}
 			},
 			legend: {
