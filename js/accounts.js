@@ -379,7 +379,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 	const accountsByCategory = [
 		{category: 'assets', colors: ['forestgreen', 'cadetblue'], accounts: accounts.filter(x => x.name_path[0] === 'Assets' && x.name_path.length <= 2)},
 		{category: 'liabilities', colors: ['firebrick', 'lightsalmon'], accounts: accounts.filter(x => x.name_path[0] === 'Liabilities' && x.name_path.length <= 2)},
-		{category: 'equity', colors: ['black'], accounts: accounts.filter(x => x.name_path[0] === 'Equity' && x.name_path.length === 1)}
+		{category: 'equity', colors: ['brown'], accounts: accounts.filter(x => x.name_path[0] === 'Equity' && x.name_path.length === 1)}
 		]
 	// console.log('accountsByCategory', accountsByCategory);
 		
@@ -456,7 +456,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 				spacingTop: 0,
 				backgroundColor: 'rgba(255, 255, 255, 0)',
 				plotBackgroundColor: '#FFFFFF',
-				height: 300,
+				height: 320,
 				plotBorderColor: 'black',
 				plotBorderWidth: 2
 			},
@@ -506,6 +506,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 				title: {
 					text: 'Accounts<br/><span style="font-size: .8remrem; color: #666; font-weight: normal">(Click to hide)</span>'
 				},
+				backgroundColor: '#FCFFC5',
 				useHTML: true,
 				enabled: true,
 				align: 'right',
