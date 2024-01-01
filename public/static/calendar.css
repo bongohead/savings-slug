@@ -34,12 +34,12 @@ div.calendar-month:not(:first-child) {
 div.text-container {
 	display: flex;
 	align-items: center;
-	height: 50px;
+	height: 40px;
 	margin: 0;
 	padding: 0;
 }
 div.text-container > h1 {
-	font-size: 24px;
+	font-size: 20px;
 	margin: 0;
 }
 
@@ -57,22 +57,24 @@ thead tr {
 	background-color: #D3D3D3;
 	color: black;
 	text-align: left;
-	height: 2rem;
+	height: 1.8rem;
 	border: 1px solid black;
 }
 
 
 th {
-	padding: 2px 15px;
-	font-size: 0.75rem;
-	font-weight: normal;
+	padding: 2px 8px;
+	font-size: 0.7rem;
+	color: rgb(100 116 139);
+	font-weight: bolder;
 	vertical-align: middle;
+	text-align:center; 
 }
 
 td {
 	padding: 8px 15px;
 	vertical-align:top;
-	text-align:left;
+	text-align:right;
 	border: 1px solid black;
 }
 
