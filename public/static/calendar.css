@@ -65,8 +65,7 @@ thead tr {
 th {
 	padding: 2px 8px;
 	font-size: 0.7rem;
-	color: rgb(100 116 139);
-	font-weight: bolder;
+	font-weight: normal;
 	vertical-align: middle;
 	text-align:center; 
 }
