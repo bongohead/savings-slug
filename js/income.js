@@ -19,10 +19,11 @@ $(document).ready(function() {
 
 });
 
-
 function updateUi(userData) {
 	drawActiveMonth(userData.page.activeMonth, userData.page.loadInstance);
 	drawChart(userData.accounts, userData.dailyBals, userData.dates, userData.page.loadInstance);
+
+	drawSankey(userData.accounts, userData.dailyBals, userData.transactions, userData.page.loadInstance);
 	// drawSavingsChart(userData.accounts, userData.dailyBals, userData.dates, userData.page.loadInstance);
 
 	$('div.overlay').hide();
@@ -30,6 +31,140 @@ function updateUi(userData) {
 
 function drawActiveMonth(activeMonth, loadInstance) {
 	$('#active-month').text(moment(activeMonth).format('MMM YYYY'));
+}
+
+
+const drawSankey = function(accounts, dailyBals, loadInstance) {
+
+	const years = [...new Set(dailyBals.map(t => t.dt.substring(0, 4)))];
+
+	const series = years.map(function(year) {
+
+		const period_bals = dailyBals.filter(t => t.dt.substring(0, 4) === year);
+
+		const income_sub_nodes = accounts.filter(a => a.name_path[a.name_path.length - 2] === 'Income').map(a => ({id: a.id, name: a.name === 'Salary' ? 'After-Tax Salary' : a.name == 'Tax Refunds' ? 'Additional Prior-Year Taxes' : a.name}));
+		const income_nodes = accounts.filter(a => a.name_path[a.name_path.length - 1] === 'Income').map(a => ({id: a.id, name: a.name}));
+		const expense_nodes = accounts.filter(a => a.name_path[a.name_path.length - 1] === 'Expenses').map(a => ({id: a.id, name: a.name}));
+		const expense_sub_nodes = accounts.filter(a => a.name_path[a.name_path.length - 2] === 'Expenses').map(a => ({id: a.id, name: a.name}));
+		const asset_sub_nodes = accounts.filter(a => a.name_path[a.name_path.length - 2] === 'Assets').map(a => ({id: a.id, name: a.name})).filter(a => a.name !== 'Fixed');
+		const asset_sub_sub_nodes = accounts.filter(a => a.name_path[a.name_path.length - 3] === 'Assets').map(a => ({parent_id: a.id_path[a.id_path.length - 2], id: a.id, name: a.name})).filter(a => a.name != 'Cars');
+		const investment_nodes = accounts.filter(a => a.name_path[a.name_path.length - 1] === 'Investment Gains/Losses').map(a => ({id: a.id, name: a.name}));
+
+		const income_sub_income_conns = income_sub_nodes.map(function(a) {
+			const account_bals = period_bals.filter(b => b.id === a.id);
+			const start = account_bals[0].bal;
+			const end = account_bals.slice(-1)[0].bal;
+			if (end - start > 0) {
+				return [a.id, income_nodes[0].id, Math.round(end - start)];
+			} else {
+				return [income_nodes[0].id, a.id, Math.round(start - end)];
+			}
+		});
+
+		const income_expense_conns = expense_nodes.map(function(a) {
+			const account_bals = period_bals.filter(b => b.id === a.id);
+			const start = account_bals[0].bal;
+			const end = account_bals.slice(-1)[0].bal;
+			return [income_nodes[0].id, a.id, Math.round(end - start)];
+		});
+
+		const expense_expense_sub_conns = expense_sub_nodes.map(function(a) {
+			const account_bals = period_bals.filter(b => b.id === a.id);
+			const start = account_bals[0].bal;
+			const end = account_bals.slice(-1)[0].bal;
+			if (end - start > 0) {
+				return [expense_nodes[0].id, a.id, Math.round(end - start)];
+			} else {
+				return [a.id, income_nodes[0].id, Math.round(start - end)];
+			}
+		});
+
+		// const income_asset_sub_sub_nodes_conns = asset_sub_sub_nodes.map(function(a) {
+		// 	const account_bals = period_bals.filter(b => b.id === a.id);
+		// 	const start = account_bals[0].bal;
+		// 	const end = account_bals.slice(-1)[0].bal;
+		// 	return [income_nodes[0].id, a.id, Math.round(end - start)];
+		// });
+
+		const income_asset_sub_conns = asset_sub_nodes.map(function(a) {
+			const account_bals = period_bals.filter(b => b.id === a.id);
+			const start = account_bals[0].bal;
+			const end = account_bals.slice(-1)[0].bal;
+			return [income_nodes[0].id, a.id, Math.round(end - start)];
+		}).filter(a => a[2] > 0);
+
+		const asset_sub_asset_sub_sub_conns = asset_sub_sub_nodes.map(function(a) {
+			const account_bals = period_bals.filter(b => b.id === a.id);
+			const start = account_bals[0].bal;
+			const end = account_bals.slice(-1)[0].bal;
+			return [a.parent_id, a.id, Math.round(end - start)];
+		});
+
+		const investment_conns = investment_nodes.map(function(a) {
+			const account_bals = period_bals.filter(b => b.id === a.id);
+			const start = account_bals[0].bal;
+			const end = account_bals.slice(-1)[0].bal;
+			if (end - start > 0) {
+				return [a.id, income_nodes[0].id, Math.round(end - start)];
+			} else {
+				return [income_nodes[0].id, a.id, Math.round(start - end)];
+			}
+		});
+
+
+		return {
+			keys: ['from', 'to', 'weight'],
+			nodes: income_sub_nodes.concat(income_nodes).concat(expense_nodes).concat(expense_sub_nodes).concat(asset_sub_nodes).concat(asset_sub_sub_nodes).concat(investment_nodes),
+			data: income_sub_income_conns.concat(income_expense_conns).concat(expense_expense_sub_conns).concat(income_asset_sub_conns).concat(asset_sub_asset_sub_sub_conns).concat(investment_conns),
+			type: 'sankey',
+			name: year,
+			showInLegend: true,
+			color: 'green',
+			visible: year === '2023' ? true : false
+		}
+	})
+
+	const o = {
+		chart: {
+			height: 950
+		},
+		title: {
+			text: 'Balance Flow by Year'
+		},
+		legend: {
+			enabled: true
+		},
+		plotOptions: {
+			sankey: {
+				dataLabels: {
+					enabled: true,
+					formatter: function() {
+						console.log(this);
+						return '$' + Highcharts.numberFormat(this.point.options.weight, 0);
+					},
+					nodeFormatter: function() {
+						return this.point.name;
+					},
+				},
+				events: {
+					show: function () {
+
+						const series = this;
+						const chart = this.chart;
+						chart.showLoading('Loading data ...');
+					
+						chart.series.forEach(s => {
+							if (s.name !== series.name && s.visible == true) s.hide()
+						});
+						chart.hideLoading();
+					}
+				}
+			}
+		},
+		series: series
+	}
+
+	const chart = Highcharts.chart('sankey-chart-container', o);
 }
 
 function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
