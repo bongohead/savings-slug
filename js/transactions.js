@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			newData.transactions.filter(x => x.cr === accountId || x.db === accountId).map(x => ({...x, from_child: false}))
 			.concat(newData.transactions.filter(x => child_accounts.includes(x.cr) || child_accounts.includes(x.db)).map(x => ({...x, from_child: true})));
 
-		const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
+		const dailyBals = newData.dailyBals.filter(x => x.id === accountId)[0].bals;
 		// @loadInstance gives an indicator of page load: 0 = initial load, 1 = later load
 		return {page: {
 			accountId: accountId,
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		if (descriptionInput.length < 2) return;
 		
 		// Get account transactions, sorted by reverse date
-		const accountTransactionsDescriptions = getData('page').transactions.sort((a, b) => new Date(b.dt) > new Date(a.dt)).map(x => x.desc);
+		const accountTransactionsDescriptions = getData('page').transactions.sort((a, b) => new Date(b.dt) > new Date(a.dt)).map(x => x.dc);
 		
 		// Finding matching transactions
 		// const matchingAccountTransactionsDescriptions = accountTransactionsDescriptions.filter(x => x.substr(0, descriptionInput.length).toUpperCase() === descriptionInput.toUpperCase());
@@ -331,7 +331,7 @@ function drawTable(tbl, accounts, thisAccount, accountTransactions, loadInstance
 				from_child: x.from_child,
 				input_row: false,
 				date: x.dt,
-				description: x.desc,
+				description: x.dc,
 				value_effect: ((x.db === thisAccount.id & thisAccount.debit_effect === 1 ) || (x.cr === thisAccount.id & thisAccount.debit_effect === -1)) ? 1 : -1,
 				value: x.val,
 				account: accounts.filter(y => y.id === (x.db === thisAccount.id ? x.db : x.cr))[0].id,

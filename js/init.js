@@ -256,6 +256,24 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				}
 				// console.log('MS Runtime X3:', (new Date()).getTime() - start_time.getTime());
 				dailyBals = dailyBals.flat(1);
+
+				const dailyBals2 = dailyBals.reduce((accumulator, currentItem) => {
+					// Check if id already exists in accumulator
+					let existingItem = accumulator.find(item => item.id === currentItem.id);
+					// If it doesn't exist, add a new item to the accumulator
+					if (!existingItem) {
+					   accumulator.push({
+						 id: currentItem.id,
+						 bals: [{dt: currentItem.dt, db: currentItem.db, cr: currentItem.cr, bal: currentItem.bal, bc: currentItem.bc}]
+					   });
+					} else {
+					   // If it does exist, add the new balance to the existing item
+					   existingItem.bals.push({dt: currentItem.dt, db: currentItem.db, cr: currentItem.cr, bal: currentItem.bal, bc: currentItem.bc});
+					}
+					return accumulator;
+				   }, []);
+				   
+				console.log('TEST', dailyBals2);
 				
 				// Idea: use hashmap instead for dailybals to reduce space; reduces roughly 40% (2.5MB -> 1.5MB)
 				// const dailyBals2Keys = {
@@ -268,7 +286,7 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 				// };
 				// const dailyBals2 = dailyBals.map((x) => [x.id, x.dt, x.db, x.cr, x.bal, x.bc]);
 
-				return {dailyBals: dailyBals, dates: dates};
+				return {dailyBals: dailyBals2, dates: dates};
 			});
 
 

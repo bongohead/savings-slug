@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function updateUi(userData) {
 	equityId = userData.accounts.filter(x => x.name === 'Equity')[0].id;
-	equityBal = userData.dailyBals.filter(x => x.id === equityId).pop().bal;
+	equityBal = userData.dailyBals.filter(x => x.id === equityId)[0].bals.slice(-1)[0].bal;
 	$('#net-worth').html(equityBal.toLocaleString('en-US', {style: 'currency', currency: 'USD'}));
 	//console.log('equityBal', equityBal);
 
@@ -235,9 +235,9 @@ accounts
 
 function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 
-	const lastBals = dailyBals.filter(x => x.dt === useDate);
+	const lastBals = dailyBals.map(a => ({id: a.id, ...a.bals.filter(x => x.dt === useDate)[0]}));
 	const lastMonthEndDate = dates.filter(y => new Date(y) <= (new Date(new Date(useDate).getFullYear(), new Date(useDate).getMonth(), 1) - (24*60*60*1000))).pop();
-	const lastMonthEndBals = dailyBals.filter(x => x.dt === lastMonthEndDate);
+	const lastMonthEndBals = dailyBals.map(a => ({id: a.id, ...a.bals.filter(x => x.dt === lastMonthEndDate)[0]}));
 	
 	const dtData = accounts.map(account => ({
 		...account,
@@ -395,7 +395,7 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 					type: (category.category !== 'equity' ? 'areaspline' : 'line'),
 					stacking: (category.category !== 'equity' ? 'normal' : false),
 					stack: (category.category !== 'equity' ? category.category : false),
-					data: dailyBals.filter(x => x.id === account.id).map(x => [new Date(x.dt).getTime(), x.bal * (category.category === 'liabilities' ? -1 : 1)])
+					data: dailyBals.filter(x => x.id === account.id)[0].bals.map(x => [new Date(x.dt).getTime(), x.bal * (category.category === 'liabilities' ? -1 : 1)])
 				}
 				return res;
 			});
@@ -579,7 +579,8 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
 	
 
-	const lastBals = dailyBals.filter(x => x.dt === useDate);
+	const lastBals = dailyBals.map(a => ({id: a.id, ...a.bals.filter(x => x.dt === useDate)[0]}));
+	console.log('lastBals', lastBals);
 	
 	// Get equity change - later add whole row, YTD +/-, 30d +/-, etc.
 	/*
@@ -606,9 +607,9 @@ function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
 
 	// Get expenses	
 	const tr30_date = dates.filter(y => new Date(y) <= moment(useDate).subtract(1, 'months').format('x')).pop();
-	const tr30_bals = dailyBals.filter(x => x.dt === tr30_date);
+	const tr30_bals = dailyBals.map(a => ({id: a.id, ...a.bals.filter(x => x.dt === tr30_date)[0]}));
 	const ytd_date = dates.filter(y => new Date(y) <= (new Date(new Date(useDate).getFullYear(), 0, 1) - (24*60*60*1000))).pop();
-	const ytd_bals = dailyBals.filter(x => x.dt === ytd_date);
+	const ytd_bals = dailyBals.map(a => ({id: a.id, ...a.bals.filter(x => x.dt === ytd_date)[0]}));
 	
 	const change_stats = ['Equity', 'Income', 'Expenses', 'Liabilities', 'Assets'].map(function(x) {
 		const id = accounts.filter(y => y.name === x)[0].id;

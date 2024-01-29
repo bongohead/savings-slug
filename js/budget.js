@@ -245,7 +245,7 @@ function drawBudgetTable(tbl, accounts, dailyBals, activeMonth, loadInstance) {
 	//const accountIds = accountsData.map(x => x.id);
 	
 	// If no daily balances for this month
-	if (dailyBals.filter(x => moment(x.dt).isSame(moment(activeMonth), 'month')).length === 0) {
+	if (dailyBals.map(a => a.bals).flat(1).filter(x => moment(x.dt).isSame(moment(activeMonth), 'month')).length === 0) {
 		console.log('No data for table');
 		tbl.DataTable().clear().draw();
 		return;
@@ -279,17 +279,16 @@ function drawBudgetTable(tbl, accounts, dailyBals, activeMonth, loadInstance) {
 		// Get last balance for this account for this month
 		const endValue =
 			dailyBals
-			.filter(x => x.id === account.id && moment(x.dt).isSame(moment(activeMonth), 'month'))
+			.filter(x => x.id === account.id)[0].bals
+			.filter(dailybal => moment(dailybal.dt).isSame(moment(activeMonth), 'month'))
 			// Get max date
 			.reduce((accum, x) => moment(x.dt) >= moment(accum.dt) ? x : accum, {dt: '2000-01-01', db: 0}).db;
 			
-		console.log(			dailyBals
-			.filter(x => x.id === account.id && moment(x.dt).isSame(moment(activeMonth), 'month'))
-			);
 		// Get last balance for this account before this month if exists; otherwise 0;
 		const startValue =
 			dailyBals
-			.filter(x => x.id === account.id && moment(x.dt).isBefore(moment(activeMonth), 'month'))
+			.filter(x => x.id === account.id)[0].bals
+			.filter(dailybal => moment(dailybal.dt).isBefore(moment(activeMonth), 'month'))
 			// Uncomment below to always use last months value instead of last value before this month
 			// .filter(x => x.id === account.id && moment(x.date).isSame(moment(activeMonth).add(-1, 'month'), 'month'))
 			// Get max date

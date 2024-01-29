@@ -20,6 +20,7 @@ $(document).ready(function() {
 });
 
 function updateUi(userData) {
+	
 	drawActiveMonth(userData.page.activeMonth, userData.page.loadInstance);
 	drawChart(userData.accounts, userData.dailyBals, userData.dates, userData.page.loadInstance);
 
@@ -36,11 +37,12 @@ function drawActiveMonth(activeMonth, loadInstance) {
 
 const drawSankey = function(accounts, dailyBals, loadInstance) {
 
-	const years = [...new Set(dailyBals.map(t => t.dt.substring(0, 4)))];
+	const years = [...new Set(dailyBals.flatMap(a => a.bals.map(t => t.dt.substring(0, 4))))];
 
 	const series = years.map(function(year) {
 
-		const period_bals = dailyBals.filter(t => t.dt.substring(0, 4) === year);
+		/// Get all transactions for the year
+		const period_bals = dailyBals.flatMap(a => a.bals.filter(t => t.dt.substring(0, 4) === year).map(t => ({...t, id: a.id}))); 
 
 		const income_sub_nodes = accounts.filter(a => a.name_path[a.name_path.length - 2] === 'Income').map(a => ({id: a.id, name: a.name === 'Salary' ? 'After-Tax Salary' : a.name == 'Tax Refunds' ? 'Additional Prior-Year Taxes' : a.name}));
 		const income_nodes = accounts.filter(a => a.name_path[a.name_path.length - 1] === 'Income').map(a => ({id: a.id, name: a.name}));
@@ -167,8 +169,8 @@ const drawSankey = function(accounts, dailyBals, loadInstance) {
 	const chart = Highcharts.chart('sankey-chart-container', o);
 }
 
-function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
-	
+function drawChart(accounts, dailyBals, dates, loadInstance) {
+
 	const accountsData = accounts.filter(x => x.name_path.includes('Income') );
 	
 	function dateSeq(startDate, stopDate) {
@@ -186,7 +188,7 @@ function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
 	
 	const chart_data_stack_1 = accountsData.map(function(account, i) {
 		
-		const accountTransactions = dailyBalsChange.filter(x => x.id === account.id).map(x => [x.dt, x.bc]);	
+		const accountTransactions = dailyBals.filter(x => x.id === account.id)[0].bals.map(x => [x.dt, x.bc]);	
 		const accountData = allDates.map(function(date) {
 			return [parseInt(moment(date).format('x')), accountTransactions.filter(x => x[0] === date).reduce((accum, x) => accum + x[1], null)]
 		}).map(x => [x[0], x[1] === 0 ? null : x[1]]);
@@ -204,9 +206,9 @@ function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
 	
 	// Not get savings data
 	const expense_account_id = accounts.filter(x => x.name === 'Expenses')[0].id;
-	const expense_transactions = dailyBalsChange.filter(x => x.id === expense_account_id);
+	const expense_transactions = dailyBals.filter(x => x.id === expense_account_id)[0].bals;
 	const income_account_id = accounts.filter(x => x.name === 'Income')[0].id;
-	const income_transactions = dailyBalsChange.filter(x => x.id === income_account_id);
+	const income_transactions = dailyBals.filter(x => x.id === income_account_id)[0].bals;
 
 	const chart_data_stack_2 = [{
 		name: 'Savings (Income - Expenses)',
@@ -374,8 +376,8 @@ function drawChart(accounts, dailyBalsChange, dates, loadInstance) {
 	return;
 }
 
-function drawSavingsChart(accounts, dailyBalsChange, dates, loadInstance) {
-		
+function drawSavingsChart(accounts, dailyBals, dates, loadInstance) {
+
 	function dateSeq(startDate, stopDate) {
 		var dateArray = [];
 		var currentDate = moment(startDate);
@@ -390,9 +392,9 @@ function drawSavingsChart(accounts, dailyBalsChange, dates, loadInstance) {
 	// Get all dates between start and end
 	const allDates = dateSeq(dates[0], dates[dates.length-1]);
 	const expense_account_id = accounts.filter(x => x.name === 'Expenses')[0].id;
-	const expense_transactions = dailyBalsChange.filter(x => x.id === expense_account_id);
+	const expense_transactions = dailyBalsFlat.filter(x => x.id === expense_account_id)[0];
 	const income_account_id = accounts.filter(x => x.name === 'Income')[0].id;
-	const income_transactions = dailyBalsChange.filter(x => x.id === income_account_id);
+	const income_transactions = dailyBalsFlat.filter(x => x.id === income_account_id)[0];
 
 	console.log(allDates, expense_account_id, expense_transactions);
 	
