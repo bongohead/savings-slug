@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					const transactions =
 						newData.transactions.filter(x => x.cr === accountId || x.db === accountId).map(x => ({...x, from_child: false}))
 						.concat(newData.transactions.filter(x => child_accounts.includes(x.cr) || child_accounts.includes(x.db)).map(x => ({...x, from_child: true})));
-					const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
+					const dailyBals = newData.dailyBals.filter(x => x.id === accountId)[0].bals;
 					return {page: {accountId: accountId, account: account, transactions: transactions, dailyBals: dailyBals, loadInstance: 1}};
 				}, true).then((userData) => updateUi(userData));
 			}
@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					const transactions =
 						newData.transactions.filter(x => x.cr === accountId || x.db === accountId).map(x => ({...x, from_child: false}))
 						.concat(newData.transactions.filter(x => child_accounts.includes(x.cr) || child_accounts.includes(x.db)).map(x => ({...x, from_child: true})));
-					const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
+					const dailyBals = newData.dailyBals.filter(x => x.id === accountId)[0].bals;
 					return {page: {accountId: accountId, account: account, transactions: transactions, dailyBals: dailyBals, loadInstance: 1}};
 				}, true).then((userData) => updateUi(userData));
 			}
@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					const transactions =
 						newData.transactions.filter(x => x.cr === accountId || x.db === accountId).map(x => ({...x, from_child: false}))
 						.concat(newData.transactions.filter(x => child_accounts.includes(x.cr) || child_accounts.includes(x.db)).map(x => ({...x, from_child: true})));
-					const dailyBals = newData.dailyBals.filter(x => x.id === accountId);
+					const dailyBals = newData.dailyBals.filter(x => x.id === accountId)[0].bals;
 					return {page: {accountId: accountId, account: account, transactions: transactions, dailyBals: dailyBals, loadInstance: 1}};
 				}, true).then((userData) => updateUi(userData));
 			}
