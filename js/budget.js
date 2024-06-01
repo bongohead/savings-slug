@@ -276,29 +276,20 @@ function drawBudgetTable(tbl, accounts, dailyBals, activeMonth, loadInstance) {
 	// Iterate through accounts, last dailyBals of the month minus first dailyBals of month
 	console.log('activeMonth', activeMonth);
 	const dtData = accountsData.map(function(account) {
-		// Get last balance for this account for this month
-		const endValue =
-			dailyBals
-			.filter(x => x.id === account.id)[0].bals
-			.filter(dailybal => moment(dailybal.dt).isSame(moment(activeMonth), 'month'))
-			// Get max date
-			.reduce((accum, x) => moment(x.dt) >= moment(accum.dt) ? x : accum, {dt: '2000-01-01', db: 0}).db;
-			
 		// Get last balance for this account before this month if exists; otherwise 0;
-		const startValue =
-			dailyBals
-			.filter(x => x.id === account.id)[0].bals
-			.filter(dailybal => moment(dailybal.dt).isBefore(moment(activeMonth), 'month'))
-			// Uncomment below to always use last months value instead of last value before this month
-			// .filter(x => x.id === account.id && moment(x.date).isSame(moment(activeMonth).add(-1, 'month'), 'month'))
-			// Get max date
-			.reduce((accum, x) => moment(x.dt) >= moment(accum.dt) ? x : accum, {dt: '2000-01-01', db: 0}).db;
-			
-			
+		const last_day_of_month = moment(activeMonth).endOf('month').format('YYYY-MM-DD');
+
+		const account_bals = dailyBals.filter(x => x.id === account.id)[0].bals;
+		const start_bals_arr = account_bals.filter(x => x.dt < activeMonth);
+		const start_bal = start_bals_arr.length === 0 ? 0 : start_bals_arr.sort((a, b) => a.dt > b.date ? 1 : -1).slice(-1)[0].db;
+		const end_bals_arr = account_bals.filter(x => x.dt <= last_day_of_month);
+		const end_bal = end_bals_arr.length === 0 ? 0 : end_bals_arr.sort((a, b) => a.dt > b.date ? 1 : -1).slice(-1)[0].db;
+
 		//const startValue = thisAccountBals.reduce((accum, x) => moment(accum.dt) < moment(x.dt) ? accum : x, activeMonth).db || 0;
 		//const endValue = thisAccountBals.reduce((accum, x) => moment(x.dt) >= moment(accum.dt) ? accum : x, activeMonth).db || 0;
-		console.log(startValue, endValue);
-		const monthly_spending = endValue - startValue;
+		// console.log(account.name, start_bal, end_bal, last_day_of_month);
+
+		const monthly_spending = end_bal - start_bal;
 		const monthly_spending_percent = typeof(Number(account.monthly_budget)) === 'number' && Number(account.monthly_budget) !== 0 ? monthly_spending/Number(account.monthly_budget) : null;
 		return {...account, ... {monthly_spending: monthly_spending, monthly_spending_percent: monthly_spending_percent}};
 	});

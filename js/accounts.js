@@ -235,18 +235,33 @@ accounts
 
 function drawTable(tbl, accounts, dailyBals, dates, useDate, loadInstance) {
 
-	const lastBals = dailyBals.map(a => ({id: a.id, ...a.bals.filter(x => x.dt === useDate)[0]}));
-	const lastMonthEndDate = dates.filter(y => new Date(y) <= (new Date(new Date(useDate).getFullYear(), new Date(useDate).getMonth(), 1) - (24*60*60*1000))).pop();
-	const lastMonthEndBals = dailyBals.map(a => ({id: a.id, ...a.bals.filter(x => x.dt === lastMonthEndDate)[0]}));
+	const last_month_end_date = dates.filter(y => new Date(y) <= (new Date(new Date(useDate).getFullYear(), new Date(useDate).getMonth(), 1) - (24*60*60*1000))).pop();
+
+	// Get last bals before each end date, 0 otherwise
+	const last_bals = dailyBals.map(a => {
+		const matching_bals_arr = a.bals.filter(x => x.dt <= useDate);
+		const bal = matching_bals_arr.length === 0 ? 0 : matching_bals_arr.sort((a, b) => a.dt > b.date ? 1 : -1).slice(-1)[0].bal;
+		return {id: a.id, bal: bal}
+	});
+
+	const last_month_end_bals = dailyBals.map(a => {
+		const matching_bals_arr = a.bals.filter(x => x.dt <= last_month_end_date);
+		const bal = matching_bals_arr.length === 0 ? 0 : matching_bals_arr.sort((a, b) => a.dt > b.date ? 1 : -1).slice(-1)[0].bal;
+		return {id: a.id, bal: bal}
+	});
 	
-	const dtData = accounts.map(account => ({
-		...account,
-		showAllAccounts: 0,
-		bal: lastBals.filter(x => x.id === account.id)[0].bal,
-		childrenState: account.descendants.length > 0 ? (account.id_path.length <= 1 ? 1 : 0) : -1,
-		changeThisMonth: lastBals.filter(x => x.id === account.id)[0].bal - lastMonthEndBals.filter(x => x.id === account.id)[0].bal
-	}));
-		
+	const dtData = accounts.map(account => {
+		const last_bal_for_account = last_bals.filter(x => x.id === account.id)[0].bal;
+		const last_month_bal_for_account = last_month_end_bals.filter(x => x.id === account.id)[0].bal;
+		return {
+			...account,
+			showAllAccounts: 0,
+			bal: last_bal_for_account,
+			childrenState: account.descendants.length > 0 ? (account.id_path.length <= 1 ? 1 : 0) : -1,
+			changeThisMonth: last_bal_for_account - last_month_bal_for_account
+		}
+	});
+
 	// console.log('dtData', dtData);
 
 	if (loadInstance === 0) {
@@ -577,11 +592,28 @@ function drawChart(chartId, accounts, dailyBals, loadInstance) {
 
 
 function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
-	
 
-	const lastBals = dailyBals.map(a => ({id: a.id, ...a.bals.filter(x => x.dt === useDate)[0]}));
-	console.log('lastBals', lastBals);
-	
+	const tr30_date = dates.filter(y => new Date(y) <= moment(useDate).subtract(1, 'months').format('x')).pop();
+	const ytd_date = dates.filter(y => new Date(y) <= (new Date(new Date(useDate).getFullYear(), 0, 1) - (24*60*60*1000))).pop();
+
+	const last_bals = dailyBals.map(a => {
+		const matching_bals_arr = a.bals.filter(x => x.dt <= useDate);
+		const bal = matching_bals_arr.length === 0 ? 0 : matching_bals_arr.sort((a, b) => a.dt > b.date ? 1 : -1).slice(-1)[0].bal;
+		return {id: a.id, bal: bal}
+	});
+
+	const tr30_bals = dailyBals.map(a => {
+		const matching_bals_arr = a.bals.filter(x => x.dt <= tr30_date);
+		const bal = matching_bals_arr.length === 0 ? 0 : matching_bals_arr.sort((a, b) => a.dt > b.date ? 1 : -1).slice(-1)[0].bal;
+		return {id: a.id, bal: bal}
+	});
+
+	const ytd_bals = dailyBals.map(a => {
+		const matching_bals_arr = a.bals.filter(x => x.dt <= ytd_date);
+		const bal = matching_bals_arr.length === 0 ? 0 : matching_bals_arr.sort((a, b) => a.dt > b.date ? 1 : -1).slice(-1)[0].bal;
+		return {id: a.id, bal: bal}
+	});
+
 	// Get equity change - later add whole row, YTD +/-, 30d +/-, etc.
 	/*
 	const equityId = accounts.filter(x => x.name === 'Equity')[0].id;
@@ -605,15 +637,10 @@ function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
 	$('#net-worth-4 > span.base').html(accounts.filter(x => x.is_open === true).length);
 	*/
 
-	// Get expenses	
-	const tr30_date = dates.filter(y => new Date(y) <= moment(useDate).subtract(1, 'months').format('x')).pop();
-	const tr30_bals = dailyBals.map(a => ({id: a.id, ...a.bals.filter(x => x.dt === tr30_date)[0]}));
-	const ytd_date = dates.filter(y => new Date(y) <= (new Date(new Date(useDate).getFullYear(), 0, 1) - (24*60*60*1000))).pop();
-	const ytd_bals = dailyBals.map(a => ({id: a.id, ...a.bals.filter(x => x.dt === ytd_date)[0]}));
-	
+	// Get expenses		
 	const change_stats = ['Equity', 'Income', 'Expenses', 'Liabilities', 'Assets'].map(function(x) {
 		const id = accounts.filter(y => y.name === x)[0].id;
-		const last_bal = lastBals.filter(y => y.id === id)[0].bal;
+		const last_bal = last_bals.filter(y => y.id === id)[0].bal;
 		const tr30_change = last_bal - tr30_bals.filter(y => y.id === id)[0].bal;
 		const ytd_change = last_bal - ytd_bals.filter(y => y.id === id)[0].bal;
 		return {
@@ -671,7 +698,7 @@ function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
 	const asset_l1_data =
 		accounts.filter(x => x.name_path[0] === 'Assets' && x.name_path.length === 2).map(x => ({
 			...x,
-			bal: lastBals.filter(y => y.id == x.id)[0].bal
+			bal: last_bals.filter(y => y.id == x.id)[0].bal
 		})).map((x, i) => ({name: x.name, y: x.bal, color: asset_colors[i]}));
 		
 		
@@ -682,7 +709,7 @@ function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
 			if (child_accounts.length !== 0) {
 				return child_accounts.map((child, i) => ({
 					name: child.name,
-					y: lastBals.filter(z => z.id == child.id)[0].bal,
+					y: last_bals.filter(z => z.id == child.id)[0].bal,
 					color: gradient.valToColor(.25, gradient.create([0, 1], [x.color, getColorArray()[i]], 'hex'), 'rgba'),
 					same_as_parent: false
 				}));
@@ -757,7 +784,7 @@ function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
 	const liability_l1_data =
 		accounts.filter(x => x.name_path[0] === 'Liabilities' && x.name_path.length === 2).map(x => ({
 			...x,
-			bal: lastBals.filter(y => y.id == x.id)[0].bal
+			bal: last_bals.filter(y => y.id == x.id)[0].bal
 		})).map((x, i) => ({name: x.name, y: x.bal, color: liability_colors[i]}));
 		
 		
@@ -768,7 +795,7 @@ function drawStatistics(accounts, dailyBals, dates, useDate, transactions)  {
 			if (child_accounts.length !== 0) {
 				return child_accounts.map((child, i) => ({
 					name: child.name,
-					y: lastBals.filter(z => z.id == child.id)[0].bal,
+					y: last_bals.filter(z => z.id == child.id)[0].bal,
 					color: gradient.valToColor(.25, gradient.create([0, 1], [x.color, getColorArray()[i]], 'hex'), 'rgba'),
 					same_as_parent: false
 				}));

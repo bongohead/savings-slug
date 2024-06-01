@@ -7,7 +7,6 @@ $(document).ready(function() {
 	}, true).then((userData) => updateUi(userData));
 	
 	
-	
 	/********** Attach Event Listener to Arrows - Back & Forward Dates **********/
 	$('button.active-month-change').on('click', function() {
 		const newActiveMonth = moment(getData('page').activeMonth).add((this.id === 'active-month-next' ? 1 : -1), 'months').format('YYYY-MM-DD');
@@ -54,8 +53,8 @@ const drawSankey = function(accounts, dailyBals, loadInstance) {
 
 		const income_sub_income_conns = income_sub_nodes.map(function(a) {
 			const account_bals = period_bals.filter(b => b.id === a.id);
-			const start = account_bals[0].bal;
-			const end = account_bals.slice(-1)[0].bal;
+			const start = account_bals.length === 0 ? 0 : account_bals[0].bal;
+			const end = account_bals.length === 0 ? 0 : account_bals.slice(-1)[0].bal;
 			if (end - start > 0) {
 				return [a.id, income_nodes[0].id, Math.round(end - start)];
 			} else {
@@ -65,15 +64,15 @@ const drawSankey = function(accounts, dailyBals, loadInstance) {
 
 		const income_expense_conns = expense_nodes.map(function(a) {
 			const account_bals = period_bals.filter(b => b.id === a.id);
-			const start = account_bals[0].bal;
-			const end = account_bals.slice(-1)[0].bal;
+			const start = account_bals.length === 0 ? 0 : account_bals[0].bal;
+			const end = account_bals.length === 0 ? 0 : account_bals.slice(-1)[0].bal;
 			return [income_nodes[0].id, a.id, Math.round(end - start)];
 		});
 
 		const expense_expense_sub_conns = expense_sub_nodes.map(function(a) {
 			const account_bals = period_bals.filter(b => b.id === a.id);
-			const start = account_bals[0].bal;
-			const end = account_bals.slice(-1)[0].bal;
+			const start = account_bals.length === 0 ? 0 : account_bals[0].bal;
+			const end = account_bals.length === 0 ? 0 : account_bals.slice(-1)[0].bal;
 			if (end - start > 0) {
 				return [expense_nodes[0].id, a.id, Math.round(end - start)];
 			} else {
@@ -90,22 +89,22 @@ const drawSankey = function(accounts, dailyBals, loadInstance) {
 
 		const income_asset_sub_conns = asset_sub_nodes.map(function(a) {
 			const account_bals = period_bals.filter(b => b.id === a.id);
-			const start = account_bals[0].bal;
-			const end = account_bals.slice(-1)[0].bal;
+			const start = account_bals.length === 0 ? 0 : account_bals[0].bal;
+			const end = account_bals.length === 0 ? 0 : account_bals.slice(-1)[0].bal;
 			return [income_nodes[0].id, a.id, Math.round(end - start)];
 		}).filter(a => a[2] > 0);
 
 		const asset_sub_asset_sub_sub_conns = asset_sub_sub_nodes.map(function(a) {
 			const account_bals = period_bals.filter(b => b.id === a.id);
-			const start = account_bals[0].bal;
-			const end = account_bals.slice(-1)[0].bal;
+			const start = account_bals.length === 0 ? 0 : account_bals[0].bal;
+			const end = account_bals.length === 0 ? 0 : account_bals.slice(-1)[0].bal;
 			return [a.parent_id, a.id, Math.round(end - start)];
 		});
 
 		const investment_conns = investment_nodes.map(function(a) {
 			const account_bals = period_bals.filter(b => b.id === a.id);
-			const start = account_bals[0].bal;
-			const end = account_bals.slice(-1)[0].bal;
+			const start = account_bals.length === 0 ? 0 : account_bals[0].bal;
+			const end = account_bals.length === 0 ? 0 : account_bals.slice(-1)[0].bal;
 			if (end - start > 0) {
 				return [a.id, income_nodes[0].id, Math.round(end - start)];
 			} else {
@@ -141,7 +140,6 @@ const drawSankey = function(accounts, dailyBals, loadInstance) {
 				dataLabels: {
 					enabled: true,
 					formatter: function() {
-						console.log(this);
 						return '$' + Highcharts.numberFormat(this.point.options.weight, 0);
 					},
 					nodeFormatter: function() {
@@ -544,7 +542,6 @@ function drawSavingsChart(accounts, dailyBals, dates, loadInstance) {
 			// valueDecimals: 2,
 			formatter: function() {
 				const dataGrouping = this.points[0].series.currentDataGrouping.unitName;
-				console.log(dataGrouping);
 				const table = '<div>' +
 					'<h5 class="text-right">' +
 						(dataGrouping === 'month' ? moment(this.x).format('MMM Y') : dataGrouping === 'week' ? moment(this.x).format('[Week of] M/D/Y') : moment(this.x).format('M/D/Y')) +

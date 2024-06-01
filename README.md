@@ -3,6 +3,9 @@ This is budget tracking software built for my own uses, hosted on https://budget
 
 # CHANGELOG
 
+## 2024-06-01
+- Greatly reduced memory/sessionStorage usage by removing dailyBals with no change
+
 ## 2023-04-29
 - Minor external libs update
 

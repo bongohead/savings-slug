@@ -204,25 +204,33 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 			
 			// Get all sim runs & active sim run
 			const calculateBalances = Promise.all([getAccounts, getTransactions]).then(function(r) {
+
 				console.log('MS Runtime (End Data Get):', (new Date()).getTime() - start_time.getTime());
+
 				const accounts = r[0].accounts;
 				const transactions = r[1].transactions;
+
 				console.log('accounts', accounts);
+
 				// All dates in set
-				const dates = [...new Set(transactions.map(x => x.dt))];
+				const dates = [...new Set(transactions.map(x => x.dt))].sort();
 				
 				// Get daily credit & debit changes at all dates (does not sum up to top-level elements) -> 
 				// returns date-level array with each containing an array of hashmaps corresponding to each account
-				const dailyBalChangeNested = dates.map(function(date) {
+				const dailyBalChangeNested = dates.map(function(date, i) {
 					const dailyTransactions = transactions.filter(x => x.dt === date);
 					const res = accounts.map(account => ({
 						id: account.id,
 						// descendants: account.descendants,
 						db: dailyTransactions.filter(x => x.db === account.id).map(x => x.val).reduce((a, b) => a + b, 0),
-						cr: dailyTransactions.filter(x => x.cr === account.id).map(x => x.val).reduce((a, b) => a + b, 0)
+						cr: dailyTransactions.filter(x => x.cr === account.id).map(x => x.val).reduce((a, b) => a + b, 0),
+						// N is an indicator of the number of transactions in the day, PLUS one for the initialization date
+						// This will be later used for tracking which dates to keep dailyBals for each account for!
+						n: dailyTransactions.filter(x => x.db === account.id || x.cr === account.id).length + (i === 0)
 					}));
 					return res;
 				});
+
 				// console.log('MS Runtime X1:', (new Date()).getTime() - start_time.getTime(), dailyBalChangeNested);
 
 				// Recurse through each date, modify db + cr up to top-level elements
@@ -234,15 +242,14 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 						db: account.db + accounts[account_order].descendants_order.map(i => accountsByDate[i].db).reduce((a, b) => a + b, 0),
 						// cr: account.cr + accountsByDate.filter(x => account.descendants.includes(x.id)).map(x => x.cr).reduce((a, b) => a + b, 0)
 						// Replaced by using ID as hashmap instead of searching through all descendents for match
-						cr: account.cr + accounts[account_order].descendants_order.map(i => accountsByDate[i].cr).reduce((a, b) => a + b, 0)
+						cr: account.cr + accounts[account_order].descendants_order.map(i => accountsByDate[i].cr).reduce((a, b) => a + b, 0),
+						n: account.n + accounts[account_order].descendants_order.map(i => accountsByDate[i].n).reduce((a, b) => a + b, 0)
 					}));
-					
 				});
+
 				// console.log('MS Runtime X2:', (new Date()).getTime() - start_time.getTime(), dailyBalChange0);
 
-				// Get daily balances instead of debit/credit daily change -> accounts and dates indices must be same in dailyBalChange as in date and accounts constants
-				// bc == balchange
-				
+				// Get daily balances instead of debit/credit daily change -> accounts and dates indices must be same in dailyBalChange as in date and accounts constants				
 				let dailyBals = dailyBalChange0;
 				for (d = 0; d < dates.length; d++) {
 					for (a = 0; a < accounts.length; a++) {
@@ -250,30 +257,36 @@ function init(_addDefaultState = (newData0) => ({}), _forceReload = false) {
 						dailyBals[d][a].cr = Math.round(((d > 0 ? dailyBals[d - 1][a].cr : 0) + dailyBalChange0[d][a].cr) * 100)/100
 						dailyBals[d][a].bal = Math.round((dailyBals[d][a].db * accounts[a].debit_effect + dailyBals[d][a].cr * accounts[a].debit_effect * -1) * 100)/100;
 						dailyBals[d][a].bc = Math.round((dailyBals[d][a].bal - (d > 0 ? dailyBals[d - 1][a].bal : 0)) * 100)/100;
+						dailyBals[d][a].n = dailyBals[d][a].n;
 						dailyBals[d][a].dt = dates[d];
 						// Clear space in storage
 					}
 				}
-				// console.log('MS Runtime X3:', (new Date()).getTime() - start_time.getTime());
+				// console.log('MS Runtime X3:', (new Date()).getTime() - start_time.getTime(), dailyBals);
 				dailyBals = dailyBals.flat(1);
-
+				
+				// Convert from date level to account ID level - strip dates with no balance 
 				const dailyBals2 = dailyBals.reduce((accumulator, currentItem) => {
+					
+					if (currentItem.n === 0) {
+						return accumulator;
+					}
+
 					// Check if id already exists in accumulator
 					let existingItem = accumulator.find(item => item.id === currentItem.id);
 					// If it doesn't exist, add a new item to the accumulator
 					if (!existingItem) {
 					   accumulator.push({
 						 id: currentItem.id,
-						 bals: [{dt: currentItem.dt, db: currentItem.db, cr: currentItem.cr, bal: currentItem.bal, bc: currentItem.bc}]
+						 bals: [{dt: currentItem.dt, db: currentItem.db, cr: currentItem.cr, bal: currentItem.bal, bc: currentItem.bc, n: currentItem.n}]
 					   });
 					} else {
 					   // If it does exist, add the new balance to the existing item
-					   existingItem.bals.push({dt: currentItem.dt, db: currentItem.db, cr: currentItem.cr, bal: currentItem.bal, bc: currentItem.bc});
+					   existingItem.bals.push({dt: currentItem.dt, db: currentItem.db, cr: currentItem.cr, bal: currentItem.bal, bc: currentItem.bc, n: currentItem.n});
 					}
 					return accumulator;
 				   }, []);
 				   
-				console.log('TEST', dailyBals2);
 				
 				// Idea: use hashmap instead for dailybals to reduce space; reduces roughly 40% (2.5MB -> 1.5MB)
 				// const dailyBals2Keys = {
