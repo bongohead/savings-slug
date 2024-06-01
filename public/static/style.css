@@ -192,6 +192,13 @@ div.dataTables_filter input {
 	height: 2.3rem;
 }
 
+.dt-search {
+  display: flex;
+  align-items: center;
+}
+
+
+
 /** Loading Spinner **/
 .overlay {
     background: #D3D3D3;
